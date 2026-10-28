@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenyz Lite — Натуральные продукты для здоровья</title>
+    <meta name="description" content="Лёгкая и быстрая версия магазина натуральной продукции Agenyz. Вита-леденцы, коллаген, детокс и другие продукты для здоровья.">
+    <style>
+        /* === 1. CSS ПЕРЕМЕННЫЕ И СБРОС === */
+        :root {
+            --primary: #2e7d32;
+            --primary-dark: #1b5e20;
+            --accent: #ff6f00;
+            --bg: #f9fafb;
+            --text: #1f2937;
+            --text-light: #6b7280;
+            --white: #ffffff;
+            --radius: 8px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        /* === 2. ШАПКА === */
+        header {
+            background: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+        .nav { display: flex; justify-content: space-between; align-items: center; height: 64px; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary); text-decoration: none; }
+        .cart-btn {
+            background: var(--primary); color: var(--white); border: none;
+            padding: 0.5rem 1rem; border-radius: var(--radius); cursor: pointer;
+            font-weight: 600; display: flex; align-items: center; gap: 0.5rem;
+        }
+        .cart-count {
+            background: var(--accent); color: var(--white); font-size: 0.75rem;
+            padding: 0.1rem 0.4rem; border-radius: 99px;
+        }
+
+        /* === 3. ГЕРОЙ-СЕКЦИЯ (вместо тяжёлого слайдера) === */
+        .hero {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            padding: 4rem 1rem; text-align: center;
+        }
+        .hero h1 { font-size: 2.5rem; color: var(--primary-dark); margin-bottom: 1rem; }
+        .hero p { font-size: 1.125rem; color: var(--text); max-width: 600px; margin: 0 auto 2rem; }
+        .btn-hero {
+            display: inline-block; padding: 0.75rem 2rem; background: var(--primary);
+            color: var(--white); text-decoration: none; border-radius: var(--radius); font-weight: 600;
+        }
+
+        /* === 4. КАТАЛОГ (CSS Grid) === */
+        .products { padding: 3rem 0; }
+        .section-title { text-align: center; font-size: 2rem; margin-bottom: 2rem; color: var(--primary-dark); }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .card {
+            background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow);
+            overflow: hidden; transition: transform 0.2s; display: flex; flex-direction: column;
+        }
+        .card:hover { transform: translateY(-4px); }
+        .card-img {
+            width: 100%; height: 200px; background-color: #e5e7eb;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text-light); font-size: 0.875rem;
+        }
+        .card-body { padding: 1rem; flex-grow: 1; display: flex; flex-direction: column; }
+        .card-title { font-size: 1.125rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .card-desc { font-size: 0.875rem; color: var(--text-light); margin-bottom: 1rem; flex-grow: 1; }
+        .card-price { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+        .price-current { font-size: 1.25rem; font-weight: 700; color: var(--primary); }
+        .price-old { font-size: 0.875rem; text-decoration: line-through; color: var(--text-light); }
+        .btn {
+            width: 100%; padding: 0.75rem; background: var(--primary); color: var(--white);
+            border: none; border-radius: var(--radius); font-weight: 600; cursor: pointer;
+        }
+        .btn:hover { background: var(--primary-dark); }
+
+        /* === 5. КОРЗИНА (Modal) === */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5); z-index: 200; justify-content: flex-end;
+        }
+        .modal.open { display: flex; }
+        .cart-panel {
+            background: var(--white); width: 100%; max-width: 400px; height: 100%;
+            padding: 1.5rem; display: flex; flex-direction: column;
+            animation: slideIn 0.3s ease-out;
+        }
+        @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+        .cart-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 1.5rem; border-bottom: 1px solid #e5e7eb; padding-bottom: 1rem;
+        }
+        .close-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; }
+        .cart-items { flex-grow: 1; overflow-y: auto; }
+        .cart-item {
+            display: flex; justify-content: space-between; margin-bottom: 1rem;
+            padding-bottom: 1rem; border-bottom: 1px solid #f3f4f6;
+        }
+        .cart-total {
+            margin-top: 1rem; padding-top: 1rem; border-top: 2px solid #e5e7eb;
+            font-size: 1.25rem; font-weight: 700; display: flex; justify-content: space-between;
+        }
+
+        /* === 6. ПОДВАЛ === */
+        footer { background: var(--text); color: var(--white); padding: 2rem 0; text-align: center; margin-top: 3rem; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container nav">
+        <a href="#" class="logo">🌿 Agenyz Lite</a>
+        <button class="cart-btn" onclick="toggleCart()">
+            🛒 Корзина <span class="cart-count" id="cartCount">0</span>
+        </button>
+    </div>
+</header>
+
+<main>
+    <section class="hero">
+        <div class="container">
+            <h1>Попробуйте на вкус силу природы!</h1>
+            <p>Натуральные продукты для здоровья, энергии и красоты. Без избыточного кода и лишних ожиданий загрузки.</p>
+            <a href="#products" class="btn-hero">Перейти в каталог</a>
+        </div>
+    </section>
+
+    <section id="products" class="products container">
+        <h2 class="section-title">Популярные продукты</h2>
+        <div class="grid" id="productGrid">
+            <!-- Товары рендерятся через JS -->
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        <p>© 2026 Agenyz Lite. Упрощённая и мгновенно загружаемая версия.</p>
+        <p style="font-size: 0.875rem; color: #9ca3af; margin-top: 0.5rem;">Доставка по всей России. Натуральный состав.</p>
+    </div>
+</footer>
+
+<!-- Модальное окно корзины -->
+<div class="modal" id="cartModal" onclick="if(event.target === this) toggleCart()">
+    <div class="cart-panel">
+        <div class="cart-header">
+            <h2>Ваша корзина</h2>
+            <button class="close-btn" onclick="toggleCart()">×</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <p style="color: var(--text-light); text-align: center; margin-top: 2rem;">Корзина пуста</p>
+        </div>
+        <div class="cart-total">
+            <span>Итого:</span>
+            <span id="cartTotal">0 ₽</span>
+        </div>
+        <button class="btn" style="margin-top: 1rem;" onclick="checkout()">Оформить заказ (WhatsApp)</button>
+    </div>
+</div>
+
+<script>
+    // === 1. Данные товаров (легко заменить на загрузку из JSON) ===
+    const products = [
+        { id: 1, name: "Вита-Леденцы Антистресс", desc: "Натуральные леденцы для спокойствия и концентрации", price: 340, oldPrice: 400 },
+        { id: 2, name: "3П-Коллаген", desc: "Трипептидный коллаген с гиалуроновой кислотой для красоты кожи", price: 2800, oldPrice: 3200 },
+        { id: 3, name: "Детокс-Z", desc: "Растительный гемосорбент на основе зостеры для очищения", price: 2830, oldPrice: null },
+        { id: 4, name: "ФерБуст", desc: "4 биодоступных источника железа для энергии на весь день", price: 1930, oldPrice: 2100 },
+        { id: 5, name: "ФунгоМакс", desc: "6 функциональных грибов для памяти и иммунитета", price: 3860, oldPrice: 4200 },
+        { id: 6, name: "ВеноБаланс", desc: "Одно решение для легкости движения и здоровья сосудов", price: 3490, oldPrice: 3900 }
+    ];
+
+    // === 2. Логика корзины (localStorage) ===
+    let cart = JSON.parse(localStorage.getItem('agenyz_cart')) || [];
+
+    // Рендер товаров
+    const grid = document.getElementById('productGrid');
+    grid.innerHTML = products.map(p => `
+        <div class="card">
+            <div class="card-img">📷 Фото ${p.name}</div>
+            <div class="card-body">
+                <h3 class="card-title">${p.name}</h3>
+                <p class="card-desc">${p.desc}</p>
+                <div class="card-price">
+                    <span class="price-current">${p.price.toLocaleString()} ₽</span>
+                    ${p.oldPrice ? `<span class="price-old">${p.oldPrice.toLocaleString()} ₽</span>` : ''}
+                </div>
+                <button class="btn" onclick="addToCart(${p.id})">В корзину</button>
+            </div>
+        </div>
+    `).join('');
+
+    function addToCart(id) {
+        const product = products.find(p => p.id === id);
+        const existing = cart.find(item => item.id === id);
+        if (existing) { existing.qty++; } 
+        else { cart.push({ ...product, qty: 1 }); }
+        saveCart();
+        toggleCart(true);
+    }
+
+    function removeFromCart(id) {
+        cart = cart.filter(item => item.id !== id);
+        saveCart();
+    }
+
+    function saveCart() {
+        localStorage.setItem('agenyz_cart', JSON.stringify(cart));
+        renderCart();
+    }
+
+    function renderCart() {
+        const countEl = document.getElementById('cartCount');
+        const itemsEl = document.getElementById('cartItems');
+        const totalEl = document.getElementById('cartTotal');
+        
+        const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+        const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+        
+        countEl.textContent = totalQty;
+        totalEl.textContent = totalPrice.toLocaleString() + ' ₽';
+
+        if (cart.length === 0) {
+            itemsEl.innerHTML = '<p style="color: var(--text-light); text-align: center; margin-top: 2rem;">Корзина пуста</p>';
+            return;
+        }
+
+        itemsEl.innerHTML = cart.map(item => `
+            <div class="cart-item">
+                <div>
+                    <div style="font-weight: 600;">${item.name}</div>
+                    <div style="font-size: 0.875rem; color: var(--text-light);">${item.qty} × ${item.price.toLocaleString()} ₽</div>
+                </div>
+                <button onclick="removeFromCart(${item.id})" style="background:none; border:none; color:red; cursor:pointer;">Удалить</button>
+            </div>
+        `).join('');
+    }
+
+    function toggleCart(forceOpen = false) {
+        const modal = document.getElementById('cartModal');
+        if (forceOpen) modal.classList.add('open');
+        else modal.classList.toggle('open');
+    }
+
+    function checkout() {
+        if (cart.length === 0) return alert('Корзина пуста!');
+        const msg = cart.map(i => `▪️ ${i.name} x${i.qty}`).join('%0A');
+        const total = document.getElementById('cartTotal').textContent;
+        // Замените номер на реальный номер менеджера
+        window.open(`https://wa.me/79871527818?text=Здравствуйте!%0AХочу оформить заказ:%0A${msg}%0A%0AИтого: ${total}`, '_blank');
+    }
+
+    // Инициализация
+    renderCart();
+</script>
+
+</body>
+</html>
