@@ -68,11 +68,27 @@
             overflow: hidden; transition: transform 0.2s; display: flex; flex-direction: column;
         }
         .card:hover { transform: translateY(-4px); }
+        
+        /* Обновленные стили для изображений */
         .card-img {
-            width: 100%; height: 180px; background-color: #e5e7eb;
-            display: flex; align-items: center; justify-content: center;
-            color: var(--text-light); font-size: 0.875rem;
+            width: 100%;
+            height: 200px;
+            background-color: #e8f5e9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
         }
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .card:hover .card-img img {
+            transform: scale(1.05);
+        }
+        
         .card-body { padding: 1rem; flex-grow: 1; display: flex; flex-direction: column; }
         .card-title { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.5rem; line-height: 1.3; }
         .card-desc { font-size: 0.85rem; color: var(--text-light); margin-bottom: 1rem; flex-grow: 1; }
@@ -111,7 +127,6 @@
             margin-top: 1rem; padding-top: 1rem; border-top: 2px solid #e5e7eb;
             font-size: 1.25rem; font-weight: 700; display: flex; justify-content: space-between;
         }
-        /* Новый стиль для уведомления о доставке */
         .delivery-note {
             font-size: 0.85rem;
             color: var(--text-light);
@@ -173,7 +188,6 @@
             <span id="cartTotal">0 ₽</span>
         </div>
         
-        <!-- Уведомление о доставке -->
         <p class="delivery-note">🚚 Стоимость доставки рассчитывается индивидуально менеджером</p>
         
         <button class="btn" onclick="checkout()">Оформить заказ (WhatsApp)</button>
@@ -288,9 +302,19 @@
             grid.innerHTML = '<div class="no-results">Ничего не найдено. Попробуйте изменить запрос.</div>';
             return;
         }
-        grid.innerHTML = list.map(p => `
+        grid.innerHTML = list.map(p => {
+            // Генерация ссылки на красивую заглушку с названием товара
+            // ЦВЕТА: e8f5e9 (светло-зеленый фон), 1b5e20 (темно-зеленый текст)
+            // ВАЖНО: Когда у вас будут реальные фото, замените строку ниже на:
+            // const imgUrl = p.image || 'путь-к-вашей-картинке.jpg';
+            const shortName = p.name.length > 25 ? p.name.substring(0, 25) + '...' : p.name;
+            const imgUrl = `https://placehold.co/400x300/e8f5e9/1b5e20?text=${encodeURIComponent(shortName)}`;
+            
+            return `
             <div class="card">
-                <div class="card-img">📦 ${p.name.substring(0, 15)}...</div>
+                <div class="card-img">
+                    <img src="${imgUrl}" alt="${p.name}" loading="lazy" width="400" height="300">
+                </div>
                 <div class="card-body">
                     <h3 class="card-title">${p.name}</h3>
                     <p class="card-desc">${p.desc}</p>
@@ -301,7 +325,7 @@
                     <button class="btn" onclick="addToCart(${p.id})">В корзину</button>
                 </div>
             </div>
-        `).join('');
+        `}).join('');
     }
 
     function addToCart(id) {
@@ -360,7 +384,6 @@
         if (cart.length === 0) return alert('Корзина пуста!');
         const msg = cart.map(i => `▪️ ${i.name} x${i.qty} — ${(i.price * i.qty).toLocaleString()} ₽`).join('%0A');
         const total = document.getElementById('cartTotal').textContent;
-        // Добавляем напоминание о доставке и в сообщение для менеджера
         const deliveryNote = '%0A%0A🚚 Доставка: рассчитывается индивидуально';
         
         // Замените 79000000000 на реальный номер менеджера
