@@ -111,6 +111,19 @@
             margin-top: 1rem; padding-top: 1rem; border-top: 2px solid #e5e7eb;
             font-size: 1.25rem; font-weight: 700; display: flex; justify-content: space-between;
         }
+        /* Новый стиль для уведомления о доставке */
+        .delivery-note {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-align: center;
+            margin-top: 1rem;
+            margin-bottom: 0.75rem;
+            background: #f3f4f6;
+            padding: 0.6rem;
+            border-radius: var(--radius);
+            border: 1px dashed #d1d5db;
+            line-height: 1.4;
+        }
         footer { background: var(--text); color: var(--white); padding: 2rem 0; text-align: center; margin-top: 3rem; }
     </style>
 </head>
@@ -159,12 +172,15 @@
             <span>Итого:</span>
             <span id="cartTotal">0 ₽</span>
         </div>
-        <button class="btn" style="margin-top: 1rem;" onclick="checkout()">Оформить заказ (WhatsApp)</button>
+        
+        <!-- Уведомление о доставке -->
+        <p class="delivery-note">🚚 Стоимость доставки рассчитывается индивидуально менеджером</p>
+        
+        <button class="btn" onclick="checkout()">Оформить заказ (WhatsApp)</button>
     </div>
 </div>
 
 <script>
-    // Полный каталог из 96 позиций с актуальными ценами
     const products = [
         {id:1, name:"Промонабор «Стройность»", desc:"Комплекс для комфортного похудения", price:16680, oldPrice:17100},
         {id:2, name:"3П-Коллаген персик-манго", desc:"14 стиков по 4 г. Трипептидный коллаген", price:4750},
@@ -344,8 +360,11 @@
         if (cart.length === 0) return alert('Корзина пуста!');
         const msg = cart.map(i => `▪️ ${i.name} x${i.qty} — ${(i.price * i.qty).toLocaleString()} ₽`).join('%0A');
         const total = document.getElementById('cartTotal').textContent;
+        // Добавляем напоминание о доставке и в сообщение для менеджера
+        const deliveryNote = '%0A%0A🚚 Доставка: рассчитывается индивидуально';
+        
         // Замените 79000000000 на реальный номер менеджера
-        window.open(`https://wa.me/79934627818?text=Здравствуйте!%0AХочу оформить заказ:%0A%0A${msg}%0A%0A💰 Итого: ${total}`, '_blank');
+        window.open(`https://wa.me/79934627818?text=Здравствуйте!%0AХочу оформить заказ:%0A%0A${msg}%0A%0A💰 Итого: ${total}${deliveryNote}`, '_blank');
     }
 
     // Живой поиск
