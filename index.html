@@ -308,7 +308,7 @@
             // ВАЖНО: Когда у вас будут реальные фото, замените строку ниже на:
             // const imgUrl = p.image || 'путь-к-вашей-картинке.jpg';
             const shortName = p.name.length > 25 ? p.name.substring(0, 25) + '...' : p.name;
-            const imgUrl = p.image || `https://front.agenyz.ru/resize/w198/cv/dl/2-1_2000px.09kb5.jpg`;
+            const imgUrl = `https://placehold.co/400x300/e8f5e9/1b5e20?text=${encodeURIComponent(shortName)}`;
             
             return `
             <div class="card">
