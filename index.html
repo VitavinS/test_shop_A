@@ -68,26 +68,16 @@
             overflow: hidden; transition: transform 0.2s; display: flex; flex-direction: column;
         }
         .card:hover { transform: translateY(-4px); }
-        
-        /* Обновленные стили для изображений */
         .card-img {
-            width: 100%;
-            height: 200px;
-            background-color: #e8f5e9;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 100%; height: 200px; background-color: #e8f5e9;
+            display: flex; align-items: center; justify-content: center;
             overflow: hidden;
         }
         .card-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            width: 100%; height: 100%; object-fit: cover;
             transition: transform 0.3s ease;
         }
-        .card:hover .card-img img {
-            transform: scale(1.05);
-        }
+        .card:hover .card-img img { transform: scale(1.05); }
         
         .card-body { padding: 1rem; flex-grow: 1; display: flex; flex-direction: column; }
         .card-title { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.5rem; line-height: 1.3; }
@@ -128,16 +118,10 @@
             font-size: 1.25rem; font-weight: 700; display: flex; justify-content: space-between;
         }
         .delivery-note {
-            font-size: 0.85rem;
-            color: var(--text-light);
-            text-align: center;
-            margin-top: 1rem;
-            margin-bottom: 0.75rem;
-            background: #f3f4f6;
-            padding: 0.6rem;
-            border-radius: var(--radius);
-            border: 1px dashed #d1d5db;
-            line-height: 1.4;
+            font-size: 0.85rem; color: var(--text-light); text-align: center;
+            margin-top: 1rem; margin-bottom: 0.75rem;
+            background: #f3f4f6; padding: 0.6rem;
+            border-radius: var(--radius); border: 1px dashed #d1d5db; line-height: 1.4;
         }
         footer { background: var(--text); color: var(--white); padding: 2rem 0; text-align: center; margin-top: 3rem; }
     </style>
@@ -185,7 +169,7 @@
         </div>
         <div class="cart-total">
             <span>Итого:</span>
-            <span id="cartTotal">0 ₽</span>
+            <span id="cartTotal">0 &#8381;</span>
         </div>
         
         <p class="delivery-note">🚚 Стоимость доставки рассчитывается индивидуально менеджером</p>
@@ -195,8 +179,10 @@
 </div>
 
 <script>
+    const RUB = '\u20BD'; // Юникод-символ рубля (работает во всех браузерах)
+    
     const products = [
-        {id:1, name:"Промонабор «Стройность»", desc:"Комплекс для комфортного похудения", price:16680, oldPrice:17100, image: "https://front.agenyz.ru/resize/w198/cv/dl/2-1_2000px.09kb5.jpg"}
+        {id:1, name:"Промонабор «Стройность»", desc:"Комплекс для комфортного похудения", price:16680, oldPrice:17100, image:"https://front.agenyz.ru/cv/dl/2-1_2000px.09kb5.jpg"},
         {id:2, name:"3П-Коллаген персик-манго", desc:"14 стиков по 4 г. Трипептидный коллаген", price:4750},
         {id:3, name:"Браслет «6 elements Titanband»", desc:"Золотой цвет, ширина 15 мм", price:10800},
         {id:4, name:"Крем Skin Elixir для сухой кожи", desc:"Уход за телом, 150 мл", price:1600},
@@ -303,12 +289,8 @@
             return;
         }
         grid.innerHTML = list.map(p => {
-            // Генерация ссылки на красивую заглушку с названием товара
-            // ЦВЕТА: e8f5e9 (светло-зеленый фон), 1b5e20 (темно-зеленый текст)
-            // ВАЖНО: Когда у вас будут реальные фото, замените строку ниже на:
-            // const imgUrl = p.image || 'путь-к-вашей-картинке.jpg';
-            const shortName = p.name.length > 25 ? p.name.substring(0, 25) + '...' : p.name;
-            const imgUrl = `https://placehold.co/400x300/e8f5e9/1b5e20?text=${encodeURIComponent(shortName)}`;
+            // Если есть реальная картинка (поле image), берём её. Иначе — зелёная заглушка.
+            const imgUrl = p.image || `https://placehold.co/400x300/e8f5e9/1b5e20?text=${encodeURIComponent(p.name.substring(0, 20))}`;
             
             return `
             <div class="card">
@@ -319,8 +301,8 @@
                     <h3 class="card-title">${p.name}</h3>
                     <p class="card-desc">${p.desc}</p>
                     <div class="card-price">
-                        <span class="price-current">${p.price.toLocaleString()} ₽</span>
-                        ${p.oldPrice ? `<span class="price-old">${p.oldPrice.toLocaleString()} ₽</span>` : ''}
+                        <span class="price-current">${p.price.toLocaleString('ru-RU')} ${RUB}</span>
+                        ${p.oldPrice ? `<span class="price-old">${p.oldPrice.toLocaleString('ru-RU')} ${RUB}</span>` : ''}
                     </div>
                     <button class="btn" onclick="addToCart(${p.id})">В корзину</button>
                 </div>
@@ -356,7 +338,7 @@
         const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
         
         countEl.textContent = totalQty;
-        totalEl.textContent = totalPrice.toLocaleString() + ' ₽';
+        totalEl.textContent = totalPrice.toLocaleString('ru-RU') + ' ' + RUB;
 
         if (cart.length === 0) {
             itemsEl.innerHTML = '<p style="color: var(--text-light); text-align: center; margin-top: 2rem;">Корзина пуста</p>';
@@ -367,7 +349,7 @@
             <div class="cart-item">
                 <div>
                     <div style="font-weight: 600;">${item.name}</div>
-                    <div style="font-size: 0.875rem; color: var(--text-light);">${item.qty} × ${item.price.toLocaleString()} ₽</div>
+                    <div style="font-size: 0.875rem; color: var(--text-light);">${item.qty} × ${item.price.toLocaleString('ru-RU')} ${RUB}</div>
                 </div>
                 <button onclick="removeFromCart(${item.id})" style="background:none; border:none; color:red; cursor:pointer; font-size:0.875rem;">Удалить</button>
             </div>
@@ -382,12 +364,12 @@
 
     function checkout() {
         if (cart.length === 0) return alert('Корзина пуста!');
-        const msg = cart.map(i => `▪️ ${i.name} x${i.qty} — ${(i.price * i.qty).toLocaleString()} ₽`).join('%0A');
+        const msg = cart.map(i => `▪️ ${i.name} x${i.qty} — ${(i.price * i.qty).toLocaleString('ru-RU')} ${RUB}`).join('%0A');
         const total = document.getElementById('cartTotal').textContent;
         const deliveryNote = '%0A%0A🚚 Доставка: рассчитывается индивидуально';
         
         // Замените 79000000000 на реальный номер менеджера
-        window.open(`https://wa.me/799936427818?text=Здравствуйте!%0AХочу оформить заказ:%0A%0A${msg}%0A%0A💰 Итого: ${total}${deliveryNote}`, '_blank');
+        window.open(`https://wa.me/79000000000?text=Здравствуйте!%0AХочу оформить заказ:%0A%0A${msg}%0A%0A💰 Итого: ${total}${deliveryNote}`, '_blank');
     }
 
     // Живой поиск
