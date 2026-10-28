@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenyz Lite — Полный каталог продукции</title>
+    <meta name="description" content="Лёгкая и быстрая версия магазина натуральной продукции Agenyz. Актуальные цены на все продукты.">
+    <style>
+        :root {
+            --primary: #2e7d32;
+            --primary-dark: #1b5e20;
+            --accent: #ff6f00;
+            --bg: #f9fafb;
+            --text: #1f2937;
+            --text-light: #6b7280;
+            --white: #ffffff;
+            --radius: 8px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+        }
+        header {
+            background: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+        .nav { display: flex; justify-content: space-between; align-items: center; height: 64px; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary); text-decoration: none; }
+        .cart-btn {
+            background: var(--primary); color: var(--white); border: none;
+            padding: 0.5rem 1rem; border-radius: var(--radius); cursor: pointer;
+            font-weight: 600; display: flex; align-items: center; gap: 0.5rem;
+        }
+        .cart-count {
+            background: var(--accent); color: var(--white); font-size: 0.75rem;
+            padding: 0.1rem 0.4rem; border-radius: 99px;
+        }
+        .hero {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            padding: 3rem 1rem; text-align: center;
+        }
+        .hero h1 { font-size: 2rem; color: var(--primary-dark); margin-bottom: 0.5rem; }
+        .hero p { color: var(--text); max-width: 600px; margin: 0 auto; }
+        
+        .products { padding: 2rem 0; }
+        .search-box {
+            width: 100%; padding: 0.875rem; border: 2px solid #e5e7eb;
+            border-radius: var(--radius); margin-bottom: 1.5rem; font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+        .search-box:focus { outline: none; border-color: var(--primary); }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .card {
+            background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow);
+            overflow: hidden; transition: transform 0.2s; display: flex; flex-direction: column;
+        }
+        .card:hover { transform: translateY(-4px); }
+        .card-img {
+            width: 100%; height: 180px; background-color: #e5e7eb;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text-light); font-size: 0.875rem;
+        }
+        .card-body { padding: 1rem; flex-grow: 1; display: flex; flex-direction: column; }
+        .card-title { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.5rem; line-height: 1.3; }
+        .card-desc { font-size: 0.85rem; color: var(--text-light); margin-bottom: 1rem; flex-grow: 1; }
+        .card-price { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+        .price-current { font-size: 1.25rem; font-weight: 700; color: var(--primary); }
+        .price-old { font-size: 0.875rem; text-decoration: line-through; color: var(--text-light); }
+        .btn {
+            width: 100%; padding: 0.75rem; background: var(--primary); color: var(--white);
+            border: none; border-radius: var(--radius); font-weight: 600; cursor: pointer;
+        }
+        .btn:hover { background: var(--primary-dark); }
+        .no-results { text-align: center; color: var(--text-light); padding: 2rem; grid-column: 1 / -1; }
+
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5); z-index: 200; justify-content: flex-end;
+        }
+        .modal.open { display: flex; }
+        .cart-panel {
+            background: var(--white); width: 100%; max-width: 400px; height: 100%;
+            padding: 1.5rem; display: flex; flex-direction: column;
+            animation: slideIn 0.3s ease-out;
+        }
+        @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+        .cart-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 1.5rem; border-bottom: 1px solid #e5e7eb; padding-bottom: 1rem;
+        }
+        .close-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; }
+        .cart-items { flex-grow: 1; overflow-y: auto; }
+        .cart-item {
+            display: flex; justify-content: space-between; margin-bottom: 1rem;
+            padding-bottom: 1rem; border-bottom: 1px solid #f3f4f6;
+        }
+        .cart-total {
+            margin-top: 1rem; padding-top: 1rem; border-top: 2px solid #e5e7eb;
+            font-size: 1.25rem; font-weight: 700; display: flex; justify-content: space-between;
+        }
+        footer { background: var(--text); color: var(--white); padding: 2rem 0; text-align: center; margin-top: 3rem; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container nav">
+        <a href="#" class="logo">🌿 Agenyz Lite</a>
+        <button class="cart-btn" onclick="toggleCart()">
+            🛒 Корзина <span class="cart-count" id="cartCount">0</span>
+        </button>
+    </div>
+</header>
+
+<main>
+    <section class="hero">
+        <div class="container">
+            <h1>Полный каталог продукции Agenyz</h1>
+            <p>Актуальные цены. Мгновенный поиск. Никаких задержек.</p>
+        </div>
+    </section>
+
+    <section class="products container">
+        <input type="text" id="searchInput" class="search-box" placeholder="🔍 Поиск по названию или описанию...">
+        <div class="grid" id="productGrid"></div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        <p>© 2026 Agenyz Lite. Демонстрационная лёгкая версия каталога.</p>
+        <p style="font-size: 0.875rem; color: #9ca3af; margin-top: 0.5rem;">Цены актуальны на момент выгрузки данных с официального сайта.</p>
+    </div>
+</footer>
+
+<div class="modal" id="cartModal" onclick="if(event.target === this) toggleCart()">
+    <div class="cart-panel">
+        <div class="cart-header">
+            <h2>Ваша корзина</h2>
+            <button class="close-btn" onclick="toggleCart()">×</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <p style="color: var(--text-light); text-align: center; margin-top: 2rem;">Корзина пуста</p>
+        </div>
+        <div class="cart-total">
+            <span>Итого:</span>
+            <span id="cartTotal">0 ₽</span>
+        </div>
+        <button class="btn" style="margin-top: 1rem;" onclick="checkout()">Оформить заказ (WhatsApp)</button>
+    </div>
+</div>
+
+<script>
+    // Полный каталог из 96 позиций с актуальными ценами
+    const products = [
+        {id:1, name:"Промонабор «Стройность»", desc:"Комплекс для комфортного похудения", price:16680, oldPrice:17100},
+        {id:2, name:"3П-Коллаген персик-манго", desc:"14 стиков по 4 г. Трипептидный коллаген", price:4750},
+        {id:3, name:"Браслет «6 elements Titanband»", desc:"Золотой цвет, ширина 15 мм", price:10800},
+        {id:4, name:"Крем Skin Elixir для сухой кожи", desc:"Уход за телом, 150 мл", price:1600},
+        {id:5, name:"Крем для бритья (Акция 1+1)", desc:"Уход за кожей вместо пены, годен до 01.12.26", price:720, oldPrice:1440},
+        {id:6, name:"Набор «Шоколад IQ-Шок» (3 шт.)", desc:"Интеллектуальный шоколад, годен до 01.01.27", price:2350, oldPrice:2970},
+        {id:7, name:"Набор чая 5.5 teArt", desc:"Листовой чай с Phytolin™", price:3390, oldPrice:3990},
+        {id:8, name:"Шампунь-гель 2 в 1 (Акция 1+1)", desc:"Восстанавливает волосы и кожу, годен до 01.12.26", price:800, oldPrice:1600},
+        {id:9, name:"Набор «Чакарты» (7 шт.)", desc:"Ваш персональный гармонизатор энергии", price:13650},
+        {id:10, name:"Мыло «Бархатная Свежесть» (1+1)", desc:"Глицериновое мыло, годен до 25.11.26", price:570, oldPrice:1140},
+        {id:11, name:"Мыло с шунгитом (Акция 1+1)", desc:"Бережный уход за кожей, годен до 25.11.26", price:570, oldPrice:1140},
+        {id:12, name:"Осенний буст: Антистресс", desc:"Комплекс для спокойствия и концентрации", price:3260, oldPrice:3910},
+        {id:13, name:"Набор «3П-Коллаген» (2 шт.)", desc:"Выгодный набор трипептидного коллагена", price:8000, oldPrice:9500},
+        {id:14, name:"Набор «МЕГА-ПАК Альфапатч»", desc:"Инфракрасный и магнитный патч, годен до 16.12.26", price:3650, oldPrice:7300},
+        {id:15, name:"Альфапатч (Акция 3+1)", desc:"Патч для суставов и мышц, годен до 16.12.26", price:2190, oldPrice:2920},
+        {id:16, name:"Набор «SG-Стикер» (5 шт.)", desc:"Защита от излучения для мобильного телефона", price:4850, oldPrice:7600},
+        {id:17, name:"Набор «БЫСТРЫЙ СТАРТ 1 Pro»", desc:"Быть в ресурсе. Просто.", price:31910, oldPrice:34990},
+        {id:18, name:"Программа «Поддержка когнитивных функций 2.0»", desc:"Думайте быстрее, помните больше", price:11980, oldPrice:13920},
+        {id:19, name:"Программа «Поддержка комфортного пищеварения»", desc:"Ваше пищеварение работает как часы", price:13480, oldPrice:15140},
+        {id:20, name:"Программа «Поддержка энергии и продуктивности»", desc:"Помогает сохранить и приумножить жизненную силу", price:11460, oldPrice:13550},
+        {id:21, name:"Программа «Поддержка оптимального веса 2.0»", desc:"Видимый результат без чувства голода", price:12020, oldPrice:14120},
+        {id:22, name:"ПЕП-Коллаген", desc:"Пептиды морского коллагена с витаминно-минеральным комплексом", price:5150},
+        {id:23, name:"ФунгоМакс", desc:"7 ключей к здоровой жизни (функциональные грибы)", price:3860},
+        {id:24, name:"Программа «Поддержка сердечно-сосудистой системы 2.0»", desc:"Здоровые сосуды — активное долголетие", price:11650, oldPrice:14200},
+        {id:25, name:"3Д-Матрикс", desc:"Молодая кожа и крепкие суставы", price:4280},
+        {id:26, name:"ГепаИн-Т", desc:"Поддержка печени и желчного пузыря", price:3250},
+        {id:27, name:"МетаФудБиом Гранат", desc:"Метабиотик нового поколения для микробиома", price:2680},
+        {id:28, name:"К2Д3-Буст", desc:"Контроль кальциевого обмена", price:3970},
+        {id:29, name:"СеллГенетикс", desc:"Активная регенерация клеток", price:4550},
+        {id:30, name:"СеллГенетикс (180 капс.)", desc:"Активная регенерация клеток, большой объем", price:13290},
+        {id:31, name:"АльфаОмега-Q10", desc:"Здоровье сердца, мозга и красота", price:3850},
+        {id:32, name:"КарбоМинор", desc:"Контроль глюкозы и баланса сахара в крови", price:3260},
+        {id:33, name:"Сустадекс", desc:"Пуриновый обмен и подвижность суставов", price:2600},
+        {id:34, name:"ВеноБаланс", desc:"Одно решение для легкости движения", price:3490},
+        {id:35, name:"ГепаАрт", desc:"Поддержка печени и баланс холестерина", price:3430},
+        {id:36, name:"Урсус", desc:"Защита почек и мочеполовой системы", price:2850},
+        {id:37, name:"СеллГард", desc:"Поддержка иммунитета (Новый дизайн)", price:3740},
+        {id:38, name:"КандиДел", desc:"Противогрибковый комплекс (Новый дизайн)", price:3260},
+        {id:39, name:"ОктоМагний + XBi-A", desc:"8 видов магния для спокойствия и гармонии", price:2890},
+        {id:40, name:"Окулайз + XBi-A", desc:"Поддержка зрения (Новый дизайн)", price:3850},
+        {id:41, name:"ФерБуст + XBi-A", desc:"Железо 4:0. Максимальная энергия!", price:1930},
+        {id:42, name:"ПараДетокс + XBi-A", desc:"Растительный противопаразитарный комплекс", price:2590},
+        {id:43, name:"Витамин С & Цинк + XBi-A", desc:"Профилактика вирусов и простуд (Новый дизайн)", price:2350},
+        {id:44, name:"Кошачий коготь + XBi-A", desc:"Экстракт кошачьего когтя", price:2830},
+        {id:45, name:"DIM & ИНДОЛ + XBi-A", desc:"Поддержка гормонального баланса мужчин и женщин", price:3380},
+        {id:46, name:"Спирулина & Хлорелла + XBi-A", desc:"Суперфуд. Источник белка и аминокислот", price:1490},
+        {id:47, name:"Фукоидан Иммун + XBi-A", desc:"Поддержка иммунитета", price:3830},
+        {id:48, name:"АйКьюМи Кидиз", desc:"Витаминно-минеральный комплекс для детей (малина)", price:1650},
+        {id:49, name:"Иммун Кидиз Плюс", desc:"Детский комплекс с повышенным содержанием Омега-3", price:1680},
+        {id:50, name:"Вита Кидиз", desc:"Витаминно-минеральный комплекс для детей", price:2170},
+        {id:51, name:"Детокс-Z", desc:"Растительный гемосорбент на основе зостеры", price:2830},
+        {id:52, name:"pH Баланс", desc:"Нормализация pH баланса организма", price:2800},
+        {id:53, name:"Иммун Селл", desc:"Поддержка иммунитета", price:2860},
+        {id:54, name:"СорбиоДетокс Селл", desc:"Детоксикация и сорбенты", price:3060},
+        {id:55, name:"АльфаМайнд", desc:"Антистресс и поддержка нервной системы", price:3060},
+        {id:56, name:"Брейниджайзер", desc:"Активная работа мозга", price:3060},
+        {id:57, name:"IQ-МСТ powder", desc:"MCT с пре- и метабиотиками", price:3150},
+        {id:58, name:"Слим МСТ", desc:"Митохондриальный подход к похудению", price:2490},
+        {id:59, name:"Слим Альфа Шейк (шоколадный капучино)", desc:"Комфортное похудение и сохранение мышц", price:2830},
+        {id:60, name:"Слим Альфа Шейк (ванильное мороженое)", desc:"Комфортное похудение и сохранение мышц", price:2690},
+        {id:61, name:"Индиго. Синий травяной чай", desc:"Селективный чай с Phytolin™", price:990},
+        {id:62, name:"Энергия. Черный чай", desc:"Листовой чай с Phytolin™", price:750},
+        {id:63, name:"Энергия. Зеленый чай", desc:"Листовой чай с Phytolin™", price:750},
+        {id:64, name:"Пищеварение. Травяной чай", desc:"Листовой чай с Phytolin™", price:750},
+        {id:65, name:"Стройность. Травяной + зеленый чай", desc:"Листовой чай с Phytolin™", price:750},
+        {id:66, name:"Антистресс. Травяной + зеленый чай", desc:"Листовой чай с Phytolin™", price:750},
+        {id:67, name:"Глубокий сон. Травяной чай", desc:"Листовой чай с Phytolin™", price:750},
+        {id:68, name:"iQ-ШОК", desc:"Интеллектуальный шоколад", price:990},
+        {id:69, name:"Вита-Леденцы Антистресс", desc:"Натуральные леденцы для спокойствия и концентрации", price:340},
+        {id:70, name:"Антивозрастной крем-эксперт «Ключ Красоты»", desc:"Anti-age уход для чувствительной кожи", price:3590},
+        {id:71, name:"Мультигель Бустер для лица", desc:"Регенерация кожи и антивозрастной эффект", price:4300},
+        {id:72, name:"Сыворотка Экспресс Ботокс Эффект", desc:"Мгновенный эффект ботокса без инъекций", price:4950},
+        {id:73, name:"Антивозрастной СС-крем с UV-защитой", desc:"Уход, защита и макияж в одном флаконе", price:2780},
+        {id:74, name:"Антивозрастной ВВ-крем с UV-защитой", desc:"Уход, защита и макияж в одном флаконе", price:2780},
+        {id:75, name:"Твердый шампунь 2PHC", desc:"Бипептидный активатор роста и восстановления волос", price:850},
+        {id:76, name:"Зубная паста True Paste", desc:"Восстанавливающий комплекс с гидроксиапатитом", price:1250},
+        {id:77, name:"Гель для ног ВеноБаланс", desc:"Возвращает ногам чувство легкости и комфорта", price:980},
+        {id:78, name:"Альфапатч инфракрасный и магнитный", desc:"Патч для суставов и мышц, годен до 16.12.26", price:730},
+        {id:79, name:"Бутылка-шейкер с ионами + 2 ремешка", desc:"Для воды, коктейлей и напитков", price:2290},
+        {id:80, name:"SG-Sticker с силиконовым покрытием", desc:"Защита от излучения для мобильного телефона", price:1520},
+        {id:81, name:"Осенний Буст: Концентрация и память", desc:"Сезонный набор для поддержки мозга", price:3460, oldPrice:4080},
+        {id:82, name:"Осенний Буст: Энергия", desc:"Сезонный набор для поддержания тонуса", price:3460, oldPrice:4080},
+        {id:83, name:"Набор «Вита леденцы Энерджи»", desc:"Выгодный набор леденцов для энергии", price:940, oldPrice:1020},
+        {id:84, name:"Набор приправ AlfaChef с банками", desc:"Натуральная приправа для здоровой кухни", price:1780},
+        {id:85, name:"Программа «Поддержка иммунитета»", desc:"Иммунитет — ваш щит против болезней", price:14180, oldPrice:15820},
+        {id:86, name:"Программа «Поддержка суставов и соединительной ткани»", desc:"Двигайтесь активно. Живите свободно.", price:14960, oldPrice:17270},
+        {id:87, name:"ГепаИнт", desc:"Поддержка пищеварения", price:2780},
+        {id:88, name:"СустаХелп", desc:"Комфорт движения и поддержка при нагрузках", price:3780},
+        {id:89, name:"ИнфлаДел", desc:"Противовоспалительный комплекс", price:3740},
+        {id:90, name:"Черное Золото", desc:"Горячий напиток из чаги, имбиря и лимона", price:1460},
+        {id:91, name:"Вита-Леденцы для горла", desc:"Для снятия боли и першения, укрепление местного иммунитета", price:340},
+        {id:92, name:"Ка-соль", desc:"Соль с Аквамином и калиево-минеральным комплексом", price:820},
+        {id:93, name:"3Д-Матрикс гель", desc:"Гель для суставов", price:980},
+        {id:94, name:"Фартук AlfaChef", desc:"Готовьте с удовольствием и стилем!", price:1300},
+        {id:95, name:"Бутылка-шейкер с позитивными словами", desc:"Для воды, коктейлей и напитков", price:1550},
+        {id:96, name:"Каталог продукции Agenyz 2026", desc:"Актуальный бумажный каталог всей продукции", price:280}
+    ];
+
+    let cart = JSON.parse(localStorage.getItem('agenyz_cart')) || [];
+
+    function renderProducts(list) {
+        const grid = document.getElementById('productGrid');
+        if (list.length === 0) {
+            grid.innerHTML = '<div class="no-results">Ничего не найдено. Попробуйте изменить запрос.</div>';
+            return;
+        }
+        grid.innerHTML = list.map(p => `
+            <div class="card">
+                <div class="card-img">📦 ${p.name.substring(0, 15)}...</div>
+                <div class="card-body">
+                    <h3 class="card-title">${p.name}</h3>
+                    <p class="card-desc">${p.desc}</p>
+                    <div class="card-price">
+                        <span class="price-current">${p.price.toLocaleString()} ₽</span>
+                        ${p.oldPrice ? `<span class="price-old">${p.oldPrice.toLocaleString()} ₽</span>` : ''}
+                    </div>
+                    <button class="btn" onclick="addToCart(${p.id})">В корзину</button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function addToCart(id) {
+        const product = products.find(p => p.id === id);
+        const existing = cart.find(item => item.id === id);
+        if (existing) { existing.qty++; } 
+        else { cart.push({ ...product, qty: 1 }); }
+        saveCart();
+        toggleCart(true);
+    }
+
+    function removeFromCart(id) {
+        cart = cart.filter(item => item.id !== id);
+        saveCart();
+    }
+
+    function saveCart() {
+        localStorage.setItem('agenyz_cart', JSON.stringify(cart));
+        renderCart();
+    }
+
+    function renderCart() {
+        const countEl = document.getElementById('cartCount');
+        const itemsEl = document.getElementById('cartItems');
+        const totalEl = document.getElementById('cartTotal');
+        
+        const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+        const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+        
+        countEl.textContent = totalQty;
+        totalEl.textContent = totalPrice.toLocaleString() + ' ₽';
+
+        if (cart.length === 0) {
+            itemsEl.innerHTML = '<p style="color: var(--text-light); text-align: center; margin-top: 2rem;">Корзина пуста</p>';
+            return;
+        }
+
+        itemsEl.innerHTML = cart.map(item => `
+            <div class="cart-item">
+                <div>
+                    <div style="font-weight: 600;">${item.name}</div>
+                    <div style="font-size: 0.875rem; color: var(--text-light);">${item.qty} × ${item.price.toLocaleString()} ₽</div>
+                </div>
+                <button onclick="removeFromCart(${item.id})" style="background:none; border:none; color:red; cursor:pointer; font-size:0.875rem;">Удалить</button>
+            </div>
+        `).join('');
+    }
+
+    function toggleCart(forceOpen = false) {
+        const modal = document.getElementById('cartModal');
+        if (forceOpen) modal.classList.add('open');
+        else modal.classList.toggle('open');
+    }
+
+    function checkout() {
+        if (cart.length === 0) return alert('Корзина пуста!');
+        const msg = cart.map(i => `▪️ ${i.name} x${i.qty} — ${(i.price * i.qty).toLocaleString()} ₽`).join('%0A');
+        const total = document.getElementById('cartTotal').textContent;
+        // Замените 79000000000 на реальный номер менеджера
+        window.open(`https://wa.me/79934627818?text=Здравствуйте!%0AХочу оформить заказ:%0A%0A${msg}%0A%0A💰 Итого: ${total}`, '_blank');
+    }
+
+    // Живой поиск
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+        const term = e.target.value.toLowerCase();
+        const filtered = products.filter(p => 
+            p.name.toLowerCase().includes(term) || p.desc.toLowerCase().includes(term)
+        );
+        renderProducts(filtered);
+    });
+
+    // Инициализация
+    renderProducts(products);
+    renderCart();
+</script>
+
+</body>
+</html>
