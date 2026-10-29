@@ -49,7 +49,7 @@
         }
         .hero h1 { font-size: 2rem; color: var(--primary-dark); margin-bottom: 0.5rem; }
         .hero p { color: var(--text); max-width: 600px; margin: 0 auto; }
-        
+
         .products { padding: 2rem 0; }
         .search-box {
             width: 100%; padding: 0.875rem; border: 2px solid #e5e7eb;
@@ -57,7 +57,7 @@
             transition: border-color 0.2s;
         }
         .search-box:focus { outline: none; border-color: var(--primary); }
-        
+
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -78,7 +78,7 @@
             transition: transform 0.3s ease;
         }
         .card:hover .card-img img { transform: scale(1.05); }
-        
+
         .card-body { padding: 1rem; flex-grow: 1; display: flex; flex-direction: column; }
         .card-title { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.5rem; line-height: 1.3; }
         .card-desc { font-size: 0.85rem; color: var(--text-light); margin-bottom: 1rem; flex-grow: 1; }
@@ -171,29 +171,29 @@
             <span>Итого:</span>
             <span id="cartTotal">0 &#8381;</span>
         </div>
-        
+
         <p class="delivery-note">🚚 Стоимость доставки рассчитывается индивидуально менеджером</p>
-        
+
         <button class="btn" onclick="checkout()">Оформить заказ (WhatsApp)</button>
     </div>
 </div>
 
 <script>
     const RUB = '\u20BD'; // Юникод-символ рубля (работает во всех браузерах)
-    
+
     const products = [
         {id:1, name:"Промонабор «Стройность»", desc:"Комплекс для комфортного похудения", price:16680, oldPrice:17100, image:"https://front.agenyz.ru/resize/w399/cv/dl/2-1_2000px.09kb5.jpg"},
         {id:2, name:"3П-Коллаген персик-манго", desc:"14 стиков по 4 г. Трипептидный коллаген", price:4750, image: "https://front.agenyz.ru/resize/w399/yl/a9/_box_.3pe08.jpg"},
         {id:3, name:"Браслет «6 elements Titanband»", desc:"Золотой цвет, ширина 15 мм", price:10800, image: "https://front.agenyz.ru/resize/w399/4o/bd/6abe5656e972d.t5qqgtc6v5o2d3vy8jaxnw.jpg"},
         {id:4, name:"Крем Skin Elixir для сухой кожи", desc:"Уход за телом, 150 мл", price:1600, image: "https://front.agenyz.ru/resize/w399/v4/i8/Tube_SKIN_ELIXIR_150ml_2.pqghx5e8apm8kxo4g9oucdqy.jpg"},
-        {id:5, name:"Крем для бритья (Акция 1+1)", desc:"Уход за кожей вместо пены, годен до 01.12.26", price:720, oldPrice:1440, image/5.webp}
-        {id:6, name:"Набор «Шоколад IQ-Шок» (3 шт.)", desc:"Интеллектуальный шоколад, годен до 01.01.27", price:2350, oldPrice:2970,image/6.webp}
-        {id:7, name:"Набор чая 5.5 teArt", desc:"Листовой чай с Phytolin™", price:3390, oldPrice:3990, image: "7.webp"}
-        {id:8, name:"Шампунь-гель 2 в 1 (Акция 1+1)", desc:"Восстанавливает волосы и кожу, годен до 01.12.26", price:800, oldPrice:1600, image: "8.webp"}
-        {id:9, name:"Набор «Чакарты» (7 шт.)", desc:"Ваш персональный гармонизатор энергии", price:13650, image: "9.webp"}
-        {id:10, name:"Мыло «Бархатная Свежесть» (1+1)", desc:"Глицериновое мыло, годен до 25.11.26", price:570, oldPrice:1140, image: "10.webp"}
-        {id:11, name:"Мыло с шунгитом (Акция 1+1)", desc:"Бережный уход за кожей, годен до 25.11.26", price:570, oldPrice:1140, image: "11.webp"}
-        {id:12, name:"Осенний буст: Антистресс", desc:"Комплекс для спокойствия и концентрации", price:3260, oldPrice:3910, image: "12.webp"}
+        {id:5, name:"Крем для бритья (Акция 1+1)", desc:"Уход за кожей вместо пены, годен до 01.12.26", price:720, oldPrice:1440},
+        {id:6, name:"Набор «Шоколад IQ-Шок» (3 шт.)", desc:"Интеллектуальный шоколад, годен до 01.01.27", price:2350, oldPrice:2970},
+        {id:7, name:"Набор чая 5.5 teArt", desc:"Листовой чай с Phytolin™", price:3390, oldPrice:3990},
+        {id:8, name:"Шампунь-гель 2 в 1 (Акция 1+1)", desc:"Восстанавливает волосы и кожу, годен до 01.12.26", price:800, oldPrice:1600},
+        {id:9, name:"Набор «Чакарты» (7 шт.)", desc:"Ваш персональный гармонизатор энергии", price:13650},
+        {id:10, name:"Мыло «Бархатная Свежесть» (1+1)", desc:"Глицериновое мыло, годен до 25.11.26", price:570, oldPrice:1140},
+        {id:11, name:"Мыло с шунгитом (Акция 1+1)", desc:"Бережный уход за кожей, годен до 25.11.26", price:570, oldPrice:1140},
+        {id:12, name:"Осенний буст: Антистресс", desc:"Комплекс для спокойствия и концентрации", price:3260, oldPrice:3910},
         {id:13, name:"Набор «3П-Коллаген» (2 шт.)", desc:"Выгодный набор трипептидного коллагена", price:8000, oldPrice:9500},
         {id:14, name:"Набор «МЕГА-ПАК Альфапатч»", desc:"Инфракрасный и магнитный патч, годен до 16.12.26", price:3650, oldPrice:7300},
         {id:15, name:"Альфапатч (Акция 3+1)", desc:"Патч для суставов и мышц, годен до 16.12.26", price:2190, oldPrice:2920},
@@ -291,7 +291,7 @@
         grid.innerHTML = list.map(p => {
             // Если есть реальная картинка (поле image), берём её. Иначе — зелёная заглушка.
             const imgUrl = p.image || `https://placehold.co/400x300/e8f5e9/1b5e20?text=${encodeURIComponent(p.name.substring(0, 20))}`;
-            
+
             return `
             <div class="card">
                 <div class="card-img">
@@ -333,10 +333,10 @@
         const countEl = document.getElementById('cartCount');
         const itemsEl = document.getElementById('cartItems');
         const totalEl = document.getElementById('cartTotal');
-        
+
         const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
         const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-        
+
         countEl.textContent = totalQty;
         totalEl.textContent = totalPrice.toLocaleString('ru-RU') + ' ' + RUB;
 
@@ -367,9 +367,10 @@
         const msg = cart.map(i => `▪️ ${i.name} x${i.qty} — ${(i.price * i.qty).toLocaleString('ru-RU')} ${RUB}`).join('%0A');
         const total = document.getElementById('cartTotal').textContent;
         const deliveryNote = '%0A%0A🚚 Доставка: рассчитывается индивидуально';
-        
+
         // Замените 79000000000 на реальный номер менеджера
-        window.open(`https://wa.me/79934627818?text=Здравствуйте!%0AХочу оформить заказ:%0A%0A${msg}%0A%0A💰 Итого: ${total}${deliveryNote}`, '_blank');
+        window.open(`https://wa.me/79936427818?text=Здравствуйте!%0AХочу оформить заказ:%0A%0A${msg}%0A%0A💰 Итого: ${total}${deliveryNote}`, '_blank');
+        
     }
 
     // Живой поиск
