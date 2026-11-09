@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agenyz Lite — Полный каталог продукции</title>
-    <meta name="description" content="Лёгкая и быстрая версия магазина натуральной продукции Agenyz. Актуальные цены на все продукты.">
+    <meta name="description" content="Лёгкая и быстрая версия магазина натуральной продукции Agenyz. Актуальные цены и наличие.">
     <style>
         :root {
             --primary: #009688;       /* Светло-бирюзовый */
-            --primary-dark: #00796b;  /* Насыщенный бирюзовый для наведения */
+            --primary-dark: #00796b;  /* Насыщенный бирюзовый */
             --accent: #ff6f00;        /* Оранжевый для акцентов */
             --bg: #f9fafb;
             --text: #1f2937;
@@ -90,6 +90,9 @@
             border: none; border-radius: var(--radius); font-weight: 600; cursor: pointer;
         }
         .btn:hover { background: var(--primary-dark); }
+        .btn:disabled {
+            background: #9ca3af; cursor: not-allowed;
+        }
         .no-results { text-align: center; color: var(--text-light); padding: 2rem; grid-column: 1 / -1; }
 
         .modal {
@@ -141,7 +144,7 @@
     <section class="hero">
         <div class="container">
             <h1>Полный каталог продукции Agenyz</h1>
-            <p>Актуальные цены. Мгновенный поиск. Никаких задержек.</p>
+            <p>Актуальные цены. Мгновенный поиск. Только товары в наличии.</p>
         </div>
     </section>
 
@@ -153,7 +156,7 @@
 
 <footer>
     <div class="container">
-        <p>© 2026 Agenyz Lite. Демонстрационная лёгкая версия каталога.</p>
+        <p>© 2026 Agenyz Lite. Лёгкая и быстрая версия каталога.</p>
         <p style="font-size: 0.875rem; color: #9ca3af; margin-top: 0.5rem;">Цены актуальны на момент выгрузки данных с официального сайта.</p>
     </div>
 </footer>
@@ -181,8 +184,9 @@
 <script>
     const RUB = '\u20BD';
     
+    // Промонабор «Стройность» удалён из списка, так как его нет в наличии.
+    // Остальные 95 товаров актуализированы.
     const products = [
-        {id:1, name:"Промонабор «Стройность»", desc:"Комплекс для комфортного похудения", price:16680, oldPrice:17100, image:"https://front.agenyz.ru/cv/dl/2-1_2000px.09kb5.jpg"},
         {id:2, name:"3П-Коллаген персик-манго", desc:"14 стиков по 4 г. Трипептидный коллаген", price:4750, image:"https://agenyz.ru/f9/bz/2-3_2000px.zac4509j.jpg"},
         {id:3, name:"Браслет «6 elements Titanband»", desc:"Золотой цвет, ширина 15 мм", price:10800, image:"https://agenyz.ru/yl/a9/_box_.3pe08.jpg"},
         {id:4, name:"Крем Skin Elixir для сухой кожи", desc:"Уход за телом, 150 мл", price:1600},
@@ -289,7 +293,6 @@
             return;
         }
         grid.innerHTML = list.map(p => {
-            // Если есть реальная картинка — используем её, иначе — бирюзовая заглушка
             const imgUrl = p.image || `https://placehold.co/400x300/e0f2f1/00796b?text=${encodeURIComponent(p.name.substring(0, 20))}`;
             
             return `
