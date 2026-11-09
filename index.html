@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agenyz Lite — Полный каталог продукции</title>
-    <meta name="description" content="Лёгкая и быстрая версия магазина натуральной продукции Agenyz. Актуальные цены и наличие.">
+    <title>Agenyz Lite — Актуальный каталог продукции</title>
+    <meta name="description" content="Лёгкая и быстрая версия магазина натуральной продукции Agenyz. Только актуальные цены и наличие.">
     <style>
         :root {
-            --primary: #009688;       /* Светло-бирюзовый */
-            --primary-dark: #00796b;  /* Насыщенный бирюзовый */
-            --accent: #ff6f00;        /* Оранжевый для акцентов */
+            --primary: #009688;
+            --primary-dark: #00796b;
+            --accent: #ff6f00;
             --bg: #f9fafb;
             --text: #1f2937;
             --text-light: #6b7280;
@@ -90,9 +90,6 @@
             border: none; border-radius: var(--radius); font-weight: 600; cursor: pointer;
         }
         .btn:hover { background: var(--primary-dark); }
-        .btn:disabled {
-            background: #9ca3af; cursor: not-allowed;
-        }
         .no-results { text-align: center; color: var(--text-light); padding: 2rem; grid-column: 1 / -1; }
 
         .modal {
@@ -143,8 +140,8 @@
 <main>
     <section class="hero">
         <div class="container">
-            <h1>Полный каталог продукции Agenyz</h1>
-            <p>Актуальные цены. Мгновенный поиск. Только товары в наличии.</p>
+            <h1>Актуальный каталог продукции Agenyz</h1>
+            <p>Только товары в наличии. Мгновенный поиск. Никаких задержек.</p>
         </div>
     </section>
 
@@ -157,7 +154,7 @@
 <footer>
     <div class="container">
         <p>© 2026 Agenyz Lite. Лёгкая и быстрая версия каталога.</p>
-        <p style="font-size: 0.875rem; color: #9ca3af; margin-top: 0.5rem;">Цены актуальны на момент выгрузки данных с официального сайта.</p>
+        <p style="font-size: 0.875rem; color: #9ca3af; margin-top: 0.5rem;">Данные обновлены напрямую с agenyz.ru/catalog</p>
     </div>
 </footer>
 
@@ -184,104 +181,106 @@
 <script>
     const RUB = '\u20BD';
     
-    // Промонабор «Стройность» удалён из списка, так как его нет в наличии.
-    // Остальные 95 товаров актуализированы.
+    // Актуальный каталог с сайта agenyz.ru/catalog на 09.11.2026
     const products = [
-        {id:2, name:"3П-Коллаген персик-манго", desc:"14 стиков по 4 г. Трипептидный коллаген", price:4750, image:"https://agenyz.ru/f9/bz/2-3_2000px.zac4509j.jpg"},
-        {id:3, name:"Браслет «6 elements Titanband»", desc:"Золотой цвет, ширина 15 мм", price:10800, image:"https://agenyz.ru/yl/a9/_box_.3pe08.jpg"},
-        {id:4, name:"Крем Skin Elixir для сухой кожи", desc:"Уход за телом, 150 мл", price:1600},
-        {id:5, name:"Крем для бритья (Акция 1+1)", desc:"Уход за кожей вместо пены, годен до 01.12.26", price:720, oldPrice:1440},
-        {id:6, name:"Набор «Шоколад IQ-Шок» (3 шт.)", desc:"Интеллектуальный шоколад, годен до 01.01.27", price:2350, oldPrice:2970, image:"https://agenyz.ru/jl/55/iq-3.4hku3vadm4l29o.jpg"},
-        {id:7, name:"Набор чая 5.5 teArt", desc:"Листовой чай с Phytolin™", price:3390, oldPrice:3990, image:"https://agenyz.ru/jl/55/iq-3.4hku3vadm4l29o.jpg"},
-        {id:8, name:"Шампунь-гель 2 в 1 (Акция 1+1)", desc:"Восстанавливает волосы и кожу, годен до 01.12.26", price:800, oldPrice:1600},
-        {id:9, name:"Набор «Чакарты» (7 шт.)", desc:"Ваш персональный гармонизатор энергии", price:13650, image:"https://agenyz.ru/v3/uj/6ab3896d57c8c.eplax1wudwmto8.jpg"},
-        {id:10, name:"Мыло «Бархатная Свежесть» (1+1)", desc:"Глицериновое мыло, годен до 25.11.26", price:570, oldPrice:1140},
-        {id:11, name:"Мыло с шунгитом (Акция 1+1)", desc:"Бережный уход за кожей, годен до 25.11.26", price:570, oldPrice:1140},
-        {id:12, name:"Осенний буст: Антистресс", desc:"Комплекс для спокойствия и концентрации", price:3260, oldPrice:3910, image:"https://agenyz.ru/i7/5g/_card_.k9aupm.jpg"},
-        {id:13, name:"Набор «3П-Коллаген» (2 шт.)", desc:"Выгодный набор трипептидного коллагена", price:8000, oldPrice:9500, image:"https://agenyz.ru/f9/bz/2-3_2000px.zac4509j.jpg"},
-        {id:14, name:"Набор «МЕГА-ПАК Альфапатч»", desc:"Инфракрасный и магнитный патч, годен до 16.12.26", price:3650, oldPrice:7300, image:"https://agenyz.ru/dc/8j/_box_2.4pblgv1b.jpg"},
-        {id:15, name:"Альфапатч (Акция 3+1)", desc:"Патч для суставов и мышц, годен до 16.12.26", price:2190, oldPrice:2920, image:"https://agenyz.ru/dc/8j/_box_2.4pblgv1b.jpg"},
-        {id:16, name:"Набор «SG-Стикер» (5 шт.)", desc:"Защита от излучения для мобильного телефона", price:4850, oldPrice:7600, image:"https://agenyz.ru/wr/fn/69837dd90525f.y83m3d8me7m6dj61z4yercvn0.png"},
-        {id:17, name:"Набор «БЫСТРЫЙ СТАРТ 1 Pro»", desc:"Быть в ресурсе. Просто.", price:31910, oldPrice:34990, image:"https://agenyz.ru/64/t1/11009-1.huysnn3tclgn5fz4cps.jpg"},
-        {id:18, name:"Программа «Поддержка когнитивных функций 2.0»", desc:"Думайте быстрее, помните больше", price:11980, oldPrice:13920, image:"https://agenyz.ru/ax/5p/set_4xSpices_ed.3ms613pnzzpffadylcy.jpg"},
-        {id:19, name:"Программа «Поддержка комфортного пищеварения»", desc:"Ваше пищеварение работает как часы", price:13480, oldPrice:15140, image:"https://agenyz.ru/hw/37/Banners_Agenyz_20002000_Joints.l4z2v1o.jpg"},
-        {id:20, name:"Программа «Поддержка энергии и продуктивности»", desc:"Помогает сохранить и приумножить жизненную силу", price:11460, oldPrice:13550, image:"https://agenyz.ru/87/yx/Banners_Agenyz_20002000_Gastro.qw0e44.jpg"},
-        {id:21, name:"Программа «Поддержка оптимального веса 2.0»", desc:"Видимый результат без чувства голода", price:12020, oldPrice:14120, image:"https://agenyz.ru/oy/9r/Banners_Agenyz_20002000_Energy.cbys1i8.jpg"},
-        {id:22, name:"ПЕП-Коллаген", desc:"Пептиды морского коллагена с витаминно-минеральным комплексом", price:5150, image:"https://agenyz.ru/sy/i8/set_sp_salt_clear2.mknazsx885al7412hsn8ssg.png"},
-        {id:23, name:"ФунгоМакс", desc:"7 ключей к здоровой жизни (функциональные грибы)", price:3860, image:"https://agenyz.ru/d9/n2/_bottle__.2z2z6.jpg"},
-        {id:24, name:"Программа «Поддержка сердечно-сосудистой системы 2.0»", desc:"Здоровые сосуды — активное долголетие", price:11650, oldPrice:14200, image:"https://agenyz.ru/ry/vq/_bottle_.tukzf4np4.jpg"},
-        {id:25, name:"3Д-Матрикс", desc:"Молодая кожа и крепкие суставы", price:4280, image:"https://agenyz.ru/1n/r0/-jpg.5dmw746nhk4fold.jpg"},
-        {id:26, name:"ГепаИн-Т", desc:"Поддержка печени и желчного пузыря", price:3250, image:"https://agenyz.ru/xn/xj/CellElixir_bottle_3-.pr5hqtg2ndk9nyz3f6s8qi.jpg"},
-        {id:27, name:"МетаФудБиом Гранат", desc:"Метабиотик нового поколения для микробиома", price:2680, image:"https://agenyz.ru/hx/4o/CellElixir_bottle_.ypqrlx9f2sfqt68ilpi2u78.jpg"},
-        {id:28, name:"К2Д3-Буст", desc:"Контроль кальциевого обмена", price:3970, image:"https://agenyz.ru/mc/70/CellElixir_bottle_.1pkjg.jpg"},
-        {id:29, name:"СеллГенетикс", desc:"Активная регенерация клеток", price:4550, image:"https://agenyz.ru/w4/64/CellElixir_bottle_23-.xd7k23srxpz2fivknbu9yqz4e8.jpg"},
-        {id:30, name:"СеллГенетикс (180 капс.)", desc:"Активная регенерация клеток, большой объем", price:13290, image:"https://agenyz.ru/w4/64/CellElixir_bottle_23-.xd7k23srxpz2fivknbu9yqz4e8.jpg"},
-        {id:31, name:"АльфаОмега-Q10", desc:"Здоровье сердца, мозга и красота", price:3850, image:"https://agenyz.ru/ue/6r/CellElixir_bottle_.ejys1r603udm4io9rhkzb99p5oql.jpg"},
-        {id:32, name:"КарбоМинор", desc:"Контроль глюкозы и баланса сахара в крови", price:3260, image:"https://agenyz.ru/sp/wg/CellElixir_bottle_.yeq8y76dhtg.jpg"},
-        {id:33, name:"Сустадекс", desc:"Пуриновый обмен и подвижность суставов", price:2600, image:"https://agenyz.ru/t2/k5/CellElixir_bottle_.mppiry4pj30b5imozc.jpg"},
-        {id:34, name:"ВеноБаланс", desc:"Одно решение для легкости движения", price:3490, image:"https://agenyz.ru/hp/8n/DirectLine_bottle_.zugqtgf7v4ypo1vj.jpg"},
-        {id:35, name:"ГепаАрт", desc:"Поддержка печени и баланс холестерина", price:3430, image:"https://agenyz.ru/3f/tu/DirectLine_bottle_.xpsftdj0dwa5.jpg"},
-        {id:36, name:"Урсус", desc:"Защита почек и мочеполовой системы", price:2850, image:"https://agenyz.ru/j8/ds/DirectLine_bottle_.fu4ab2d5ja7e3pr9j0qrbu.jpg"},
-        {id:37, name:"СеллГард", desc:"Поддержка иммунитета (Новый дизайн)", price:3740, image:"https://agenyz.ru/2d/zy/DirectLine_bottle_.tl9nm5w5jvs72cv.jpg"},
-        {id:38, name:"КандиДел", desc:"Противогрибковый комплекс (Новый дизайн)", price:3260, image:"https://agenyz.ru/u5/xm/3Dgard_bottle_.2d24ci.jpg"},
-        {id:39, name:"ОктоМагний + XBi-A", desc:"8 видов магния для спокойствия и гармонии", price:2890, image:"https://agenyz.ru/41/kz/3DGard_bottle_.9i308hy.jpg"},
-        {id:40, name:"Окулайз + XBi-A", desc:"Поддержка зрения (Новый дизайн)", price:3850, image:"https://agenyz.ru/ei/qu/XBi-A_bottle_.azovjbzhvc.jpg"},
-        {id:41, name:"ФерБуст + XBi-A", desc:"Железо 4:0. Максимальная энергия!", price:1930, image:"https://agenyz.ru/fs/ii/XBi-A_bottle_.m2hs30kqfrwjdpyqo6jcpwb5bm.jpg"},
-        {id:42, name:"ПараДетокс + XBi-A", desc:"Растительный противопаразитарный комплекс", price:2590, image:"https://agenyz.ru/07/8j/XBi-A_bottle_.95722.jpg"},
-        {id:43, name:"Витамин С & Цинк + XBi-A", desc:"Профилактика вирусов и простуд (Новый дизайн)", price:2350, image:"https://agenyz.ru/qq/vr/XBI-A_bottle_.ttwmi67xqo.jpg"},
-        {id:44, name:"Кошачий коготь + XBi-A", desc:"Экстракт кошачьего когтя", price:2830, image:"https://agenyz.ru/qq/vr/XBI-A_bottle_.ttwmi67xqo.jpg"},
-        {id:45, name:"DIM & ИНДОЛ + XBi-A", desc:"Поддержка гормонального баланса мужчин и женщин", price:3380, image:"https://agenyz.ru/rh/d3/XBi-A_bottle_.hfwktkr5sqop.jpg"},
-        {id:46, name:"Спирулина & Хлорелла + XBi-A", desc:"Суперфуд. Источник белка и аминокислот", price:1490, image:"https://agenyz.ru/uk/f2/XBi-A_bottle_.szv8rh4c3jk.jpg"},
-        {id:47, name:"Фукоидан Иммун + XBi-A", desc:"Поддержка иммунитета", price:3830, image:"https://agenyz.ru/l6/pw/XBi-A_bottle_.ikyfaen7quv77c8e58iluf0bt.jpg"},
-        {id:48, name:"АйКьюМи Кидиз", desc:"Витаминно-минеральный комплекс для детей (малина)", price:1650, image:"https://agenyz.ru/0u/qf/XBi-A_bottle_.j688tn53vqqbbuxw4jrwr.jpg"},
-        {id:49, name:"Иммун Кидиз Плюс", desc:"Детский комплекс с повышенным содержанием Омега-3", price:1680, image:"https://agenyz.ru/fz/ae/Kidyz_bottle_.49f6rglz5ujv587aiy9ad.jpg"},
-        {id:50, name:"Вита Кидиз", desc:"Витаминно-минеральный комплекс для детей", price:2170, image:"https://agenyz.ru/9l/ul/KidYz_bottle_Imune.zr2vnszj68inxyg.jpg"},
-        {id:51, name:"Детокс-Z", desc:"Растительный гемосорбент на основе зостеры", price:2830, image:"https://agenyz.ru/cg/4m/Kidyz_bottle_.idlldv7vrqzpl14d4vpbfxeu4.jpg"},
-        {id:52, name:"pH Баланс", desc:"Нормализация pH баланса организма", price:2800, image:"https://agenyz.ru/qg/yv/IMG_1781.mzhjszyrqsxolbmb30cavt.jpeg"},
-        {id:53, name:"Иммун Селл", desc:"Поддержка иммунитета", price:2860, image:"https://agenyz.ru/uf/fj/TrueAqua_box_PH.h0qgrb21i4j.jpg"},
-        {id:54, name:"СорбиоДетокс Селл", desc:"Детоксикация и сорбенты", price:3060, image:"https://agenyz.ru/q1/t4/TrueAqua_box_.m6cqhe0br7aky7oou.jpg"},
-        {id:55, name:"АльфаМайнд", desc:"Антистресс и поддержка нервной системы", price:3060, image:"https://agenyz.ru/13/n3/TrueAqua_box_.5uloaqu0wii6br95s3c9c.jpg"},
-        {id:56, name:"Брейниджайзер", desc:"Активная работа мозга", price:3060, image:"https://agenyz.ru/y5/14/TrueAqua_box_.jclnv.jpg"},
-        {id:57, name:"IQ-МСТ powder", desc:"MCT с пре- и метабиотиками", price:3150, image:"https://agenyz.ru/04/p0/TrueAqua_box_.vvgvrym8u1ffjopz2k.jpg"},
-        {id:58, name:"Слим МСТ", desc:"Митохондриальный подход к похудению", price:2490, image:"https://agenyz.ru/bo/4c/KETO_bottle_IQ_.j34m6jp285m0dngf5was.jpg"},
-        {id:59, name:"Слим Альфа Шейк (шоколадный капучино)", desc:"Комфортное похудение и сохранение мышц", price:2830, image:"https://agenyz.ru/es/rp/_bottle_1.rb11tbxff8j1.jpg"},
-        {id:60, name:"Слим Альфа Шейк (ванильное мороженое)", desc:"Комфортное похудение и сохранение мышц", price:2690, image:"https://agenyz.ru/es/rp/_bottle_1.rb11tbxff8j1.jpg"},
-        {id:61, name:"Индиго. Синий травяной чай", desc:"Селективный чай с Phytolin™", price:990, image:"https://agenyz.ru/2t/8z/_bottle__.sec522y7lp6l.jpg"},
-        {id:62, name:"Энергия. Черный чай", desc:"Листовой чай с Phytolin™", price:750, image:"https://agenyz.ru/4p/zz/55teart_box__.3s7hkfeg830z6qdl.jpg"},
-        {id:63, name:"Энергия. Зеленый чай", desc:"Листовой чай с Phytolin™", price:750, image:"https://agenyz.ru/3n/z8/tea___4_site.4dqkmr.png"},
-        {id:64, name:"Пищеварение. Травяной чай", desc:"Листовой чай с Phytolin™", price:750, image:"https://agenyz.ru/vy/gi/tea___4_site.cwogp8s6480ioskia.png"},
-        {id:65, name:"Стройность. Травяной + зеленый чай", desc:"Листовой чай с Phytolin™", price:750, image:"https://agenyz.ru/gu/fy/tea__4_site.mdw15r78mjoz72j4f7dx.png"},
-        {id:66, name:"Антистресс. Травяной + зеленый чай", desc:"Листовой чай с Phytolin™", price:750, image:"https://agenyz.ru/jr/uv/tea__4_site.6sborit90q6gx.png"},
-        {id:67, name:"Глубокий сон. Травяной чай", desc:"Листовой чай с Phytolin™", price:750, image:"https://agenyz.ru/q2/bd/tea__4_site.j6hwf8g7p5r7yrcyc80pfpi.png"},
-        {id:68, name:"iQ-ШОК", desc:"Интеллектуальный шоколад", price:990, image:"https://agenyz.ru/18/ab/tea___4_site.pbfi2.png"},
-        {id:69, name:"Вита-Леденцы Антистресс", desc:"Натуральные леденцы для спокойствия и концентрации", price:340, image:"https://agenyz.ru/my/uo/_box_.8v5jd6xdkto53nlbl9pw.jpg"},
-        {id:70, name:"Антивозрастной крем-эксперт «Ключ Красоты»", desc:"Anti-age уход для чувствительной кожи", price:3590, image:"https://agenyz.ru/39/uw/_pack_-1.ba3qcukl.jpg"},
-        {id:71, name:"Мультигель Бустер для лица", desc:"Регенерация кожи и антивозрастной эффект", price:4300, image:"https://agenyz.ru/oh/j2/_boxflakon_mirror_2000x2000px1.adf3d2nzzsfdyhhgwb2njg9ejp.jpg"},
-        {id:72, name:"Сыворотка Экспресс Ботокс Эффект", desc:"Мгновенный эффект ботокса без инъекций", price:4950, image:"https://agenyz.ru/4o/bc/_box_.t7xm8cbr57u8k63jqhsdg45fl.jpg"},
-        {id:73, name:"Антивозрастной СС-крем с UV-защитой", desc:"Уход, защита и макияж в одном флаконе", price:2780, image:"https://agenyz.ru/f7/vr/BeautyKey_box_2.btk185mer3f8q.jpg"},
-        {id:74, name:"Антивозрастной ВВ-крем с UV-защитой", desc:"Уход, защита и макияж в одном флаконе", price:2780, image:"https://agenyz.ru/w9/uh/BeautyKey_box_CC.dunpiqlzq00ve1jj1q8mj.jpg"},
-        {id:75, name:"Твердый шампунь 2PHC", desc:"Бипептидный активатор роста и восстановления волос", price:850, image:"https://agenyz.ru/7h/pg/BeautyKey_box_BB.kc2ovooniozgvba01134.jpg"},
-        {id:76, name:"Зубная паста True Paste", desc:"Восстанавливающий комплекс с гидроксиапатитом", price:1250, image:"https://agenyz.ru/5d/ov/__box-new_ru.e3fpf2zmcr3h5fvktrd3u3mb4.jpg"},
-        {id:77, name:"Гель для ног ВеноБаланс", desc:"Возвращает ногам чувство легкости и комфорта", price:980, image:"https://agenyz.ru/hp/8n/DirectLine_bottle_.zugqtgf7v4ypo1vj.jpg"},
-        {id:78, name:"Альфапатч инфракрасный и магнитный", desc:"Патч для суставов и мышц, годен до 16.12.26", price:730, image:"https://agenyz.ru/dc/8j/_box_2.4pblgv1b.jpg"},
-        {id:79, name:"Бутылка-шейкер с ионами + 2 ремешка", desc:"Для воды, коктейлей и напитков", price:2290, image:"https://agenyz.ru/hp/rh/alpha_patch_ru_2500x25001.phz9cr5xd5jmepywbz.png"},
-        {id:80, name:"SG-Sticker с силиконовым покрытием", desc:"Защита от излучения для мобильного телефона", price:1520, image:"https://agenyz.ru/xz/6s/69e0bfc521a84.7g49qhilh4l64wf3y4hel283rtw9.jpg"},
-        {id:81, name:"Осенний Буст: Концентрация и память", desc:"Сезонный набор для поддержки мозга", price:3460, oldPrice:4080, image:"https://agenyz.ru/8y/at/6a8d4e71cf7c7.ulfep4des6jja29inky.jpg"},
-        {id:82, name:"Осенний Буст: Энергия", desc:"Сезонный набор для поддержания тонуса", price:3460, oldPrice:4080, image:"https://agenyz.ru/bb/lz/6a8c552ca0876.94iqwg84h0ifr5xon6lz2sxb8o38.jpg"},
-        {id:83, name:"Набор «Вита леденцы Энерджи»", desc:"Выгодный набор леденцов для энергии", price:940, oldPrice:1020, image:"https://agenyz.ru/ro/5h/_SG-_5_2000px.b6uftspkiq2kc3y5c3w.jpg"},
-        {id:84, name:"Набор приправ AlfaChef с банками", desc:"Натуральная приправа для здоровой кухни", price:1780, image:"https://agenyz.ru/wu/9y/1PRO.dfg0e.jpg"},
-        {id:85, name:"Программа «Поддержка иммунитета»", desc:"Иммунитет — ваш щит против болезней", price:14180, oldPrice:15820, image:"https://agenyz.ru/u4/m2/_PRO.3vytj3clrjbfi3hamo80qfivki.jpg"},
-        {id:86, name:"Программа «Поддержка суставов и соединительной ткани»", desc:"Двигайтесь активно. Живите свободно.", price:14960, oldPrice:17270, image:"https://agenyz.ru/7b/ed/Banners_Agenyz_20002000_Immunity.24je1ypyyrh.jpg"},
-        {id:87, name:"ГепаИнт", desc:"Поддержка пищеварения", price:2780, image:"https://agenyz.ru/er/ln/CellElixir_bottle_-.uq7rlg8oh0392sp.jpg"},
-        {id:88, name:"СустаХелп", desc:"Комфорт движения и поддержка при нагрузках", price:3780, image:"https://agenyz.ru/gp/kd/CellElixir_bottle_.o4ji0bkcb6dn.jpg"},
-        {id:89, name:"ИнфлаДел", desc:"Противовоспалительный комплекс", price:3740, image:"https://agenyz.ru/83/54/3DGard_bottle_.hmjoogp391taiqax4dka1k8l.jpg"},
-        {id:90, name:"Черное Золото", desc:"Горячий напиток из чаги, имбиря и лимона", price:1460, image:"https://agenyz.ru/ev/kg/_pack_2_.ienouup.jpg"},
-        {id:91, name:"Вита-Леденцы для горла", desc:"Для снятия боли и першения, укрепление местного иммунитета", price:340, image:"https://agenyz.ru/m6/93/Keto_box_IQ_2.3n5u7o4k.jpg"},
-        {id:92, name:"Ка-соль", desc:"Соль с Аквамином и калиево-минеральным комплексом", price:820, image:"https://agenyz.ru/t2/0x/69ef87b222d1a.5t2l734j4r03gh50o87mzt39mva.jpeg"},
-        {id:93, name:"3Д-Матрикс гель", desc:"Гель для суставов", price:980, image:"https://agenyz.ru/1n/r0/-jpg.5dmw746nhk4fold.jpg"},
-        {id:94, name:"Фартук AlfaChef", desc:"Готовьте с удовольствием и стилем!", price:1300, image:"https://agenyz.ru/qt/sk/_tube_32.m3c4d511atppswxj.jpg"},
-        {id:95, name:"Бутылка-шейкер с позитивными словами", desc:"Для воды, коктейлей и напитков", price:1550, image:"https://agenyz.ru/qg/hp/__2.4m7zgujyvr1hascif44i0.jpg"},
-        {id:96, name:"Каталог продукции Agenyz 2026", desc:"Актуальный бумажный каталог всей продукции", price:280, image:"https://agenyz.ru/nb/wf/69e0c0f3d4abb.8cs26dmoc5ke4x0dhpau.jpg"}
+        {id:1, name:"Промонабор «Энергия мозга» до 15.11.26", desc:"Комплекс для работы мозга и концентрации", price:16560, oldPrice:16980},
+        {id:2, name:"Набор чая 5.5 teArt", desc:"Листовой чай с Phytolin™", price:3390, oldPrice:3990},
+        {id:3, name:"Набор «Чакарты» (7 шт.)", desc:"Ваш персональный гармонизатор энергии", price:13650},
+        {id:4, name:"Осенний буст: Антистресс", desc:"Комплекс для спокойствия и концентрации", price:3260, oldPrice:3910},
+        {id:5, name:"Набор «3П-Коллаген» (2 шт.)", desc:"Выгодный набор трипептидного коллагена со вкусом персик-манго", price:8000, oldPrice:9500},
+        {id:6, name:"Набор «МЕГА-ПАК Альфапатч»", desc:"Инфракрасный и магнитный патч, годен до 16.12.26", price:3650, oldPrice:7300},
+        {id:7, name:"Альфапатч (Акция 3+1)", desc:"Патч для суставов и мышц, годен до 16.12.26", price:2190, oldPrice:2920},
+        {id:8, name:"Набор «SG-Стикер» (5 шт.)", desc:"Защита от излучения для мобильного телефона", price:4850, oldPrice:7600},
+        {id:9, name:"Программа «Поддержка когнитивных функций 2.0»", desc:"Думайте быстрее, помните больше", price:11980, oldPrice:13920},
+        {id:10, name:"Программа «Поддержка суставов и соединительной ткани»", desc:"Двигайтесь активно. Живите свободно.", price:14960, oldPrice:17270},
+        {id:11, name:"Программа «Поддержка энергии и продуктивности»", desc:"Помогает сохранить и приумножить жизненную силу", price:11460, oldPrice:13550},
+        {id:12, name:"Программа «Поддержка оптимального веса 2.0»", desc:"Видимый результат без чувства голода", price:12020, oldPrice:14120},
+        {id:13, name:"Программа «Поддержка сердечно-сосудистой системы 2.0»", desc:"Здоровые сосуды — активное долголетие", price:11650, oldPrice:14200},
+        {id:14, name:"3П-Коллаген персик-манго", desc:"14 стиков по 4 г. Трипептидный коллаген", price:4750},
+        {id:15, name:"ПЕП-Коллаген", desc:"Пептиды морского коллагена с витаминно-минеральным комплексом", price:5150},
+        {id:16, name:"ФунгоМакс", desc:"7 ключей к здоровой жизни (функциональные грибы)", price:3860},
+        {id:17, name:"3Д-Матрикс", desc:"Молодая кожа и крепкие суставы", price:4280},
+        {id:18, name:"К2Д3-Буст", desc:"Контроль кальциевого обмена", price:3970},
+        {id:19, name:"СеллГенетикс", desc:"Активная регенерация клеток", price:4550},
+        {id:20, name:"СеллГенетикс (180 капс.)", desc:"Активная регенерация клеток, большой объем", price:13290},
+        {id:21, name:"АльфаОмега-Q10", desc:"Здоровье сердца, мозга и красота", price:3850},
+        {id:22, name:"КарбоМинор", desc:"Контроль глюкозы и баланса сахара в крови", price:3260},
+        {id:23, name:"Сустадекс", desc:"Пуриновый обмен и подвижность суставов", price:2600},
+        {id:24, name:"ВеноБаланс", desc:"Одно решение для легкости движения", price:3490},
+        {id:25, name:"ГепаАрт", desc:"Поддержка печени и баланс холестерина", price:3430},
+        {id:26, name:"Урсус", desc:"Защита почек и мочеполовой системы", price:2850},
+        {id:27, name:"ГепаИн-Т", desc:"Поддержка печени и желчного пузыря", price:3250},
+        {id:28, name:"СеллГард", desc:"Поддержка иммунитета", price:3740},
+        {id:29, name:"КандиДел", desc:"Противогрибковый комплекс", price:3260},
+        {id:30, name:"ОктоМагний + XBi-A", desc:"8 видов магния для спокойствия и гармонии", price:2890},
+        {id:31, name:"Окулайз + XBi-A", desc:"Поддержка зрения", price:3850},
+        {id:32, name:"ФерБуст + XBi-A", desc:"Железо 4:0. Максимальная энергия!", price:1930},
+        {id:33, name:"ПараДетокс + XBi-A", desc:"Растительный противопаразитарный комплекс", price:2590},
+        {id:34, name:"Кошачий коготь + XBi-A", desc:"Экстракт кошачьего когтя", price:2830},
+        {id:35, name:"DIM & ИНДОЛ + XBi-A", desc:"Поддержка гормонального баланса мужчин и женщин", price:3380},
+        {id:36, name:"Спирулина & Хлорелла + XBi-A", desc:"Суперфуд. Источник белка и аминокислот", price:1490},
+        {id:37, name:"Фукоидан Иммун + XBi-A", desc:"Поддержка иммунитета", price:3830},
+        {id:38, name:"АйКьюМи Кидиз", desc:"Витаминно-минеральный комплекс для детей со вкусом малины", price:1650},
+        {id:39, name:"Иммун Кидиз Плюс", desc:"Детский комплекс с повышенным содержанием Омега-3", price:1680},
+        {id:40, name:"Детокс-Z", desc:"Растительный гемосорбент на основе зостеры", price:2830},
+        {id:41, name:"pH Баланс", desc:"Нормализация pH баланса организма", price:2800},
+        {id:42, name:"Иммун Селл", desc:"Поддержка иммунитета", price:2860},
+        {id:43, name:"СорбиоДетокс Селл", desc:"Детоксикация и сорбенты", price:3060},
+        {id:44, name:"АльфаМайнд", desc:"Антистресс и поддержка нервной системы", price:3060},
+        {id:45, name:"Брейниджайзер", desc:"Активная работа мозга", price:3060},
+        {id:46, name:"IQ-МСТ powder", desc:"MCT с пре- и метабиотиками", price:3150},
+        {id:47, name:"Слим МСТ", desc:"Митохондриальный подход к похудению", price:2490},
+        {id:48, name:"Слим Альфа Шейк шоколадный капучино", desc:"Комфортное похудение и сохранение мышц", price:2830},
+        {id:49, name:"Слим Альфа Шейк ванильное мороженое", desc:"Комфортное похудение и сохранение мышц", price:2690},
+        {id:50, name:"Индиго. Синий травяной чай", desc:"Селективный чай с Phytolin™", price:990},
+        {id:51, name:"Энергия. Черный чай", desc:"Листовой чай с Phytolin™", price:750},
+        {id:52, name:"Энергия. Зеленый чай", desc:"Листовой чай с Phytolin™", price:750},
+        {id:53, name:"Пищеварение. Травяной чай", desc:"Листовой чай с Phytolin™", price:750},
+        {id:54, name:"Стройность. Травяной + зеленый чай", desc:"Листовой чай с Phytolin™", price:750},
+        {id:55, name:"Антистресс. Травяной + зеленый чай", desc:"Листовой чай с Phytolin™", price:750},
+        {id:56, name:"Глубокий сон. Травяной чай", desc:"Листовой чай с Phytolin™", price:750},
+        {id:57, name:"Вита-Леденцы Антистресс", desc:"Натуральные леденцы для спокойствия и концентрации", price:340},
+        {id:58, name:"Крем Skin Elixir для сухой кожи", desc:"Уход за телом, 150 мл", price:1600},
+        {id:59, name:"Антивозрастной крем-эксперт «Ключ Красоты»", desc:"Anti-age уход для чувствительной кожи", price:3590},
+        {id:60, name:"Мультигель Бустер для лица", desc:"Регенерация кожи и антивозрастной эффект", price:4300},
+        {id:61, name:"Сыворотка Экспресс Ботокс Эффект", desc:"Мгновенный эффект ботокса без инъекций", price:4950},
+        {id:62, name:"Антивозрастной СС-крем с UV-защитой", desc:"Уход, защита и макияж в одном флаконе", price:2780},
+        {id:63, name:"Антивозрастной ВВ-крем с UV-защитой", desc:"Уход, защита и макияж в одном флаконе", price:2780},
+        {id:64, name:"Зубная паста True Paste", desc:"Восстанавливающий комплекс с гидроксиапатитом", price:1250},
+        {id:65, name:"Гель для ног ВеноБаланс", desc:"Возвращает ногам чувство легкости и комфорта", price:980},
+        {id:66, name:"3Д-Матрикс гель", desc:"Гель для суставов", price:980},
+        {id:67, name:"Твердый шампунь 2PHC", desc:"Бипептидный активатор роста и восстановления волос", price:850},
+        {id:68, name:"Браслет «6 elements Titanband»", desc:"Золотой цвет, ширина 15 мм", price:10800},
+        {id:69, name:"Альфапатч инфракрасный и магнитный", desc:"Патч для суставов и мышц, годен до 16.12.26", price:730},
+        {id:70, name:"SG-Sticker с силиконовым покрытием", desc:"Защита от излучения для мобильного телефона", price:1520},
+        {id:71, name:"Бутылка-шейкер с ионами + 2 ремешка", desc:"Для воды, коктейлей и напитков", price:2290},
+        {id:72, name:"Бутылка-шейкер с позитивными словами", desc:"Для воды, коктейлей и напитков", price:1550},
+        {id:73, name:"Сумка из спанбонда Agenyz", desc:"Удобный аксессуар", price:120},
+        {id:74, name:"Буклет по корейской косметике (10 шт.)", desc:"Комплект буклетов", price:100},
+        {id:75, name:"Буклет 5,5 teArt (10 шт.)", desc:"Комплект буклетов", price:200},
+        {id:76, name:"Набор «Шоколад IQ-Шок» (3 шт.)", desc:"Интеллектуальный шоколад, годен до 01.01.27", price:2350, oldPrice:2970},
+        {id:77, name:"Осенний Буст: Концентрация и память", desc:"Сезонный набор для поддержки мозга", price:3460, oldPrice:4080},
+        {id:78, name:"Осенний Буст: Энергия", desc:"Сезонный набор для поддержания тонуса", price:3460, oldPrice:4080},
+        {id:79, name:"Набор «Вита леденцы Энерджи»", desc:"Выгодный набор леденцов для энергии", price:940, oldPrice:1020},
+        {id:80, name:"Набор «БЫСТРЫЙ СТАРТ 1 Pro»", desc:"Быть в ресурсе. Просто.", price:31910, oldPrice:34990},
+        {id:81, name:"Набор приправ AlfaChef с банками", desc:"Натуральная приправа для здоровой кухни", price:1780},
+        {id:82, name:"Набор «БЫСТРЫЙ СТАРТ 2 Pro»", desc:"Ваш комплексный путь к энергии и балансу", price:31970, oldPrice:34720},
+        {id:83, name:"Набор «РЕ:СТАРТ Pro»", desc:"5 шагов к обновлению, которые работают", price:11780, oldPrice:14410},
+        {id:84, name:"Программа «Поддержка иммунитета»", desc:"Иммунитет — ваш щит против болезней", price:14180, oldPrice:15820},
+        {id:85, name:"Программа «Поддержка комфортного пищеварения»", desc:"Ваше пищеварение работает как часы", price:13480, oldPrice:15140},
+        {id:86, name:"Набор приправ AlfaChef с банками + Ка-соль", desc:"Натуральная приправа + соль с минералами", price:2500, oldPrice:2600},
+        {id:87, name:"МетаФудБиом Гранат", desc:"Метабиотик нового поколения для микробиома", price:2680},
+        {id:88, name:"СустаХелп", desc:"Комфорт движения и поддержка при нагрузках", price:3780},
+        {id:89, name:"ГепаИнт", desc:"Поддержка пищеварения", price:2780},
+        {id:90, name:"ИнфлаДел", desc:"Противовоспалительный комплекс", price:3740},
+        {id:91, name:"Витамин С & Цинк + XBi-A", desc:"Профилактика вирусов и простуд (Новый дизайн)", price:2350},
+        {id:92, name:"Вита Кидиз", desc:"Витаминно-минеральный комплекс для детей", price:2170},
+        {id:93, name:"Черное Золото", desc:"Горячий напиток из чаги, имбиря и лимона", price:1460},
+        {id:94, name:"iQ-ШОК", desc:"Интеллектуальный шоколад", price:990},
+        {id:95, name:"Вита-Леденцы для горла", desc:"Для снятия боли и першения, укрепление местного иммунитета", price:340},
+        {id:96, name:"Ка-соль", desc:"Соль с Аквамином и калиево-минеральным комплексом", price:820},
+        {id:97, name:"Фартук AlfaChef", desc:"Готовьте с удовольствием и стилем!", price:1300},
+        {id:98, name:"Каталог продукции Agenyz 2026", desc:"Актуальный бумажный каталог всей продукции", price:280}
     ];
 
     let cart = JSON.parse(localStorage.getItem('agenyz_cart')) || [];
