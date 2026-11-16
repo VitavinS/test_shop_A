@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Agenyz Lite — каталог натуральной продукции</title>
-<meta name="description" content="Быстрый каталог натуральной продукции Agenyz: актуальные цены, поиск, корзина и заказ через WhatsApp.">
+<meta name="description" content="Быстрый каталог натуральной продукции Agenyz: актуальные цены, описания товаров, поиск, корзина и заказ через WhatsApp.">
 <style>
 :root{
   --primary:#009688;
@@ -13,17 +13,14 @@
   --primary-line:#b2dfdb;
   --accent:#ff6f00;
   --accent-soft:#fff3e0;
-  --success:#2e7d32;
-  --warning:#f9a825;
   --danger:#d32f2f;
-  --info:#0288d1;
   --bg:#f6faf9;
   --surface:#ffffff;
   --surface-2:#f0f7f6;
   --text:#173230;
   --muted:#5f7775;
   --line:#d7e7e5;
-  --scrim:rgba(10,32,30,.55);
+  --scrim:rgba(10,32,30,.58);
   --radius:12px;
   --shadow:0 10px 30px rgba(0,77,64,.08);
   --shadow-hover:0 16px 40px rgba(0,77,64,.14);
@@ -43,22 +40,14 @@ body{
 ::-webkit-scrollbar-thumb{background:var(--primary);border-radius:99px;border:2px solid var(--primary-soft)}
 ::-webkit-scrollbar-thumb:hover{background:var(--primary-dark)}
 .container{max-width:1200px;margin:0 auto;padding:0 1rem}
-header{
-  position:sticky;top:0;z-index:100;
-  background:rgba(255,255,255,.88);backdrop-filter:blur(12px);
-  border-bottom:1px solid var(--line)
-}
+header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 .nav{display:flex;justify-content:space-between;align-items:center;gap:.75rem;min-height:66px;padding:.6rem 0}
 .brand{display:flex;flex-direction:column;text-decoration:none;line-height:1.1}
 .brand strong{font-size:1.35rem;color:var(--primary-dark);letter-spacing:.3px}
 .brand span{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.12em}
 .nav-actions{display:flex;align-items:center;gap:.6rem}
 .phone-link{color:var(--primary-dark);text-decoration:none;font-weight:600;font-size:.9rem;white-space:nowrap}
-.cart-btn{
-  display:inline-flex;align-items:center;gap:.5rem;border:none;cursor:pointer;
-  background:linear-gradient(135deg,var(--primary),#26b6a8);color:#fff;
-  padding:.6rem 1rem;border-radius:99px;font-weight:700;box-shadow:0 6px 16px rgba(0,150,136,.28)
-}
+.cart-btn{display:inline-flex;align-items:center;gap:.5rem;border:none;cursor:pointer;background:linear-gradient(135deg,var(--primary),#26b6a8);color:#fff;padding:.6rem 1rem;border-radius:99px;font-weight:700;box-shadow:0 6px 16px rgba(0,150,136,.28)}
 .cart-btn:hover{filter:brightness(1.05)}
 .cart-count{background:var(--accent);color:#fff;font-size:.72rem;min-width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;border-radius:99px;padding:0 .35rem}
 .hero{padding:3.2rem 0 2.4rem;text-align:center;position:relative;overflow:hidden}
@@ -72,49 +61,71 @@ header{
 .products{padding:1rem 0 3rem}
 .toolbar{display:flex;gap:.75rem;align-items:center;margin-bottom:1.2rem;flex-wrap:wrap}
 .search-wrap{position:relative;flex:1;min-width:240px}
-.search-box{
-  width:100%;padding:.9rem 2.8rem .9rem 1rem;border:2px solid var(--line);
-  border-radius:var(--radius);font-size:1rem;background:var(--surface);color:var(--text);transition:.2s
-}
+.search-box{width:100%;padding:.9rem 2.8rem .9rem 1rem;border:2px solid var(--line);border-radius:var(--radius);font-size:1rem;background:var(--surface);color:var(--text);transition:.2s}
 .search-box:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 4px rgba(0,150,136,.12)}
 .search-clear{position:absolute;right:.6rem;top:50%;transform:translateY(-50%);border:none;background:var(--surface-2);color:var(--muted);width:28px;height:28px;border-radius:99px;cursor:pointer;display:none}
 .search-clear.show{display:block}
 .result-count{font-size:.85rem;color:var(--muted);white-space:nowrap}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1.25rem}
-.card{
-  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
-  box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;
-  transition:transform .2s,box-shadow .2s;animation:cardIn .4s ease backwards;animation-delay:calc(var(--i,0)*22ms)
-}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;cursor:pointer;transition:transform .2s,box-shadow .2s;animation:cardIn .4s ease backwards;animation-delay:calc(var(--i,0)*22ms)}
 @keyframes cardIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 .card:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover)}
+.card:focus-visible{outline:3px solid var(--primary);outline-offset:2px}
 .card-img{position:relative;height:210px;background:linear-gradient(145deg,var(--primary-soft),#f7fffd);display:flex;align-items:center;justify-content:center;overflow:hidden}
 .card-img img{width:100%;height:100%;object-fit:contain;padding:12px;transition:transform .3s}
 .card:hover .card-img img{transform:scale(1.05)}
+.card-hint{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(transparent,rgba(0,121,107,.9));color:#fff;font-size:.78rem;font-weight:700;padding:1.6rem .8rem .5rem;opacity:0;transition:opacity .2s;text-align:center}
+.card:hover .card-hint{opacity:1}
 .promo-badge{position:absolute;top:10px;left:10px;background:var(--accent);color:#fff;font-size:.7rem;font-weight:800;padding:4px 10px;border-radius:99px;box-shadow:0 3px 10px rgba(255,111,0,.35)}
 .sale-badge{position:absolute;top:10px;right:10px;background:var(--danger);color:#fff;font-size:.7rem;font-weight:800;padding:4px 10px;border-radius:99px}
 .card-body{padding:1rem;display:flex;flex-direction:column;flex:1}
+.card-tag{font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--primary);font-weight:800;margin-bottom:.35rem}
 .card-title{font-size:1rem;font-weight:700;line-height:1.3;margin-bottom:.4rem;min-height:2.6em}
 .card-desc{font-size:.84rem;color:var(--muted);margin-bottom:.9rem;flex:1}
 .card-price{display:flex;align-items:baseline;gap:.6rem;margin-bottom:.9rem;flex-wrap:wrap}
 .price-current{font-size:1.3rem;font-weight:800;color:var(--primary-dark)}
 .price-old{font-size:.85rem;text-decoration:line-through;color:var(--muted)}
-.btn{
-  width:100%;padding:.75rem;border:none;border-radius:10px;cursor:pointer;
-  background:linear-gradient(135deg,var(--primary),#26b6a8);color:#fff;font-weight:700;font-size:.95rem;
-  transition:filter .2s,transform .1s
-}
+.card-actions{display:grid;grid-template-columns:1.35fr 1fr;gap:.5rem}
+.btn{width:100%;padding:.75rem;border:none;border-radius:10px;cursor:pointer;background:linear-gradient(135deg,var(--primary),#26b6a8);color:#fff;font-weight:700;font-size:.95rem;transition:filter .2s,transform .1s;text-align:center;text-decoration:none;display:inline-block}
 .btn:hover{filter:brightness(1.06)}
 .btn:active{transform:scale(.98)}
+.btn.ghost{background:var(--surface-2);color:var(--primary-dark);border:1px solid var(--line)}
 .btn.secondary{background:var(--surface-2);color:var(--primary-dark);border:1px solid var(--line)}
 .no-results{grid-column:1/-1;text-align:center;padding:3rem 1rem;color:var(--muted)}
 .no-results button{margin-top:1rem;width:auto;padding:.6rem 1.4rem}
+
+/* Окно товара */
+.pm{display:none;position:fixed;inset:0;background:var(--scrim);backdrop-filter:blur(4px);z-index:250;align-items:center;justify-content:center;padding:1rem}
+.pm.open{display:flex}
+.pm-panel{position:relative;background:var(--surface);border-radius:18px;width:min(940px,100%);max-height:92vh;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;box-shadow:0 30px 80px rgba(0,0,0,.35);animation:pmIn .3s cubic-bezier(.2,.8,.2,1)}
+@keyframes pmIn{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}
+.pm-close{position:absolute;top:12px;right:12px;z-index:3;border:none;background:rgba(255,255,255,.92);width:38px;height:38px;border-radius:99px;font-size:1.4rem;cursor:pointer;color:var(--muted);box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.pm-close:hover{color:var(--primary-dark)}
+.pm-media{position:relative;background:linear-gradient(150deg,var(--primary-soft),#f4fffd 60%,var(--accent-soft));display:flex;align-items:center;justify-content:center;padding:2rem;min-height:340px}
+.pm-media img{max-width:100%;max-height:400px;object-fit:contain;filter:drop-shadow(0 16px 30px rgba(0,77,64,.18))}
+.pm-badges{position:absolute;top:14px;left:14px;display:flex;flex-direction:column;gap:.4rem;align-items:flex-start}
+.pm-info{padding:2rem 1.8rem;overflow-y:auto;display:flex;flex-direction:column}
+.pm-tag{display:inline-block;align-self:flex-start;background:var(--primary-soft);color:var(--primary-dark);font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;padding:.3rem .7rem;border-radius:99px;margin-bottom:.7rem}
+.pm-info h2{font-size:1.4rem;line-height:1.25;color:var(--text);margin-bottom:.4rem;padding-right:2rem}
+.pm-tagline{color:var(--muted);font-size:.92rem;margin-bottom:1rem}
+.pm-price{display:flex;align-items:baseline;gap:.7rem;flex-wrap:wrap;padding:.9rem 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:1rem}
+.pm-price .price-current{font-size:1.7rem}
+.pm-save{background:var(--accent-soft);color:#b35300;font-size:.75rem;font-weight:800;padding:.25rem .6rem;border-radius:99px}
+.pm-points{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:1.1rem}
+.pm-point{background:var(--surface-2);border:1px solid var(--line);color:var(--primary-dark);font-size:.78rem;font-weight:600;padding:.35rem .7rem;border-radius:99px}
+.pm-about h3{font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;color:var(--primary);margin-bottom:.4rem}
+.pm-about p{font-size:.92rem;color:var(--text);margin-bottom:1rem}
+.pm-note{font-size:.76rem;color:var(--muted);background:var(--surface-2);border-left:3px solid var(--primary-line);padding:.6rem .7rem;border-radius:0 8px 8px 0;margin-bottom:1.1rem}
+.pm-actions{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:auto}
+.pm-nav{display:flex;justify-content:space-between;align-items:center;gap:.5rem;margin-top:1rem;padding-top:.9rem;border-top:1px solid var(--line)}
+.pm-nav button{border:none;background:none;color:var(--primary-dark);font-weight:700;font-size:.82rem;cursor:pointer;padding:.3rem .4rem;border-radius:6px}
+.pm-nav button:hover{background:var(--primary-soft)}
+.pm-nav span{font-size:.78rem;color:var(--muted)}
+
+/* Корзина */
 .modal{display:none;position:fixed;inset:0;background:var(--scrim);z-index:200;justify-content:flex-end}
 .modal.open{display:flex}
-.cart-panel{
-  background:var(--surface);width:min(420px,100%);height:100%;padding:1.4rem;
-  display:flex;flex-direction:column;animation:slideIn .28s ease;box-shadow:-12px 0 40px rgba(0,0,0,.18)
-}
+.cart-panel{background:var(--surface);width:min(420px,100%);height:100%;padding:1.4rem;display:flex;flex-direction:column;animation:slideIn .28s ease;box-shadow:-12px 0 40px rgba(0,0,0,.18)}
 @keyframes slideIn{from{transform:translateX(100%)}to{transform:none}}
 .cart-header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:1rem;margin-bottom:1rem}
 .cart-header h2{font-size:1.25rem;color:var(--primary-dark)}
@@ -131,26 +142,32 @@ header{
 .delivery-note{font-size:.82rem;color:var(--muted);text-align:center;background:var(--accent-soft);border:1px dashed #ffcc80;padding:.6rem;border-radius:10px;margin-bottom:.8rem}
 .cart-actions{display:grid;gap:.6rem}
 .empty-cart{text-align:center;color:var(--muted);padding:2rem 0}
+
+.toast{position:fixed;left:50%;bottom:1.5rem;transform:translate(-50%,20px);background:#12302e;color:#e6f4f2;padding:.75rem 1.2rem;border-radius:99px;font-size:.88rem;font-weight:600;box-shadow:0 12px 30px rgba(0,0,0,.3);opacity:0;pointer-events:none;transition:.25s;z-index:400;max-width:90vw;text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
 footer{background:#12302e;color:#cfe4e2;padding:2rem 0;margin-top:2rem}
 footer a{color:#7fe0d6;text-decoration:none}
 .footer-inner{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;align-items:center}
 .footer-note{font-size:.8rem;color:#91aaa8}
-.consent{
-  position:fixed;left:1rem;right:1rem;bottom:1rem;z-index:300;
-  background:#12302e;color:#e6f4f2;border:1px solid rgba(127,224,214,.25);
-  border-radius:14px;padding:.9rem 1rem;display:flex;gap:1rem;align-items:center;justify-content:space-between;
-  box-shadow:0 16px 40px rgba(0,0,0,.3);animation:consentIn .35s ease
-}
+.consent{position:fixed;left:1rem;right:1rem;bottom:1rem;z-index:300;background:#12302e;color:#e6f4f2;border:1px solid rgba(127,224,214,.25);border-radius:14px;padding:.9rem 1rem;display:flex;gap:1rem;align-items:center;justify-content:space-between;box-shadow:0 16px 40px rgba(0,0,0,.3);animation:consentIn .35s ease}
 .consent[hidden]{display:none}
 @keyframes consentIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 .consent p{font-size:.82rem;max-width:640px}
 .consent-actions{display:flex;gap:.6rem;align-items:center;flex-shrink:0}
 .consent-btn{border:none;background:var(--primary);color:#fff;padding:.5rem 1rem;border-radius:99px;font-weight:700;cursor:pointer}
 .consent-link{border:none;background:none;color:#9fc5c2;font-size:.8rem;cursor:pointer;text-decoration:underline}
+@media(max-width:820px){
+  .pm-panel{grid-template-columns:1fr;max-height:94vh;overflow-y:auto}
+  .pm-media{min-height:240px;padding:1.5rem}
+  .pm-media img{max-height:260px}
+  .pm-info{padding:1.4rem;overflow:visible}
+  .pm-actions{grid-template-columns:1fr}
+}
 @media(max-width:640px){
   .phone-link{display:none}
   .grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem}
   .card-img{height:180px}
+  .card-actions{grid-template-columns:1fr}
   .consent{flex-direction:column;align-items:stretch}
   .consent-actions{justify-content:flex-end}
 }
@@ -159,9 +176,7 @@ footer a{color:#7fe0d6;text-decoration:none}
 </head>
 <body>
 
-<!-- Yandex.Metrika counter (noscript-пиксель для посетителей без JavaScript) -->
 <noscript><div><img src="https://mc.yandex.ru/watch/114262393" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
 
 <header>
   <div class="container nav">
@@ -177,11 +192,11 @@ footer a{color:#7fe0d6;text-decoration:none}
   <section class="hero">
     <div class="container">
       <h1>Каталог продукции Agenyz</h1>
-      <p>Актуальные цены, живой поиск и заказ в WhatsApp. Акции автоматически исчезают после окончания срока.</p>
+      <p>Нажмите на товар, чтобы прочитать описание и ключевые особенности. Заказ — в один клик через WhatsApp.</p>
       <div class="hero-stats">
-        <span class="pill" id="activeCount">98 товаров</span>
+        <span class="pill" id="activeCount">Каталог продукции</span>
         <span class="pill">Доставка по России</span>
-        <span class="pill">Заказ в 1 клик</span>
+        <span class="pill">Описание у каждого товара</span>
       </div>
     </div>
   </section>
@@ -204,15 +219,52 @@ footer a{color:#7fe0d6;text-decoration:none}
       <strong>Agenyz Lite</strong>
       <div class="footer-note">Заказы и консультация: <a href="tel:+79934627818">+7 993 462-78-18</a> · <a href="https://wa.me/79934627818" target="_blank" rel="noopener">WhatsApp</a></div>
     </div>
-    <div class="footer-note">© 2026 · Цены и наличие уточняйте у менеджера</div>
+    <div class="footer-note">© 2026 · БАД не является лекарственным средством</div>
   </div>
 </footer>
 
-<div class="modal" id="cartModal" onclick="if(event.target===this)toggleCart(false,'overlay')">
+<!-- Окно товара -->
+<div class="pm" id="productModal" onclick="if(event.target===this)closeProduct()">
+  <div class="pm-panel" role="dialog" aria-modal="true" aria-labelledby="pmTitle">
+    <button class="pm-close" id="pmClose" onclick="closeProduct()" aria-label="Закрыть описание">×</button>
+    <div class="pm-media">
+      <div class="pm-badges" id="pmBadges"></div>
+      <img id="pmImage" src="" alt="">
+    </div>
+    <div class="pm-info">
+      <span class="pm-tag" id="pmTag"></span>
+      <h2 id="pmTitle"></h2>
+      <p class="pm-tagline" id="pmTagline"></p>
+      <div class="pm-price">
+        <span class="price-current" id="pmPrice"></span>
+        <span class="price-old" id="pmOld"></span>
+        <span class="pm-save" id="pmSave"></span>
+      </div>
+      <div class="pm-points" id="pmPoints"></div>
+      <div class="pm-about">
+        <h3>Описание</h3>
+        <p id="pmAbout"></p>
+      </div>
+      <p class="pm-note" id="pmNote"></p>
+      <div class="pm-actions">
+        <button class="btn" id="pmAdd">В корзину</button>
+        <a class="btn secondary" id="pmAsk" target="_blank" rel="noopener">Спросить в WhatsApp</a>
+      </div>
+      <div class="pm-nav">
+        <button onclick="stepProduct(-1)">← Предыдущий</button>
+        <span id="pmCounter"></span>
+        <button onclick="stepProduct(1)">Следующий →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Корзина -->
+<div class="modal" id="cartModal" onclick="if(event.target===this)toggleCart(false)">
   <div class="cart-panel" role="dialog" aria-modal="true" aria-label="Корзина">
     <div class="cart-header">
       <h2>Ваша корзина</h2>
-      <button class="close-btn" onclick="toggleCart(false,'close')" aria-label="Закрыть">×</button>
+      <button class="close-btn" onclick="toggleCart(false)" aria-label="Закрыть">×</button>
     </div>
     <div class="cart-items" id="cartItems"></div>
     <div class="cart-footer">
@@ -226,6 +278,8 @@ footer a{color:#7fe0d6;text-decoration:none}
   </div>
 </div>
 
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
 <div class="consent" id="consentBar" hidden>
   <p>Мы используем cookies и обезличенную статистику посещений (страна, город, интерес к товарам), чтобы улучшать каталог. Аналитика не собирает имена, телефоны и адреса.</p>
   <div class="consent-actions">
@@ -235,183 +289,166 @@ footer a{color:#7fe0d6;text-decoration:none}
 </div>
 
 <script>
-/* ============ НАСТРОЙКИ АНАЛИТИКИ ============ */
 const ANALYTICS_CONFIG = {
-  METRIKA_ID: 114262393,   // ваш счётчик Яндекс.Метрики — подключён
-  REPORT_URL: "https://script.google.com/macros/s/AKfycbyIBu-r1s29asVKLxWiYlQfvxkcErEH5NNzcetfGZ0Ijio_18eQEGAFkCvf8Tw_fTHh8g/exec",          // URL веб-приложения Google Apps Script (для писем-отчётов, необязательно)
-  GEO_APIS: [
-    "https://ipwho.is/",
-    "https://ipapi.co/json/"
-  ],
+  METRIKA_ID: 114262393,
+  REPORT_URL: "",
+  GEO_APIS: ["https://ipwho.is/","https://ipapi.co/json/"],
   CONSENT_KEY: "agenyz_analytics_consent",
   LOCAL_BUFFER_KEY: "agenyz_stats_local"
 };
-
 const RUB = "\u20BD";
 const WHATSAPP_PHONE = "79934627818";
 
-/* ============ КАТАЛОГ ============ */
 const products = [
-  {id:1,name:"Промонабор «Энергия мозга»",desc:"Комплекс для работы мозга и концентрации",price:16560,oldPrice:16980,promoUntil:"2026-11-15",image:"https://front.agenyz.ru/f9/bz/2-3_2000px.zac4509j.jpg"},
-  {id:2,name:"Набор чая 5.5 teArt",desc:"Листовой чай с Phytolin™",price:3390,oldPrice:3990,image:"https://front.agenyz.ru/v3/uj/6ab3896d57c8c.eplax1wudwmto8.jpg"},
-  {id:3,name:"Набор «Чакарты» (7 шт.)",desc:"Персональный гармонизатор энергии",price:13650,image:"https://front.agenyz.ru/i7/5g/_card_.k9aupm.jpg"},
-  {id:4,name:"Осенний буст: Антистресс",desc:"Комплекс для спокойствия и концентрации",price:3260,oldPrice:3910,image:"https://front.agenyz.ru/8y/at/6a8d4e71cf7c7.ulfep4des6jja29inky.jpg"},
-  {id:5,name:"Набор «3П-Коллаген» (2 шт.)",desc:"Выгодный набор коллагена со вкусом персик-манго",price:8000,oldPrice:9500,image:"https://front.agenyz.ru/dc/8j/_box_2.4pblgv1b.jpg"},
-  {id:6,name:"Набор «МЕГА-ПАК Альфапатч»",desc:"Инфракрасный и магнитный патч",price:3650,oldPrice:7300,promoUntil:"2026-12-16",image:"https://front.agenyz.ru/kf/jh/6a6715b365ec8.b4ljmqfh8hmpxdxkomw81acv7.png"},
-  {id:7,name:"Альфапатч (Акция 3+1)",desc:"Патч для суставов и мышц + 1 в подарок",price:2190,oldPrice:2920,promoUntil:"2026-12-16",image:"https://front.agenyz.ru/wr/fn/69837dd90525f.y83m3d8me7m6dj61z4yercvn0.png"},
-  {id:8,name:"Набор «SG-Стикер» (5 шт.)",desc:"Защита от излучения для мобильного телефона",price:4850,oldPrice:7600,image:"https://front.agenyz.ru/ro/5h/_SG-_5_2000px.b6uftspkiq2kc3y5c3w.jpg"},
-  {id:9,name:"Программа «Поддержка когнитивных функций 2.0»",desc:"Думайте быстрее, помните больше",price:11980,oldPrice:13920,image:"https://front.agenyz.ru/mr/zb/jpg.k08sivz85vncks1ygwblw287tr.jpg"},
-  {id:10,name:"Программа «Поддержка суставов и соединительной ткани»",desc:"Двигайтесь активно. Живите свободно.",price:14960,oldPrice:17270,image:"https://front.agenyz.ru/hw/37/Banners_Agenyz_20002000_Joints.l4z2v1o.jpg"},
-  {id:11,name:"Программа «Поддержка энергии и продуктивности»",desc:"Сохраняйте и приумножайте жизненную силу",price:11460,oldPrice:13550,image:"https://front.agenyz.ru/oy/9r/Banners_Agenyz_20002000_Energy.cbys1i8.jpg"},
-  {id:12,name:"Программа «Поддержка оптимального веса 2.0»",desc:"Видимый результат без чувства голода",price:12020,oldPrice:14120,image:"https://front.agenyz.ru/t2/0x/69ef87b222d1a.5t2l734j4r03gh50o87mzt39mva.jpeg"},
-  {id:13,name:"Программа «Поддержка сердечно-сосудистой системы 2.0»",desc:"Здоровые сосуды — активное долголетие",price:11650,oldPrice:14200,image:"https://front.agenyz.ru/1n/r0/-jpg.5dmw746nhk4fold.jpg"},
-  {id:14,name:"3П-Коллаген персик-манго",desc:"14 стиков по 4 г. Трипептидный коллаген",price:4750,image:"https://front.agenyz.ru/yl/a9/_box_.3pe08.jpg"},
-  {id:15,name:"ПЕП-Коллаген",desc:"Пептиды морского коллагена с витаминно-минеральным комплексом",price:5150,image:"https://front.agenyz.ru/d9/n2/_bottle__.2z2z6.jpg"},
-  {id:16,name:"ФунгоМакс",desc:"7 ключей к здоровой жизни",price:3860,image:"https://front.agenyz.ru/ry/vq/_bottle_.tukzf4np4.jpg"},
-  {id:17,name:"3Д-Матрикс",desc:"Молодая кожа и крепкие суставы",price:4280,image:"https://front.agenyz.ru/xn/xj/CellElixir_bottle_3-.pr5hqtg2ndk9nyz3f6s8qi.jpg"},
-  {id:18,name:"К2Д3-Буст",desc:"Контроль кальциевого обмена",price:3970,image:"https://front.agenyz.ru/w4/64/CellElixir_bottle_23-.xd7k23srxpz2fivknbu9yqz4e8.jpg"},
-  {id:19,name:"СеллГенетикс",desc:"Активная регенерация клеток",price:4550,image:"https://front.agenyz.ru/74/oy/CellElixir_bottle_2026.hvzurqvrax614t3d2l.jpg"},
-  {id:20,name:"СеллГенетикс (180 капс.)",desc:"Активная регенерация клеток, большой объём",price:13290,image:"https://front.agenyz.ru/li/bg/CellElixir_bottle_2026.z3frrrpg.jpg"},
-  {id:21,name:"АльфаОмега-Q10",desc:"Здоровье сердца, мозга и красота",price:3850,image:"https://front.agenyz.ru/sp/wg/CellElixir_bottle_.yeq8y76dhtg.jpg"},
-  {id:22,name:"КарбоМинор",desc:"Контроль глюкозы и баланса сахара в крови",price:3260,image:"https://front.agenyz.ru/t2/k5/CellElixir_bottle_.mppiry4pj30b5imozc.jpg"},
-  {id:23,name:"Сустадекс",desc:"Пуриновый обмен и подвижность суставов",price:2600,image:"https://front.agenyz.ru/hp/8n/DirectLine_bottle_.zugqtgf7v4ypo1vj.jpg"},
-  {id:24,name:"ВеноБаланс",desc:"Одно решение для лёгкости движения",price:3490,image:"https://front.agenyz.ru/3f/tu/DirectLine_bottle_.xpsftdj0dwa5.jpg"},
-  {id:25,name:"ГепаАрт",desc:"Поддержка печени и баланс холестерина",price:3430,image:"https://front.agenyz.ru/j8/ds/DirectLine_bottle_.fu4ab2d5ja7e3pr9j0qrbu.jpg"},
-  {id:26,name:"Урсус",desc:"Защита почек и мочеполовой системы",price:2850,image:"https://front.agenyz.ru/2d/zy/DirectLine_bottle_.tl9nm5w5jvs72cv.jpg"},
-  {id:27,name:"ГепаИн-Т",desc:"Поддержка печени и желчного пузыря",price:3250,image:"https://front.agenyz.ru/er/ln/CellElixir_bottle_-.uq7rlg8oh0392sp.jpg"},
-  {id:28,name:"СеллГард",desc:"Поддержка иммунитета",price:3740,image:"https://front.agenyz.ru/nb/t2/3Dgard_bottle_.8kwzfq.jpg"},
-  {id:29,name:"КандиДел",desc:"Противогрибковый комплекс",price:3260,image:"https://front.agenyz.ru/hn/x1/3Dgard_bottle_.wscobplfgwgo11xdqrwmkoaob.jpg"},
-  {id:30,name:"ОктоМагний + XBi-A",desc:"8 видов магния для спокойствия и гармонии",price:2890,image:"https://front.agenyz.ru/ei/qu/XBi-A_bottle_.azovjbzhvc.jpg"},
-  {id:31,name:"Окулайз + XBi-A",desc:"Поддержка зрения",price:3850,image:"https://front.agenyz.ru/fs/ii/XBi-A_bottle_.m2hs30kqfrwjdpyqo6jcpwb5bm.jpg"},
-  {id:32,name:"ФерБуст + XBi-A",desc:"Железо 4:0. Максимальная энергия",price:1930,image:"https://front.agenyz.ru/07/8j/XBi-A_bottle_.95722.jpg"},
-  {id:33,name:"ПараДетокс + XBi-A",desc:"Растительный противопаразитарный комплекс",price:2590,image:"https://front.agenyz.ru/ib/0e/XBi-A_bottle_.v4943eq305jiadur3gexzup92.jpg"},
-  {id:34,name:"Кошачий коготь + XBi-A",desc:"Экстракт кошачьего когтя",price:2830,image:"https://front.agenyz.ru/rh/d3/XBi-A_bottle_.hfwktkr5sqop.jpg"},
-  {id:35,name:"DIM & ИНДОЛ + XBi-A",desc:"Поддержка гормонального баланса",price:3380,image:"https://front.agenyz.ru/uk/f2/XBi-A_bottle_.szv8rh4c3jk.jpg"},
-  {id:36,name:"Спирулина & Хлорелла + XBi-A",desc:"Суперфуд, источник белка и аминокислот",price:1490,image:"https://front.agenyz.ru/l6/pw/XBi-A_bottle_.ikyfaen7quv77c8e58iluf0bt.jpg"},
-  {id:37,name:"Фукоидан Иммун + XBi-A",desc:"Поддержка иммунитета",price:3830,image:"https://front.agenyz.ru/0u/qf/XBi-A_bottle_.j688tn53vqqbbuxw4jrwr.jpg"},
-  {id:38,name:"АйКьюМи Кидиз",desc:"Детский витаминно-минеральный комплекс, малина",price:1650,image:"https://front.agenyz.ru/fz/ae/Kidyz_bottle_.49f6rglz5ujv587aiy9ad.jpg"},
-  {id:39,name:"Иммун Кидиз Плюс",desc:"Детский комплекс с повышенным содержанием Омега-3",price:1680,image:"https://front.agenyz.ru/9l/ul/KidYz_bottle_Imune.zr2vnszj68inxyg.jpg"},
-  {id:40,name:"Детокс-Z",desc:"Растительный гемосорбент на основе зостеры",price:2830,image:"https://front.agenyz.ru/qg/yv/IMG_1781.mzhjszyrqsxolbmb30cavt.jpeg"},
-  {id:41,name:"pH Баланс",desc:"Нормализация pH баланса организма",price:2800,image:"https://front.agenyz.ru/uf/fj/TrueAqua_box_PH.h0qgrb21i4j.jpg"},
-  {id:42,name:"Иммун Селл",desc:"Поддержка иммунитета",price:2860,image:"https://front.agenyz.ru/q1/t4/TrueAqua_box_.m6cqhe0br7aky7oou.jpg"},
-  {id:43,name:"СорбиоДетокс Селл",desc:"Детоксикация и сорбенты",price:3060,image:"https://front.agenyz.ru/13/n3/TrueAqua_box_.5uloaqu0wii6br95s3c9c.jpg"},
-  {id:44,name:"АльфаМайнд",desc:"Антистресс и поддержка нервной системы",price:3060,image:"https://front.agenyz.ru/y5/14/TrueAqua_box_.jclnv.jpg"},
-  {id:45,name:"Брейниджайзер",desc:"Активная работа мозга",price:3060,image:"https://front.agenyz.ru/04/p0/TrueAqua_box_.vvgvrym8u1ffjopz2k.jpg"},
-  {id:46,name:"IQ-МСТ powder",desc:"MCT с пре- и метабиотиками",price:3150,image:"https://front.agenyz.ru/bo/4c/KETO_bottle_IQ_.j34m6jp285m0dngf5was.jpg"},
-  {id:47,name:"Слим МСТ",desc:"Митохондриальный подход к похудению",price:2490,image:"https://front.agenyz.ru/es/rp/_bottle_1.rb11tbxff8j1.jpg"},
-  {id:48,name:"Слим Альфа Шейк шоколадный капучино",desc:"Комфортное похудение и сохранение мышц",price:2830,image:"https://front.agenyz.ru/7c/5p/_pack_.alz20ouia9vtw.jpg"},
-  {id:49,name:"Слим Альфа Шейк ванильное мороженое",desc:"Комфортное похудение и сохранение мышц",price:2690,image:"https://front.agenyz.ru/ev/kg/_pack_2_.ienouup.jpg"},
-  {id:50,name:"Индиго. Синий травяной чай",desc:"Селективный чай с Phytolin™",price:990,image:"https://front.agenyz.ru/4p/zz/55teart_box__.3s7hkfeg830z6qdl.jpg"},
-  {id:51,name:"Энергия. Черный чай",desc:"Листовой чай с Phytolin™",price:750,image:"https://front.agenyz.ru/3n/z8/tea___4_site.4dqkmr.png"},
-  {id:52,name:"Энергия. Зеленый чай",desc:"Листовой чай с Phytolin™",price:750,image:"https://front.agenyz.ru/vy/gi/tea___4_site.cwogp8s6480ioskia.png"},
-  {id:53,name:"Пищеварение. Травяной чай",desc:"Листовой чай с Phytolin™",price:750,image:"https://front.agenyz.ru/gu/fy/tea__4_site.mdw15r78mjoz72j4f7dx.png"},
-  {id:54,name:"Стройность. Травяной + зеленый чай",desc:"Листовой чай с Phytolin™",price:750,image:"https://front.agenyz.ru/jr/uv/tea__4_site.6sborit90q6gx.png"},
-  {id:55,name:"Антистресс. Травяной + зеленый чай",desc:"Листовой чай с Phytolin™",price:750,image:"https://front.agenyz.ru/q2/bd/tea__4_site.j6hwf8g7p5r7yrcyc80pfpi.png"},
-  {id:56,name:"Глубокий сон. Травяной чай",desc:"Листовой чай с Phytolin™",price:750,image:"https://front.agenyz.ru/18/ab/tea___4_site.pbfi2.png"},
-  {id:57,name:"Вита-Леденцы Антистресс",desc:"Натуральные леденцы для спокойствия и концентрации",price:340,image:"https://front.agenyz.ru/id/cd/_box_.ilc7cujegp2vpmkcnqeh8hd.jpg"},
-  {id:58,name:"Крем Skin Elixir для сухой кожи",desc:"Уход за телом, 150 мл",price:1600,image:"https://front.agenyz.ru/yg/jg/Tube_SKIN_ELIXIR_150ml.vo50979kjehz41ebyz.jpg"},
-  {id:59,name:"Антивозрастной крем-эксперт «Ключ Красоты»",desc:"Anti-age уход для чувствительной кожи",price:3590,image:"https://front.agenyz.ru/oh/j2/_boxflakon_mirror_2000x2000px1.adf3d2nzzsfdyhhgwb2njg9ejp.jpg"},
-  {id:60,name:"Мультигель Бустер для лица",desc:"Регенерация кожи и антивозрастной эффект",price:4300,image:"https://front.agenyz.ru/z6/fp/_box_2026.67y3demvt4rvx9cgaefo51qms.jpg"},
-  {id:61,name:"Сыворотка Экспресс Ботокс Эффект",desc:"Мгновенный эффект ботокса без инъекций",price:4950,image:"https://front.agenyz.ru/f7/vr/BeautyKey_box_2.btk185mer3f8q.jpg"},
-  {id:62,name:"Антивозрастной СС-крем с UV-защитой",desc:"Уход, защита и макияж в одном флаконе",price:2780,image:"https://front.agenyz.ru/w9/uh/BeautyKey_box_CC.dunpiqlzq00ve1jj1q8mj.jpg"},
-  {id:63,name:"Антивозрастной ВВ-крем с UV-защитой",desc:"Уход, защита и макияж в одном флаконе",price:2780,image:"https://front.agenyz.ru/7h/pg/BeautyKey_box_BB.kc2ovooniozgvba01134.jpg"},
-  {id:64,name:"Зубная паста True Paste",desc:"Восстанавливающий комплекс с гидроксиапатитом",price:1250,image:"https://front.agenyz.ru/v2/do/_tube_TruePaste.i3rb2jvhxrzag5bnha4lq.jpg"},
-  {id:65,name:"Гель для ног ВеноБаланс",desc:"Лёгкость и комфорт для ног",price:980,image:"https://front.agenyz.ru/qy/z8/_tube_2.7rv27glq1mz.jpg"},
-  {id:66,name:"3Д-Матрикс гель",desc:"Гель для суставов",price:980,image:"https://front.agenyz.ru/qt/sk/_tube_32.m3c4d511atppswxj.jpg"},
-  {id:67,name:"Твердый шампунь 2PHC",desc:"Активатор роста и восстановления волос",price:850,image:"https://front.agenyz.ru/sj/cf/__box-old_ru.wzsrfad6hjyt3zqvxd6.jpg"},
-  {id:68,name:"Браслет «6 elements Titanband»",desc:"Золотой цвет, ширина 15 мм",price:10800,image:"https://front.agenyz.ru/qn/9z/____2000px_1.6z3e9.jpg"},
-  {id:69,name:"Альфапатч инфракрасный и магнитный",desc:"Патч для суставов и мышц",price:730,promoUntil:"2026-12-16",image:"https://front.agenyz.ru/hp/rh/alpha_patch_ru_2500x25001.phz9cr5xd5jmepywbz.png"},
-  {id:70,name:"SG-Sticker с силиконовым покрытием",desc:"Защита от излучения для телефона",price:1520,image:"https://front.agenyz.ru/nb/wf/69e0c0f3d4abb.8cs26dmoc5ke4x0dhpau.jpg"},
-  {id:71,name:"Бутылка-шейкер с ионами + 2 ремешка",desc:"Для воды, коктейлей и напитков",price:2290,image:"https://front.agenyz.ru/qg/hp/__2.4m7zgujyvr1hascif44i0.jpg"},
-  {id:72,name:"Бутылка-шейкер с позитивными словами",desc:"Для воды, коктейлей и напитков",price:1550,image:"https://front.agenyz.ru/xz/6s/69e0bfc521a84.7g49qhilh4l64wf3y4hel283rtw9.jpg"},
-  {id:73,name:"Сумка из спанбонда Agenyz",desc:"Удобный аксессуар",price:120,image:"https://front.agenyz.ru/8o/0b/IMG_4854.7v1jwwi40n1dvypy4.png"},
-  {id:74,name:"Буклет по корейской косметике (10 шт.)",desc:"Комплект информационных буклетов",price:100,image:"https://front.agenyz.ru/aw/zr/trifold_cosmetis_mockup_4_site_x10.svxdch7e9.png"},
-  {id:75,name:"Буклет 5,5 teArt (10 шт.)",desc:"Комплект информационных буклетов",price:200,image:"https://front.agenyz.ru/8b/m5/trifold_tea_mockup_4_site.4szcm6.png"},
-  {id:76,name:"Набор «Шоколад IQ-Шок» (3 шт.)",desc:"Интеллектуальный шоколад",price:2350,oldPrice:2970,promoUntil:"2027-01-01",image:"https://front.agenyz.ru/jl/55/iq-3.4hku3vadm4l29o.jpg"},
-  {id:77,name:"Осенний Буст: Концентрация и память",desc:"Сезонный набор для поддержки мозга",price:3460,oldPrice:4080,image:"https://front.agenyz.ru/bb/lz/6a8c552ca0876.94iqwg84h0ifr5xon6lz2sxb8o38.jpg"},
-  {id:78,name:"Осенний Буст: Энергия",desc:"Сезонный набор для поддержания тонуса",price:3460,oldPrice:4080,image:"https://front.agenyz.ru/lm/ui/6a8c56552892e.afe7jwksqzt0i.jpg"},
-  {id:79,name:"Набор «Вита леденцы Энерджи»",desc:"Выгодный набор леденцов для энергии",price:940,oldPrice:1020,image:"https://front.agenyz.ru/64/t1/11009-1.huysnn3tclgn5fz4cps.jpg"},
-  {id:80,name:"Набор «БЫСТРЫЙ СТАРТ 1 Pro»",desc:"Быть в ресурсе. Просто.",price:31910,oldPrice:34990,image:"https://front.agenyz.ru/wu/9y/1PRO.dfg0e.jpg"},
-  {id:81,name:"Набор приправ AlfaChef с банками",desc:"Натуральная приправа для здоровой кухни",price:1780,image:"https://front.agenyz.ru/ax/5p/set_4xSpices_ed.3ms613pnzzpffadylcy.jpg"},
-  {id:82,name:"Набор «БЫСТРЫЙ СТАРТ 2 Pro»",desc:"Комплексный путь к энергии и балансу",price:31970,oldPrice:34720,image:"https://front.agenyz.ru/w0/e1/2PRO.yv2jr8gh90.jpg"},
-  {id:83,name:"Набор «РЕ:СТАРТ Pro»",desc:"5 шагов к обновлению",price:11780,oldPrice:14410,image:"https://front.agenyz.ru/u4/m2/_PRO.3vytj3clrjbfi3hamo80qfivki.jpg"},
-  {id:84,name:"Программа «Поддержка иммунитета»",desc:"Иммунитет — ваш щит против болезней",price:14180,oldPrice:15820,image:"https://front.agenyz.ru/7b/ed/Banners_Agenyz_20002000_Immunity.24je1ypyyrh.jpg"},
-  {id:85,name:"Программа «Поддержка комфортного пищеварения»",desc:"Пищеварение работает как часы",price:13480,oldPrice:15140,image:"https://front.agenyz.ru/87/yx/Banners_Agenyz_20002000_Gastro.qw0e44.jpg"},
-  {id:86,name:"Набор приправ AlfaChef с банками + Ка-соль",desc:"Приправа и соль с минералами",price:2500,oldPrice:2600,image:"https://front.agenyz.ru/uy/29/set_sp_salt_clear2.z3efdb.png"},
-  {id:87,name:"МетаФудБиом Гранат",desc:"Метабиотик нового поколения для микробиома",price:2680,image:"https://front.agenyz.ru/gp/kd/CellElixir_bottle_.o4ji0bkcb6dn.jpg"},
-  {id:88,name:"СустаХелп",desc:"Комфорт движения и поддержка при нагрузках",price:3780,image:"https://front.agenyz.ru/mc/70/CellElixir_bottle_.1pkjg.jpg"},
-  {id:89,name:"ГепаИнт",desc:"Поддержка пищеварения",price:2780,image:"https://front.agenyz.ru/hx/4o/CellElixir_bottle_.ypqrlx9f2sfqt68ilpi2u78.jpg"},
-  {id:90,name:"ИнфлаДел",desc:"Противовоспалительный комплекс",price:3740,image:"https://front.agenyz.ru/u5/xm/3Dgard_bottle_.2d24ci.jpg"},
-  {id:91,name:"Витамин С & Цинк + XBi-A",desc:"Профилактика вирусов и простуд",price:2350,image:"https://front.agenyz.ru/qq/vr/XBI-A_bottle_.ttwmi67xqo.jpg"},
-  {id:92,name:"Вита Кидиз",desc:"Витаминно-минеральный комплекс для детей",price:2170,image:"https://front.agenyz.ru/cg/4m/Kidyz_bottle_.idlldv7vrqzpl14d4vpbfxeu4.jpg"},
-  {id:93,name:"Черное Золото",desc:"Горячий напиток из чаги, имбиря и лимона",price:1460,image:"https://front.agenyz.ru/2t/8z/_bottle__.sec522y7lp6l.jpg"},
-  {id:94,name:"iQ-ШОК",desc:"Интеллектуальный шоколад",price:990,image:"https://front.agenyz.ru/m6/93/Keto_box_IQ_2.3n5u7o4k.jpg"},
-  {id:95,name:"Вита-Леденцы для горла",desc:"От боли и першения, местный иммунитет",price:340,image:"https://front.agenyz.ru/my/uo/_box_.8v5jd6xdkto53nlbl9pw.jpg"},
-  {id:96,name:"Ка-соль",desc:"Соль с Аквамином и калиево-минеральным комплексом",price:820,image:"https://front.agenyz.ru/39/uw/_pack_-1.ba3qcukl.jpg"},
-  {id:97,name:"Фартук AlfaChef",desc:"Готовьте с удовольствием и стилем",price:1300,image:"https://front.agenyz.ru/ag/4t/apron_with_line_light.tzlfiz22hhkpko18z6w3ezf.jpg"},
-  {id:98,name:"Каталог продукции Agenyz 2026",desc:"Бумажный каталог всей продукции",price:280,image:"https://front.agenyz.ru/fl/qa/_book_2026.zokph1q4flgrv.jpg"}
+  {id:1,name:"Промонабор «Энергия мозга»",tag:"Промонабор",desc:"Комплекс для работы мозга и концентрации",about:"Комплексный набор для поддержки памяти, внимания и умственной работоспособности. Компоненты подобраны так, чтобы дополнять друг друга в течение дня.",points:["Память и фокус","Готовый комплекс","Выгода 420 ₽"],price:16560,oldPrice:16980,promoUntil:"2026-11-15",image:"https://front.agenyz.ru/f9/bz/2-3_2000px.zac4509j.jpg"},
+  {id:2,name:"Набор чая 5.5 teArt",tag:"Чаи",desc:"Листовой чай с Phytolin™",about:"Ассорти листовых чаёв с фитокомплексом Phytolin™. Разные купажи под задачи дня — от бодрого утра до спокойного вечера.",points:["Ассорти купажей","Phytolin™","Листовой формат"],price:3390,oldPrice:3990,image:"https://front.agenyz.ru/v3/uj/6ab3896d57c8c.eplax1wudwmto8.jpg"},
+  {id:3,name:"Набор «Чакарты» (7 шт.)",tag:"Аксессуары",desc:"Персональный гармонизатор энергии",about:"Комплект из семи карт с символикой чакр. Используются как персональный аксессуар для настройки на день и работы с состоянием.",points:["7 карт","Компактный формат","Персональный аксессуар"],price:13650,image:"https://front.agenyz.ru/i7/5g/_card_.k9aupm.jpg"},
+  {id:4,name:"Осенний буст: Антистресс",tag:"Сезонный набор",desc:"Комплекс для спокойствия и концентрации",about:"Сезонная подборка для устойчивости к нагрузкам: магний, растительные комплексы и чай для вечернего ритуала.",points:["Спокойствие","Вечерний ритуал","Сезонная выгода"],price:3260,oldPrice:3910,image:"https://front.agenyz.ru/8y/at/6a8d4e71cf7c7.ulfep4des6jja29inky.jpg"},
+  {id:5,name:"Набор «3П-Коллаген» (2 шт.)",tag:"Выгодный набор",desc:"Коллаген со вкусом персик-манго, 2 упаковки",about:"Две упаковки трипептидного коллагена — удобный запас на длительный курс и выгоднее поштучной покупки.",points:["2 упаковки","Длительный курс","Экономия 1 500 ₽"],price:8000,oldPrice:9500,image:"https://front.agenyz.ru/dc/8j/_box_2.4pblgv1b.jpg"},
+  {id:6,name:"Набор «МЕГА-ПАК Альфапатч»",tag:"Аксессуары",desc:"Инфракрасный и магнитный патч, макси-упаковка",about:"Большая упаковка патчей для локального комфорта мышц и суставов. Удобно для курса и для использования всей семьёй.",points:["Макси-упаковка","Мышцы и суставы","Выгода 50%"],price:3650,oldPrice:7300,promoUntil:"2026-12-16",image:"https://front.agenyz.ru/kf/jh/6a6715b365ec8.b4ljmqfh8hmpxdxkomw81acv7.png"},
+  {id:7,name:"Альфапатч (Акция 3+1)",tag:"Акция",desc:"Патч для суставов и мышц + 1 в подарок",about:"Три патча для локального применения плюс четвёртый в подарок. Клеится на кожу, носится в течение дня.",points:["3 + 1 в подарок","Локально","Одноразовый"],price:2190,oldPrice:2920,promoUntil:"2026-12-16",image:"https://front.agenyz.ru/wr/fn/69837dd90525f.y83m3d8me7m6dj61z4yercvn0.png"},
+  {id:8,name:"Набор «SG-Стикер» (5 шт.)",tag:"Аксессуары",desc:"Стикеры для мобильного телефона",about:"Комплект из пяти стикеров с силиконовым покрытием. Наклеиваются на корпус телефона или чехол.",points:["5 штук","Силиконовое покрытие","Для телефона"],price:4850,oldPrice:7600,image:"https://front.agenyz.ru/ro/5h/_SG-_5_2000px.b6uftspkiq2kc3y5c3w.jpg"},
+  {id:9,name:"Программа «Поддержка когнитивных функций 2.0»",tag:"Программа",desc:"Думайте быстрее, помните больше",about:"Готовая схема из нескольких продуктов для памяти, внимания и ясности мышления. Не нужно подбирать компоненты по отдельности.",points:["Готовая схема","Комплексный подход","Выгода 1 940 ₽"],price:11980,oldPrice:13920,image:"https://front.agenyz.ru/mr/zb/jpg.k08sivz85vncks1ygwblw287tr.jpg"},
+  {id:10,name:"Программа «Поддержка суставов и соединительной ткани»",tag:"Программа",desc:"Двигайтесь активно. Живите свободно.",about:"Комплекс для поддержки суставов, хрящей и соединительной ткани. Сочетает приём внутрь и локальный гель.",points:["Суставы и хрящи","Внутрь + наружно","Выгода 2 310 ₽"],price:14960,oldPrice:17270,image:"https://front.agenyz.ru/hw/37/Banners_Agenyz_20002000_Joints.l4z2v1o.jpg"},
+  {id:11,name:"Программа «Поддержка энергии и продуктивности»",tag:"Программа",desc:"Сохраняйте и приумножайте жизненную силу",about:"Подборка для тонуса и работоспособности в периоды повышенных нагрузок: железо, магний, адаптогены и напитки.",points:["Тонус","Работоспособность","Выгода 2 090 ₽"],price:11460,oldPrice:13550,image:"https://front.agenyz.ru/oy/9r/Banners_Agenyz_20002000_Energy.cbys1i8.jpg"},
+  {id:12,name:"Программа «Поддержка оптимального веса 2.0»",tag:"Программа",desc:"Видимый результат без чувства голода",about:"Схема для комфортного снижения веса: контроль аппетита, поддержка обмена и сохранение мышц за счёт белка.",points:["Контроль аппетита","Сохранение мышц","Выгода 2 100 ₽"],price:12020,oldPrice:14120,image:"https://front.agenyz.ru/t2/0x/69ef87b222d1a.5t2l734j4r03gh50o87mzt39mva.jpeg"},
+  {id:13,name:"Программа «Поддержка сердечно-сосудистой системы 2.0»",tag:"Программа",desc:"Здоровые сосуды — активное долголетие",about:"Комплекс для поддержки сосудов и сердца: омега-3, коэнзим Q10, магний и венотонизирующий комплекс.",points:["Сосуды и сердце","Омега-3 + Q10","Выгода 2 550 ₽"],price:11650,oldPrice:14200,image:"https://front.agenyz.ru/1n/r0/-jpg.5dmw746nhk4fold.jpg"},
+  {id:14,name:"3П-Коллаген персик-манго",tag:"Красота и суставы",desc:"14 стиков по 4 г. Трипептидный коллаген",about:"Трипептидный коллаген I типа в стиках со вкусом персик-манго. Дополнен гиалуроновой кислотой, эластином и пробиотиками.",points:["14 стиков по 4 г","Гиалуроновая кислота","Вкус персик-манго"],price:4750,image:"https://front.agenyz.ru/yl/a9/_box_.3pe08.jpg"},
+  {id:15,name:"ПЕП-Коллаген",tag:"Красота и суставы",desc:"Пептиды морского коллагена",about:"Пептиды морского коллагена с витаминно-минеральным комплексом. Поддержка кожи, волос и ногтей изнутри.",points:["Морской коллаген","Витамины и минералы","Кожа и волосы"],price:5150,image:"https://front.agenyz.ru/d9/n2/_bottle__.2z2z6.jpg"},
+  {id:16,name:"ФунгоМакс",tag:"Нутрицевтика",desc:"7 ключей к здоровой жизни",about:"Комплекс из функциональных грибов для поддержки иммунитета и адаптации к физическим и умственным нагрузкам.",points:["Функциональные грибы","Иммунитет","Адаптогенный профиль"],price:3860,image:"https://front.agenyz.ru/ry/vq/_bottle_.tukzf4np4.jpg"},
+  {id:17,name:"3Д-Матрикс",tag:"Красота и суставы",desc:"Молодая кожа и крепкие суставы",about:"Комплекс для поддержки кожи и суставов: компоненты коллагенового каркаса и соединительной ткани.",points:["Кожа и суставы","Коллагеновый каркас","Курсовой приём"],price:4280,image:"https://front.agenyz.ru/xn/xj/CellElixir_bottle_3-.pr5hqtg2ndk9nyz3f6s8qi.jpg"},
+  {id:18,name:"К2Д3-Буст",tag:"Нутрицевтика",desc:"Контроль кальциевого обмена",about:"Витамины D3 и K2 в связке — для нормального обмена кальция и поддержки костей.",points:["D3 + K2","Обмен кальция","Для костей"],price:3970,image:"https://front.agenyz.ru/w4/64/CellElixir_bottle_23-.xd7k23srxpz2fivknbu9yqz4e8.jpg"},
+  {id:19,name:"СеллГенетикс",tag:"Нутрицевтика",desc:"Активная регенерация клеток",about:"Комплекс для поддержки клеточного обновления и общего тонуса. Базовая упаковка для курсового приёма.",points:["Клеточный уровень","Базовая упаковка","Курсовой приём"],price:4550,image:"https://front.agenyz.ru/74/oy/CellElixir_bottle_2026.hvzurqvrax614t3d2l.jpg"},
+  {id:20,name:"СеллГенетикс (180 капс.)",tag:"Нутрицевтика",desc:"Большой объём для длительного курса",about:"Увеличенная упаковка СеллГенетикс на 180 капсул — выгодный формат для длительного курса без перерывов.",points:["180 капсул","Длительный курс","Выгодный формат"],price:13290,image:"https://front.agenyz.ru/li/bg/CellElixir_bottle_2026.z3frrrpg.jpg"},
+  {id:21,name:"АльфаОмега-Q10",tag:"Нутрицевтика",desc:"Здоровье сердца, мозга и красота",about:"Омега-3 с коэнзимом Q10 для поддержки сердца, мозга и качества кожи.",points:["Омега-3","Коэнзим Q10","Сердце и мозг"],price:3850,image:"https://front.agenyz.ru/sp/wg/CellElixir_bottle_.yeq8y76dhtg.jpg"},
+  {id:22,name:"КарбоМинор",tag:"Нутрицевтика",desc:"Контроль глюкозы и сахара в крови",about:"Комплекс для поддержки углеводного обмена и стабильного уровня сахара при сбалансированном рационе.",points:["Углеводный обмен","Контроль тяги к сладкому","Растительные компоненты"],price:3260,image:"https://front.agenyz.ru/t2/k5/CellElixir_bottle_.mppiry4pj30b5imozc.jpg"},
+  {id:23,name:"Сустадекс",tag:"Нутрицевтика",desc:"Пуриновый обмен и подвижность суставов",about:"Комплекс для поддержки пуринового обмена и подвижности суставов при регулярных нагрузках.",points:["Пуриновый обмен","Подвижность суставов","Курсовой приём"],price:2600,image:"https://front.agenyz.ru/hp/8n/DirectLine_bottle_.zugqtgf7v4ypo1vj.jpg"},
+  {id:24,name:"ВеноБаланс",tag:"Нутрицевтика",desc:"Одно решение для лёгкости движения",about:"Растительный комплекс для ощущения лёгкости в ногах и поддержки тонуса вен.",points:["Лёгкость в ногах","Тонус вен","Растительный состав"],price:3490,image:"https://front.agenyz.ru/3f/tu/DirectLine_bottle_.xpsftdj0dwa5.jpg"},
+  {id:25,name:"ГепаАрт",tag:"Нутрицевтика",desc:"Поддержка печени и баланс холестерина",about:"Комплекс для поддержки печени и нормального обмена холестерина.",points:["Поддержка печени","Обмен холестерина","Растительные экстракты"],price:3430,image:"https://front.agenyz.ru/j8/ds/DirectLine_bottle_.fu4ab2d5ja7e3pr9j0qrbu.jpg"},
+  {id:26,name:"Урсус",tag:"Нутрицевтика",desc:"Защита почек и мочеполовой системы",about:"Комплекс для поддержки почек и мочевыделительной системы.",points:["Почки","Мочевыделительная система","Курсовой приём"],price:2850,image:"https://front.agenyz.ru/2d/zy/DirectLine_bottle_.tl9nm5w5jvs72cv.jpg"},
+  {id:27,name:"ГепаИн-Т",tag:"Нутрицевтика",desc:"Поддержка печени и желчного пузыря",about:"Поддержка печени и желчного пузыря, участие в нормальном переваривании жиров.",points:["Печень и желчный","Пищеварение жиров","Курсовой приём"],price:3250,image:"https://front.agenyz.ru/er/ln/CellElixir_bottle_-.uq7rlg8oh0392sp.jpg"},
+  {id:28,name:"СеллГард",tag:"Иммунитет",desc:"Поддержка иммунитета",about:"Комплекс для поддержки иммунной системы в сезон нагрузок и простуд.",points:["Иммунитет","Сезонная поддержка","Курсовой приём"],price:3740,image:"https://front.agenyz.ru/nb/t2/3Dgard_bottle_.8kwzfq.jpg"},
+  {id:29,name:"КандиДел",tag:"Нутрицевтика",desc:"Противогрибковый комплекс",about:"Растительный комплекс для поддержки баланса микрофлоры и комфортного пищеварения.",points:["Баланс микрофлоры","Растительный комплекс","Курсовой приём"],price:3260,image:"https://front.agenyz.ru/hn/x1/3Dgard_bottle_.wscobplfgwgo11xdqrwmkoaob.jpg"},
+  {id:30,name:"ОктоМагний + XBi-A",tag:"Нутрицевтика",desc:"8 видов магния для спокойствия и гармонии",about:"Восемь форм магния с комплексом XBi-A для нервной системы, сна и нормальной работы мышц.",points:["8 форм магния","XBi-A","Сон и спокойствие"],price:2890,image:"https://front.agenyz.ru/ei/qu/XBi-A_bottle_.azovjbzhvc.jpg"},
+  {id:31,name:"Окулайз + XBi-A",tag:"Нутрицевтика",desc:"Поддержка зрения",about:"Комплекс для поддержки зрения при работе с экранами и повышенных зрительных нагрузках.",points:["Для зрения","Работа с экранами","XBi-A"],price:3850,image:"https://front.agenyz.ru/fs/ii/XBi-A_bottle_.m2hs30kqfrwjdpyqo6jcpwb5bm.jpg"},
+  {id:32,name:"ФерБуст + XBi-A",tag:"Нутрицевтика",desc:"Железо 4:0. Максимальная энергия",about:"Четыре источника железа с повышенной биодоступностью для поддержки энергии и нормального кроветворения.",points:["4 формы железа","XBi-A","Энергия и тонус"],price:1930,image:"https://front.agenyz.ru/07/8j/XBi-A_bottle_.95722.jpg"},
+  {id:33,name:"ПараДетокс + XBi-A",tag:"Нутрицевтика",desc:"Растительный противопаразитарный комплекс",about:"Растительный комплекс для курсовой поддержки организма и комфортного пищеварения.",points:["Растительный состав","Курсовой приём","XBi-A"],price:2590,image:"https://front.agenyz.ru/ib/0e/XBi-A_bottle_.v4943eq305jiadur3gexzup92.jpg"},
+  {id:34,name:"Кошачий коготь + XBi-A",tag:"Нутрицевтика",desc:"Экстракт кошачьего когтя",about:"Экстракт кошачьего когтя (Uncaria tomentosa) для поддержки иммунного ответа организма.",points:["Uncaria tomentosa","Иммунитет","XBi-A"],price:2830,image:"https://front.agenyz.ru/rh/d3/XBi-A_bottle_.hfwktkr5sqop.jpg"},
+  {id:35,name:"DIM & ИНДОЛ + XBi-A",tag:"Нутрицевтика",desc:"Поддержка гормонального баланса",about:"DIM и индол-3-карбинол для поддержки гормонального баланса у мужчин и женщин.",points:["DIM + I3C","Гормональный баланс","XBi-A"],price:3380,image:"https://front.agenyz.ru/uk/f2/XBi-A_bottle_.szv8rh4c3jk.jpg"},
+  {id:36,name:"Спирулина & Хлорелла + XBi-A",tag:"Суперфуд",desc:"Источник белка и аминокислот",about:"Спирулина и хлорелла — источник растительного белка, аминокислот и природных пигментов.",points:["Растительный белок","Спирулина + хлорелла","Суперфуд"],price:1490,image:"https://front.agenyz.ru/l6/pw/XBi-A_bottle_.ikyfaen7quv77c8e58iluf0bt.jpg"},
+  {id:37,name:"Фукоидан Иммун + XBi-A",tag:"Иммунитет",desc:"Поддержка иммунитета",about:"Фукоидан из бурых водорослей для поддержки иммунного ответа в сезон нагрузок.",points:["Фукоидан","Бурые водоросли","Иммунитет"],price:3830,image:"https://front.agenyz.ru/0u/qf/XBi-A_bottle_.j688tn53vqqbbuxw4jrwr.jpg"},
+  {id:38,name:"АйКьюМи Кидиз",tag:"Детям",desc:"Детский комплекс со вкусом малины",about:"Детский витаминно-минеральный комплекс со вкусом малины. Формат, который дети принимают охотно.",points:["Вкус малины","Витамины и минералы","Для детей"],price:1650,image:"https://front.agenyz.ru/fz/ae/Kidyz_bottle_.49f6rglz5ujv587aiy9ad.jpg"},
+  {id:39,name:"Иммун Кидиз Плюс",tag:"Детям",desc:"Детский комплекс с Омега-3",about:"Детский комплекс с повышенным содержанием Омега-3 для поддержки иммунитета и развития.",points:["Омега-3","Иммунитет","Детский формат"],price:1680,image:"https://front.agenyz.ru/9l/ul/KidYz_bottle_Imune.zr2vnszj68inxyg.jpg"},
+  {id:40,name:"Детокс-Z",tag:"Детокс",desc:"Растительный гемосорбент на основе зостеры",about:"Растительный сорбент на основе зостеры для мягкой поддержки естественных процессов очищения.",points:["Зостера","Мягкое очищение","Растительный сорбент"],price:2830,image:"https://front.agenyz.ru/qg/yv/IMG_1781.mzhjszyrqsxolbmb30cavt.jpeg"},
+  {id:41,name:"pH Баланс",tag:"Нутрицевтика",desc:"Нормализация pH баланса",about:"Минеральный комплекс для поддержки кислотно-щелочного баланса рациона.",points:["pH баланс","Минеральный профиль","Курсовой приём"],price:2800,image:"https://front.agenyz.ru/uf/fj/TrueAqua_box_PH.h0qgrb21i4j.jpg"},
+  {id:42,name:"Иммун Селл",tag:"Иммунитет",desc:"Поддержка иммунитета",about:"Комплекс для поддержки иммунитета в сезон повышенной заболеваемости.",points:["Иммунитет","Сезонная поддержка","Курсовой приём"],price:2860,image:"https://front.agenyz.ru/q1/t4/TrueAqua_box_.m6cqhe0br7aky7oou.jpg"},
+  {id:43,name:"СорбиоДетокс Селл",tag:"Детокс",desc:"Детоксикация и сорбенты",about:"Сорбент и детокс-комплекс для поддержки естественных процессов очищения организма.",points:["Сорбент","Детокс-поддержка","Курсовой приём"],price:3060,image:"https://front.agenyz.ru/13/n3/TrueAqua_box_.5uloaqu0wii6br95s3c9c.jpg"},
+  {id:44,name:"АльфаМайнд",tag:"Антистресс",desc:"Антистресс и поддержка нервной системы",about:"Комплекс для спокойствия и устойчивости к стрессовым нагрузкам.",points:["Антистресс","Нервная система","Курсовой приём"],price:3060,image:"https://front.agenyz.ru/y5/14/TrueAqua_box_.jclnv.jpg"},
+  {id:45,name:"Брейниджайзер",tag:"Нутрицевтика",desc:"Активная работа мозга",about:"Комплекс для поддержки внимания, памяти и активной умственной работы.",points:["Внимание и память","Умственные нагрузки","Курсовой приём"],price:3060,image:"https://front.agenyz.ru/04/p0/TrueAqua_box_.vvgvrym8u1ffjopz2k.jpg"},
+  {id:46,name:"IQ-МСТ powder",tag:"Нутрицевтика",desc:"MCT с пре- и метабиотиками",about:"MCT-порошок с пре- и метабиотиками. Добавляется в напитки для энергии и поддержки микробиома.",points:["MCT","Пре- и метабиотики","В напитки"],price:3150,image:"https://front.agenyz.ru/bo/4c/KETO_bottle_IQ_.j34m6jp285m0dngf5was.jpg"},
+  {id:47,name:"Слим МСТ",tag:"Контроль веса",desc:"Митохондриальный подход к похудению",about:"MCT-комплекс для поддержки能量 обмена и комфортного снижения веса.",points:["MCT","Энергия из жиров","Контроль веса"],price:2490,image:"https://front.agenyz.ru/es/rp/_bottle_1.rb11tbxff8j1.jpg"},
+  {id:48,name:"Слим Альфа Шейк шоколадный капучино",tag:"Контроль веса",desc:"Комфортное похудение и сохранение мышц",about:"Белковый коктейль со вкусом шоколадного капучино. Помогает добирать белок и сохранять мышцы при снижении веса.",points:["Белковый коктейль","Шоколадный капучино","Сохранение мышц"],price:2830,image:"https://front.agenyz.ru/7c/5p/_pack_.alz20ouia9vtw.jpg"},
+  {id:49,name:"Слим Альфа Шейк ванильное мороженое",tag:"Контроль веса",desc:"Комфортное похудение и сохранение мышц",about:"Белковый коктейль со вкусом ванильного мороженого. Мягкий вкус и сытность между приёмами пищи.",points:["Белковый коктейль","Ванильное мороженое","Сытность"],price:2690,image:"https://front.agenyz.ru/ev/kg/_pack_2_.ienouup.jpg"},
+  {id:50,name:"Индиго. Синий травяной чай",tag:"Чаи",desc:"Селективный чай с Phytolin™",about:"Синий травяной чай с фитокомплексом Phytolin™. Яркий цвет и спокойный вечерний ритуал.",points:["Синий чай","Phytolin™","Вечерний ритуал"],price:990,image:"https://front.agenyz.ru/4p/zz/55teart_box__.3s7hkfeg830z6qdl.jpg"},
+  {id:51,name:"Энергия. Черный чай",tag:"Чаи",desc:"Листовой чай с Phytolin™",about:"Листовой чёрный чай с Phytolin™ для бодрого начала дня.",points:["Чёрный листовой","Phytolin™","Бодрость"],price:750,image:"https://front.agenyz.ru/3n/z8/tea___4_site.4dqkmr.png"},
+  {id:52,name:"Энергия. Зеленый чай",tag:"Чаи",desc:"Листовой чай с Phytolin™",about:"Листовой зелёный чай с Phytolin™ — мягкая бодрость без резкости.",points:["Зелёный листовой","Phytolin™","Мягкая бодрость"],price:750,image:"https://front.agenyz.ru/vy/gi/tea___4_site.cwogp8s6480ioskia.png"},
+  {id:53,name:"Пищеварение. Травяной чай",tag:"Чаи",desc:"Листовой чай с Phytolin™",about:"Травяной купаж с Phytolin™ для комфортного пищеварения после еды.",points:["Травяной купаж","После еды","Phytolin™"],price:750,image:"https://front.agenyz.ru/gu/fy/tea__4_site.mdw15r78mjoz72j4f7dx.png"},
+  {id:54,name:"Стройность. Травяной + зеленый чай",tag:"Чаи",desc:"Листовой чай с Phytolin™",about:"Травяной и зелёный чай с Phytolin™ в поддержку рациона и контроля веса.",points:["Травяной + зелёный","Контроль веса","Phytolin™"],price:750,image:"https://front.agenyz.ru/jr/uv/tea__4_site.6sborit90q6gx.png"},
+  {id:55,name:"Антистресс. Травяной + зеленый чай",tag:"Чаи",desc:"Листовой чай с Phytolin™",about:"Травяной и зелёный чай с Phytolin™ для спокойного вечера и снижения напряжения.",points:["Травяной + зелёный","Спокойствие","Phytolin™"],price:750,image:"https://front.agenyz.ru/q2/bd/tea__4_site.j6hwf8g7p5r7yrcyc80pfpi.png"},
+  {id:56,name:"Глубокий сон. Травяной чай",tag:"Чаи",desc:"Листовой чай с Phytolin™",about:"Травяной чай с Phytolin™ для вечернего расслабления и подготовки ко сну.",points:["Вечерний купаж","Подготовка ко сну","Phytolin™"],price:750,image:"https://front.agenyz.ru/18/ab/tea___4_site.pbfi2.png"},
+  {id:57,name:"Вита-Леденцы Антистресс",tag:"Леденцы",desc:"Леденцы для спокойствия и концентрации",about:"Натуральные леденцы для спокойствия и концентрации. Удобный формат в дорогу, на работу и в сумку.",points:["Натуральный состав","В дорогу","Спокойствие"],price:340,image:"https://front.agenyz.ru/id/cd/_box_.ilc7cujegp2vpmkcnqeh8hd.jpg"},
+  {id:58,name:"Крем Skin Elixir для сухой кожи",tag:"Уход за телом",desc:"Уход за телом, 150 мл",about:"Крем в тубе для сухой кожи тела. Питает и смягчает, быстро впитывается без липкости.",points:["150 мл","Для сухой кожи","Быстро впитывается"],price:1600,image:"https://front.agenyz.ru/yg/jg/Tube_SKIN_ELIXIR_150ml.vo50979kjehz41ebyz.jpg"},
+  {id:59,name:"Антивозрастной крем-эксперт «Ключ Красоты»",tag:"Уход за лицом",desc:"Anti-age уход для чувствительной кожи",about:"Антивозрастной крем для чувствительной кожи. Мягкий уход с акцентом на увлажнение и комфорт.",points:["Anti-age","Чувствительная кожа","Увлажнение"],price:3590,image:"https://front.agenyz.ru/oh/j2/_boxflakon_mirror_2000x2000px1.adf3d2nzzsfdyhhgwb2njg9ejp.jpg"},
+  {id:60,name:"Мультигель Бустер для лица",tag:"Уход за лицом",desc:"Регенерация кожи и антивозрастной эффект",about:"Мультигель-бустер для лица с лёгкой гелевой текстурой. Увлажняет и поддерживает восстановление кожного барьера.",points:["Гелевая текстура","Увлажнение","Барьер кожи"],price:4300,image:"https://front.agenyz.ru/z6/fp/_box_2026.67y3demvt4rvx9cgaefo51qms.jpg"},
+  {id:61,name:"Сыворотка Экспресс Ботокс Эффект",tag:"Уход за лицом",desc:"Мгновенный эффект без инъекций",about:"Сыворотка с эффектом моментального выравнивания рельефа кожи. Косметический уход без инъекций.",points:["Экспресс-эффект","Выравнивание рельефа","Без инъекций"],price:4950,image:"https://front.agenyz.ru/f7/vr/BeautyKey_box_2.btk185mer3f8q.jpg"},
+  {id:62,name:"Антивозрастной СС-крем с UV-защитой",tag:"Уход за лицом",desc:"Уход, защита и макияж в одном флаконе",about:"СС-крем с UV-защитой: уход, выравнивание тона и защита в одном флаконе.",points:["UV-защита","Выравнивание тона","Уход + макияж"],price:2780,image:"https://front.agenyz.ru/w9/uh/BeautyKey_box_CC.dunpiqlzq00ve1jj1q8mj.jpg"},
+  {id:63,name:"Антивозрастной ВВ-крем с UV-защитой",tag:"Уход за лицом",desc:"Уход, защита и макияж в одном флаконе",about:"ВВ-крем с UV-защитой. Лёгкое покрытие и уход на каждый день.",points:["UV-защита","Лёгкое покрытие","На каждый день"],price:2780,image:"https://front.agenyz.ru/7h/pg/BeautyKey_box_BB.kc2ovooniozgvba01134.jpg"},
+  {id:64,name:"Зубная паста True Paste",tag:"Гигиена",desc:"Восстанавливающий комплекс с гидроксиапатитом",about:"Восстанавливающая зубная паста с гидроксиапатитом — для эмали и снижения чувствительности.",points:["Гидроксиапатит","Для эмали","Ежедневный уход"],price:1250,image:"https://front.agenyz.ru/v2/do/_tube_TruePaste.i3rb2jvhxrzag5bnha4lq.jpg"},
+  {id:65,name:"Гель для ног ВеноБаланс",tag:"Уход за телом",desc:"Лёгкость и комфорт для ног",about:"Гель для ног с охлаждающим эффектом. Возвращает ощущение лёгкости после дня на ногах.",points:["Охлаждающий эффект","Лёгкость в ногах","После нагрузок"],price:980,image:"https://front.agenyz.ru/qy/z8/_tube_2.7rv27glq1mz.jpg"},
+  {id:66,name:"3Д-Матрикс гель",tag:"Уход за телом",desc:"Гель для суставов",about:"Гель локального действия для суставов. Дополняет приём коллагеновых комплексов изнутри.",points:["Локально на суставы","Гелевая текстура","Пара к 3Д-Матрикс"],price:980,image:"https://front.agenyz.ru/qt/sk/_tube_32.m3c4d511atppswxj.jpg"},
+  {id:67,name:"Твердый шампунь 2PHC",tag:"Уход за волосами",desc:"Активатор роста и восстановления волос",about:"Твёрдый шампунь с бипептидным комплексом для роста и восстановления волос. Экономичный расход.",points:["Твёрдый формат","Бипептидный комплекс","Экономичный расход"],price:850,image:"https://front.agenyz.ru/sj/cf/__box-old_ru.wzsrfad6hjyt3zqvxd6.jpg"},
+  {id:68,name:"Браслет «6 elements Titanband»",tag:"Аксессуары",desc:"Золотой цвет, ширина 15 мм",about:"Браслет золотистого цвета шириной 15 мм из линейки 6 elements. Аксессуар на каждый день.",points:["Ширина 15 мм","Золотистый цвет","6 elements"],price:10800,image:"https://front.agenyz.ru/qn/9z/____2000px_1.6z3e9.jpg"},
+  {id:69,name:"Альфапатч инфракрасный и магнитный",tag:"Аксессуары",desc:"Патч для суставов и мышц",about:"Инфракрасный и магнитный патч для локального комфорта мышц и суставов. Носится в течение дня.",points:["Инфракрасный + магнитный","Локально","Одноразовый"],price:730,promoUntil:"2026-12-16",image:"https://front.agenyz.ru/hp/rh/alpha_patch_ru_2500x25001.phz9cr5xd5jmepywbz.png"},
+  {id:70,name:"SG-Sticker с силиконовым покрытием",tag:"Аксессуары",desc:"Стикер для мобильного телефона",about:"Стикер с силиконовым защитным покрытием для мобильного телефона. Тонкий и незаметный на корпусе.",points:["Силиконовое покрытие","Для телефона","Тонкий"],price:1520,image:"https://front.agenyz.ru/nb/wf/69e0c0f3d4abb.8cs26dmoc5ke4x0dhpau.jpg"},
+  {id:71,name:"Бутылка-шейкер с ионами + 2 ремешка",tag:"Аксессуары",desc:"Для воды, коктейлей и напитков",about:"Бутылка-шейкер с двумя сменными ремешками. Для воды, коктейлей и напитков на ходу.",points:["2 ремешка","Для коктейлей","На ходу"],price:2290,image:"https://front.agenyz.ru/qg/hp/__2.4m7zgujyvr1hascif44i0.jpg"},
+  {id:72,name:"Бутылка-шейкер с позитивными словами",tag:"Аксессуары",desc:"Для воды, коктейлей и напитков",about:"Бутылка-шейкер с мотивирующими надписями. Напоминает пить воду в течение дня.",points:["Мотивирующие надписи","Для воды","Питьевой режим"],price:1550,image:"https://front.agenyz.ru/xz/6s/69e0bfc521a84.7g49qhilh4l64wf3y4hel283rtw9.jpg"},
+  {id:73,name:"Сумка из спанбонда Agenyz",tag:"Аксессуары",desc:"Удобный аксессуар",about:"Лёгкая сумка из спанбонда с логотипом. Удобно носить покупки и готовые наборы.",points:["Спанбонд","Лёгкая","Для покупок"],price:120,image:"https://front.agenyz.ru/8o/0b/IMG_4854.7v1jwwi40n1dvypy4.png"},
+  {id:74,name:"Буклет по корейской косметике (10 шт.)",tag:"Полиграфия",desc:"Комплект информационных буклетов",about:"Комплект из 10 буклетов по корейской косметике. Удобно для консультаций и знакомства с линейкой.",points:["10 штук","По косметике","Для консультаций"],price:100,image:"https://front.agenyz.ru/aw/zr/trifold_cosmetis_mockup_4_site_x10.svxdch7e9.png"},
+  {id:75,name:"Буклет 5,5 teArt (10 шт.)",tag:"Полиграфия",desc:"Комплект информационных буклетов",about:"Комплект из 10 буклетов по чайной линейке 5,5 teArt.",points:["10 штук","По чаям","Для консультаций"],price:200,image:"https://front.agenyz.ru/8b/m5/trifold_tea_mockup_4_site.4szcm6.png"},
+  {id:76,name:"Набор «Шоколад IQ-Шок» (3 шт.)",tag:"Выгодный набор",desc:"Интеллектуальный шоколад",about:"Три плитки интеллектуального шоколада. Вкусный формат поддержки концентрации и настроения.",points:["3 плитки","Выгода 620 ₽","Перекус"],price:2350,oldPrice:2970,promoUntil:"2027-01-01",image:"https://front.agenyz.ru/jl/55/iq-3.4hku3vadm4l29o.jpg"},
+  {id:77,name:"Осенний Буст: Концентрация и память",tag:"Сезонный набор",desc:"Сезонный набор для поддержки мозга",about:"Сезонный набор для памяти и внимания в период интенсивных умственных нагрузок.",points:["Память и внимание","Сезонная выгода","Готовая схема"],price:3460,oldPrice:4080,image:"https://front.agenyz.ru/bb/lz/6a8c552ca0876.94iqwg84h0ifr5xon6lz2sxb8o38.jpg"},
+  {id:78,name:"Осенний Буст: Энергия",tag:"Сезонный набор",desc:"Сезонный набор для поддержания тонуса",about:"Сезонный набор для тонуса и работоспособности в тёмное время года.",points:["Тонус","Сезонная выгода","Готовая схема"],price:3460,oldPrice:4080,image:"https://front.agenyz.ru/lm/ui/6a8c56552892e.afe7jwksqzt0i.jpg"},
+  {id:79,name:"Набор «Вита леденцы Энерджи»",tag:"Выгодный набор",desc:"Набор леденцов для энергии",about:"Набор леденцов для бодрости. Удобно держать под рукой в течение дня.",points:["Набор леденцов","Бодрость","В дорогу"],price:940,oldPrice:1020,image:"https://front.agenyz.ru/64/t1/11009-1.huysnn3tclgn5fz4cps.jpg"},
+  {id:80,name:"Набор «БЫСТРЫЙ СТАРТ 1 Pro»",tag:"Программа",desc:"Быть в ресурсе. Просто.",about:"Стартовый комплекс для знакомства с продукцией: базовые нутрицевтики и напитки в одной схеме.",points:["Стартовый набор","Базовые продукты","Выгода 3 080 ₽"],price:31910,oldPrice:34990,image:"https://front.agenyz.ru/wu/9y/1PRO.dfg0e.jpg"},
+  {id:81,name:"Набор приправ AlfaChef с банками",tag:"Кухня",desc:"Натуральная приправа для здоровой кухни",about:"Натуральные приправы AlfaChef с банками. Для вкусной и осознанной кухни без лишних добавок.",points:["Натуральные приправы","Банки в комплекте","Для кухни"],price:1780,image:"https://front.agenyz.ru/ax/5p/set_4xSpices_ed.3ms613pnzzpffadylcy.jpg"},
+  {id:82,name:"Набор «БЫСТРЫЙ СТАРТ 2 Pro»",tag:"Программа",desc:"Комплексный путь к энергии и балансу",about:"Расширенный стартовый комплекс для энергии и баланса. Больше продуктов и шире охват задач.",points:["Расширенный набор","Энергия и баланс","Выгода 2 750 ₽"],price:31970,oldPrice:34720,image:"https://front.agenyz.ru/w0/e1/2PRO.yv2jr8gh90.jpg"},
+  {id:83,name:"Набор «РЕ:СТАРТ Pro»",tag:"Программа",desc:"5 шагов к обновлению",about:"Пятишаговая программа обновления: очищение, поддержка и восстановление в понятной последовательности.",points:["5 шагов","Очищение + поддержка","Выгода 2 630 ₽"],price:11780,oldPrice:14410,image:"https://front.agenyz.ru/u4/m2/_PRO.3vytj3clrjbfi3hamo80qfivki.jpg"},
+  {id:84,name:"Программа «Поддержка иммунитета»",tag:"Программа",desc:"Иммунитет — ваш щит против болезней",about:"Комплексная схема для поддержки иммунной системы в сезон нагрузок и простуд.",points:["Иммунитет","Готовая схема","Выгода 1 640 ₽"],price:14180,oldPrice:15820,image:"https://front.agenyz.ru/7b/ed/Banners_Agenyz_20002000_Immunity.24je1ypyyrh.jpg"},
+  {id:85,name:"Программа «Поддержка комфортного пищеварения»",tag:"Программа",desc:"Пищеварение работает как часы",about:"Схема для комфортного пищеварения: поддержка микробиома, печени и ферментной функции.",points:["Пищеварение","Микробиом","Выгода 1 660 ₽"],price:13480,oldPrice:15140,image:"https://front.agenyz.ru/87/yx/Banners_Agenyz_20002000_Gastro.qw0e44.jpg"},
+  {id:86,name:"Набор приправ AlfaChef с банками + Ка-соль",tag:"Кухня",desc:"Приправа и соль с минералами",about:"Приправы AlfaChef с банками и Ка-соль с минеральным комплексом. Полный набор для осознанной кухни.",points:["Приправы + Ка-соль","Банки","Выгода 100 ₽"],price:2500,oldPrice:2600,image:"https://front.agenyz.ru/uy/29/set_sp_salt_clear2.z3efdb.png"},
+  {id:87,name:"МетаФудБиом Гранат",tag:"Нутрицевтика",desc:"Метабиотик для микробиома",about:"Метабиотик нового поколения со вкусом граната для поддержки микробиома кишечника.",points:["Метабиотик","Вкус граната","Микробиом"],price:2680,image:"https://front.agenyz.ru/gp/kd/CellElixir_bottle_.o4ji0bkcb6dn.jpg"},
+  {id:88,name:"СустаХелп",tag:"Нутрицевтика",desc:"Комфорт движения при нагрузках",about:"Комплекс для комфорта движения и поддержки суставов при физических нагрузках.",points:["Комфорт движения","При нагрузках","Курсовой приём"],price:3780,image:"https://front.agenyz.ru/mc/70/CellElixir_bottle_.1pkjg.jpg"},
+  {id:89,name:"ГепаИнт",tag:"Нутрицевтика",desc:"Поддержка пищеварения",about:"Комплекс для поддержки пищеварения и комфортной работы ЖКТ.",points:["Пищеварение","ЖКТ","Курсовой приём"],price:2780,image:"https://front.agenyz.ru/hx/4o/CellElixir_bottle_.ypqrlx9f2sfqt68ilpi2u78.jpg"},
+  {id:90,name:"ИнфлаДел",tag:"Нутрицевтика",desc:"Противовоспалительный комплекс",about:"Комплекс противовоспалительного профиля для поддержки организма при повышенных нагрузках.",points:["Профиль комплекса","При нагрузках","Курсовой приём"],price:3740,image:"https://front.agenyz.ru/u5/xm/3Dgard_bottle_.2d24ci.jpg"},
+  {id:91,name:"Витамин С & Цинк + XBi-A",tag:"Иммунитет",desc:"Профилактика вирусов и простуд",about:"Витамин C и цинк с комплексом XBi-A для поддержки иммунитета в сезон простуд.",points:["Витамин C","Цинк","XBi-A"],price:2350,image:"https://front.agenyz.ru/qq/vr/XBI-A_bottle_.ttwmi67xqo.jpg"},
+  {id:92,name:"Вита Кидиз",tag:"Детям",desc:"Витаминно-минеральный комплекс для детей",about:"Детский витаминно-минеральный комплекс для ежедневной поддержки рациона.",points:["Для детей","Витамины и минералы","Ежедневно"],price:2170,image:"https://front.agenyz.ru/cg/4m/Kidyz_bottle_.idlldv7vrqzpl14d4vpbfxeu4.jpg"},
+  {id:93,name:"Черное Золото",tag:"Напитки",desc:"Горячий напиток из чаги, имбиря и лимона",about:"Горячий напиток из чаги, имбиря и лимона. Согревающий ритуал в холодный день.",points:["Чага + имбирь + лимон","Горячий напиток","Согревающий"],price:1460,image:"https://front.agenyz.ru/2t/8z/_bottle__.sec522y7lp6l.jpg"},
+  {id:94,name:"iQ-ШОК",tag:"Напитки",desc:"Интеллектуальный шоколад",about:"Интеллектуальный шоколад — вкусный формат поддержки концентрации и настроения.",points:["Шоколад","Для концентрации","Перекус"],price:990,image:"https://front.agenyz.ru/m6/93/Keto_box_IQ_2.3n5u7o4k.jpg"},
+  {id:95,name:"Вита-Леденцы для горла",tag:"Леденцы",desc:"От боли и першения, местный иммунитет",about:"Леденцы для комфорта в горле и поддержки местного иммунитета. Удобно носить с собой.",points:["Для горла","Местный иммунитет","В дорогу"],price:340,image:"https://front.agenyz.ru/my/uo/_box_.8v5jd6xdkto53nlbl9pw.jpg"},
+  {id:96,name:"Ка-соль",tag:"Кухня",desc:"Соль с Аквамином и минералами",about:"Соль с Аквамином и калиево-минеральным комплексом. Осознанная замена обычной соли на кухне.",points:["Аквамин","Калий и минералы","Замена соли"],price:820,image:"https://front.agenyz.ru/39/uw/_pack_-1.ba3qcukl.jpg"},
+  {id:97,name:"Фартук AlfaChef",tag:"Кухня",desc:"Готовьте с удовольствием и стилем",about:"Фартук AlfaChef для комфортной готовки. Практичный аксессуар для кухни.",points:["Для кухни","Практичный","AlfaChef"],price:1300,image:"https://front.agenyz.ru/ag/4t/apron_with_line_light.tzlfiz22hhkpko18z6w3ezf.jpg"},
+  {id:98,name:"Каталог продукции Agenyz 2026",tag:"Полиграфия",desc:"Бумажный каталог всей продукции",about:"Печатный каталог всей продукции Agenyz на 2026 год. Удобно для офлайн-знакомства и консультаций.",points:["Печатный","2026 год","Вся линейка"],price:280,image:"https://front.agenyz.ru/fl/qa/_book_2026.zokph1q4flgrv.jpg"}
 ];
 
-/* ============ АКТИВНЫЕ ТОВАРЫ ============ */
-const nowDate = new Date();
-const todayStr = nowDate.getFullYear()+"-"+String(nowDate.getMonth()+1).padStart(2,"0")+"-"+String(nowDate.getDate()).padStart(2,"0");
-const activeProducts = products.filter(p=>!p.promoUntil || p.promoUntil>=todayStr);
-const activeIds = new Set(activeProducts.map(p=>p.id));
-let cart = [];
-try{
-  cart = JSON.parse(localStorage.getItem("agenyz_cart")||"[]").filter(i=>activeIds.has(i.id));
-}catch(e){cart=[]}
+const SUPPLEMENT_TAGS = new Set(["Промонабор","Программа","Сезонный набор","Выгодный набор","Акция","Нутрицевтика","Иммунитет","Детокс","Антистресс","Контроль веса","Детям","Суперфуд","Красота и суставы","Леденцы","Напитки","Чаи"]);
+
+const nowDate=new Date();
+const todayStr=nowDate.getFullYear()+"-"+String(nowDate.getMonth()+1).padStart(2,"0")+"-"+String(nowDate.getDate()).padStart(2,"0");
+const activeProducts=products.filter(p=>!p.promoUntil||p.promoUntil>=todayStr);
+const activeIds=new Set(activeProducts.map(p=>p.id));
+let cart=[];
+try{cart=JSON.parse(localStorage.getItem("agenyz_cart")||"[]").filter(i=>activeIds.has(i.id))}catch(e){cart=[]}
 localStorage.setItem("agenyz_cart",JSON.stringify(cart));
 
-/* ============ АНАЛИТИКА ============ */
-const Analytics = (function(){
-  const cfg = ANALYTICS_CONFIG;
-  let enabled=false, started=false, sent=false, geo=null, observer=null;
-  const sid = (window.crypto&&crypto.randomUUID)?crypto.randomUUID():"s"+Date.now()+Math.random().toString(16).slice(2);
-  const t0 = Date.now();
-  const viewed = new Map();
-  const added = new Map();
-  const searches = [];
-  const dwellTimers = new Map();
+/* ===== Аналитика ===== */
+const Analytics=(function(){
+  const cfg=ANALYTICS_CONFIG;
+  let enabled=false,started=false,sent=false,geo=null,observer=null;
+  const sid=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():"s"+Date.now()+Math.random().toString(16).slice(2);
+  const t0=Date.now();
+  const viewed=new Map(),added=new Map(),opened=new Map(),searches=[],dwellTimers=new Map();
   let checkoutFlag=false;
 
-  /* Официальный код Яндекс.Метрики (счётчик 114262393), запуск после согласия */
   function loadMetrika(id){
     (function(m,e,t,r,i,k,a){
       m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
       m[i].l=1*new Date();
-      for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+      for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return}}
       k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id='+id, 'ym');
-
-    ym(id, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+    })(window,document,"script","https://mc.yandex.ru/metrika/tag.js?id="+id,"ym");
+    ym(id,"init",{ssr:true,webvisor:true,clickmap:true,ecommerce:"dataLayer",referrer:document.referrer,url:location.href,accurateTrackBounce:true,trackLinks:true});
   }
   function goal(name,params){
-    if(!enabled || !(cfg.METRIKA_ID>0) || !window.ym) return;
+    if(!enabled||!(cfg.METRIKA_ID>0)||!window.ym)return;
     try{ym(cfg.METRIKA_ID,"reachGoal",name,params||{})}catch(e){}
   }
   function ecom(action,p,qty){
-    if(!enabled || !(cfg.METRIKA_ID>0)) return;
+    if(!enabled||!(cfg.METRIKA_ID>0))return;
     window.dataLayer=window.dataLayer||[];
     const item={id:String(p.id),name:p.name,price:p.price};
-    if(qty) item.quantity=qty;
+    if(qty)item.quantity=qty;
     const payload={ecommerce:{currencyCode:"RUB"}};
     payload.ecommerce[action]={products:[item]};
     window.dataLayer.push(payload);
   }
   async function fetchGeo(){
-    try{
-      const cached=sessionStorage.getItem("agenyz_geo");
-      if(cached){geo=JSON.parse(cached);return}
-    }catch(e){}
+    try{const c=sessionStorage.getItem("agenyz_geo");if(c){geo=JSON.parse(c);return}}catch(e){}
     for(const url of cfg.GEO_APIS){
       try{
-        const ctrl=new AbortController();
-        const timer=setTimeout(()=>ctrl.abort(),3500);
-        const res=await fetch(url,{signal:ctrl.signal});
-        clearTimeout(timer);
+        const ctrl=new AbortController(),timer=setTimeout(()=>ctrl.abort(),3500);
+        const res=await fetch(url,{signal:ctrl.signal});clearTimeout(timer);
         const j=await res.json();
-        if(j && (j.country||j.country_name)){
+        if(j&&(j.country||j.country_name)){
           geo={country:j.country||j.country_name||"",city:j.city||"",region:j.region||"",cc:j.country_code||""};
           try{sessionStorage.setItem("agenyz_geo",JSON.stringify(geo))}catch(e){}
           return;
@@ -421,124 +458,79 @@ const Analytics = (function(){
   }
   function localBuffer(payload){
     try{
-      const key=cfg.LOCAL_BUFFER_KEY;
-      const arr=JSON.parse(localStorage.getItem(key)||"[]");
-      arr.push(payload);
-      localStorage.setItem(key,JSON.stringify(arr.slice(-100)));
+      const arr=JSON.parse(localStorage.getItem(cfg.LOCAL_BUFFER_KEY)||"[]");
+      arr.push(payload);localStorage.setItem(cfg.LOCAL_BUFFER_KEY,JSON.stringify(arr.slice(-100)));
     }catch(e){}
   }
   function post(payload){
     localBuffer(payload);
-    if(!cfg.REPORT_URL) return;
+    if(!cfg.REPORT_URL)return;
     const body=JSON.stringify(payload);
-    try{
-      if(navigator.sendBeacon){
-        const ok=navigator.sendBeacon(cfg.REPORT_URL,new Blob([body],{type:"text/plain;charset=UTF-8"}));
-        if(ok) return;
-      }
-    }catch(e){}
-    try{
-      fetch(cfg.REPORT_URL,{method:"POST",mode:"no-cors",keepalive:true,headers:{"Content-Type":"text/plain;charset=UTF-8"},body});
-    }catch(e){}
+    try{if(navigator.sendBeacon&&navigator.sendBeacon(cfg.REPORT_URL,new Blob([body],{type:"text/plain;charset=UTF-8"})))return}catch(e){}
+    try{fetch(cfg.REPORT_URL,{method:"POST",mode:"no-cors",keepalive:true,headers:{"Content-Type":"text/plain;charset=UTF-8"},body})}catch(e){}
   }
   function payload(){
-    const params=new URLSearchParams(location.search);
-    const utm={};
+    const params=new URLSearchParams(location.search),utm={};
     ["utm_source","utm_medium","utm_campaign","utm_content","utm_term"].forEach(k=>{const v=params.get(k);if(v)utm[k]=v});
-    return {
-      type:"session",
-      site:location.hostname,
-      page:location.pathname,
-      sid,
-      ts:Date.now(),
-      duration_sec:Math.round((Date.now()-t0)/1000),
-      geo,
-      referrer:document.referrer||"",
-      utm,
-      screen:`${screen.width}x${screen.height}`,
-      lang:navigator.language||"",
-      products_viewed:Array.from(viewed.values()),
-      products_added:Array.from(added.values()),
-      searches:searches.slice(-20),
-      checkout:checkoutFlag,
-      cart_items:cart.reduce((s,i)=>s+i.qty,0),
-      cart_total:cart.reduce((s,i)=>s+i.price*i.qty,0)
-    };
+    return{type:"session",site:location.hostname,page:location.pathname,sid,ts:Date.now(),duration_sec:Math.round((Date.now()-t0)/1000),geo,referrer:document.referrer||"",utm,screen:screen.width+"x"+screen.height,lang:navigator.language||"",products_viewed:Array.from(viewed.values()),products_opened:Array.from(opened.values()),products_added:Array.from(added.values()),searches:searches.slice(-20),checkout:checkoutFlag,cart_items:cart.reduce((s,i)=>s+i.qty,0),cart_total:cart.reduce((s,i)=>s+i.price*i.qty,0)};
   }
-  function flush(force){
-    if(!enabled || (sent&&!force)) return;
-    sent=true;
-    post(payload());
-  }
+  function flush(force){if(!enabled||(sent&&!force))return;sent=true;post(payload())}
   function productView(p){
-    if(!enabled || viewed.has(p.id)) return;
+    if(!enabled||viewed.has(p.id))return;
     viewed.set(p.id,{id:p.id,name:p.name,price:p.price});
     goal("product_view",{product_id:p.id,product_name:p.name,product_price:p.price});
     ecom("detail",p);
   }
   function observeCards(){
-    if(!enabled || !("IntersectionObserver" in window)) return;
-    if(observer) observer.disconnect();
-    dwellTimers.forEach(t=>clearTimeout(t));
-    dwellTimers.clear();
+    if(!enabled||!("IntersectionObserver" in window))return;
+    if(observer)observer.disconnect();
+    dwellTimers.forEach(t=>clearTimeout(t));dwellTimers.clear();
     observer=new IntersectionObserver(entries=>{
       entries.forEach(entry=>{
         const id=Number(entry.target.dataset.id);
-        if(entry.isIntersecting && entry.intersectionRatio>=0.5){
+        if(entry.isIntersecting&&entry.intersectionRatio>=0.5){
           if(!dwellTimers.has(id)){
             dwellTimers.set(id,setTimeout(()=>{
               const p=activeProducts.find(x=>x.id===id);
-              if(p) productView(p);
+              if(p)productView(p);
               dwellTimers.delete(id);
             },1000));
           }
-        }else{
-          const t=dwellTimers.get(id);
-          if(t){clearTimeout(t);dwellTimers.delete(id)}
-        }
+        }else{const t=dwellTimers.get(id);if(t){clearTimeout(t);dwellTimers.delete(id)}}
       });
     },{threshold:[0,0.5,1]});
     document.querySelectorAll(".card[data-id]").forEach(el=>observer.observe(el));
   }
-  return {
+  return{
     start(){
-      if(started) return;
-      started=true;enabled=true;
-      if(cfg.METRIKA_ID>0) loadMetrika(cfg.METRIKA_ID);
+      if(started)return;started=true;enabled=true;
+      if(cfg.METRIKA_ID>0)loadMetrika(cfg.METRIKA_ID);
       fetchGeo();
       document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="hidden")flush(false)});
       window.addEventListener("pagehide",()=>flush(false));
-      observeCards();
-      goal("session_start");
+      observeCards();goal("session_start");
     },
-    observeCards,
-    productView,
-    productClick(p){
+    observeCards,productView,
+    detail(p){
+      if(!enabled)return;
+      opened.set(p.id,{id:p.id,name:p.name,price:p.price});
       productView(p);
-      goal("product_click",{product_id:p.id,product_name:p.name});
+      goal("product_detail_open",{product_id:p.id,product_name:p.name,product_tag:p.tag});
     },
+    productClick(p){productView(p);goal("product_click",{product_id:p.id,product_name:p.name})},
     add(p,qty){
-      if(!enabled) return;
+      if(!enabled)return;
       const prev=added.get(p.id)||{id:p.id,name:p.name,price:p.price,qty:0};
-      prev.qty+=qty;
-      added.set(p.id,prev);
+      prev.qty+=qty;added.set(p.id,prev);
       goal("add_to_cart",{product_id:p.id,product_name:p.name,product_price:p.price,quantity:qty});
       ecom("add",p,qty);
     },
-    remove(p,qty){
-      if(!enabled) return;
-      goal("remove_from_cart",{product_id:p.id,product_name:p.name,quantity:qty});
-      ecom("remove",p,qty||1);
-    },
+    remove(p,qty){if(!enabled)return;goal("remove_from_cart",{product_id:p.id,product_name:p.name,quantity:qty});ecom("remove",p,qty||1)},
     cartOpen(){goal("cart_open")},
-    search(term){
-      if(!enabled || term.length<2) return;
-      if(searches[searches.length-1]!==term) searches.push(term.slice(0,80));
-      goal("search",{query:term.slice(0,80)});
-    },
+    search(term){if(!enabled||term.length<2)return;if(searches[searches.length-1]!==term)searches.push(term.slice(0,80));goal("search",{query:term.slice(0,80)})},
+    question(p){goal("product_question",{product_id:p.id,product_name:p.name})},
     checkout(){
-      if(!enabled) return;
-      checkoutFlag=true;
+      if(!enabled)return;checkoutFlag=true;
       goal("whatsapp_order",{order_total:cart.reduce((s,i)=>s+i.price*i.qty,0),order_items:cart.reduce((s,i)=>s+i.qty,0)});
       flush(true);
     },
@@ -546,175 +538,205 @@ const Analytics = (function(){
   };
 })();
 
-/* ============ UI ============ */
+/* ===== UI ===== */
 const grid=document.getElementById("productGrid");
 const searchInput=document.getElementById("searchInput");
 const searchClear=document.getElementById("searchClear");
 const resultCount=document.getElementById("resultCount");
 const activeCount=document.getElementById("activeCount");
+const productModal=document.getElementById("productModal");
+const cartModal=document.getElementById("cartModal");
+let currentList=activeProducts.slice();
+let currentIndex=-1;
+let lastFocus=null;
 
 function money(n){return n.toLocaleString("ru-RU")+" "+RUB}
-function fmtDate(iso){const [y,m,d]=iso.split("-");return `${d}.${m}.${y.slice(2)}`}
+function fmtDate(iso){const [y,m,d]=iso.split("-");return d+"."+m+"."+y.slice(2)}
 function discount(p){return p.oldPrice?Math.round((1-p.price/p.oldPrice)*100):0}
+function fallbackImage(p){return "https://placehold.co/400x300/e0f2f1/00796b?text="+encodeURIComponent(p.name.slice(0,22))}
+function updateScrollLock(){document.body.style.overflow=(productModal.classList.contains("open")||cartModal.classList.contains("open"))?"hidden":""}
+let toastTimer=null;
+function toast(msg){
+  const el=document.getElementById("toast");
+  el.textContent=msg;el.classList.add("show");
+  clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove("show"),2400);
+}
 
 function renderProducts(list){
+  currentList=list.slice();
   activeCount.textContent=activeProducts.length+" товаров";
-  resultCount.textContent=`Показано: ${list.length}`;
+  resultCount.textContent="Показано: "+list.length;
   if(!list.length){
-    grid.innerHTML=`<div class="no-results"><h3>Ничего не найдено</h3><p>Попробуйте «коллаген», «магний», «чай» или «детокс».</p><button class="btn" onclick="resetSearch()">Сбросить поиск</button></div>`;
-    Analytics.observeCards();
-    return;
+    grid.innerHTML='<div class="no-results"><h3>Ничего не найдено</h3><p>Попробуйте «коллаген», «магний», «чай» или «детокс».</p><button class="btn" onclick="resetSearch()">Сбросить поиск</button></div>';
+    Analytics.observeCards();return;
   }
   grid.innerHTML=list.map((p,idx)=>{
-    const fallback=`https://placehold.co/400x300/e0f2f1/00796b?text=${encodeURIComponent(p.name.slice(0,22))}`;
-    const badge=p.promoUntil?`<span class="promo-badge">до ${fmtDate(p.promoUntil)}</span>`:"";
     const sale=discount(p);
-    return `
-    <article class="card" data-id="${p.id}" style="--i:${idx}">
-      <div class="card-img">
-        ${badge}
-        ${sale?`<span class="sale-badge">−${sale}%</span>`:""}
-        <img src="${p.image||fallback}" alt="${p.name}" loading="lazy" width="400" height="300" onerror="this.onerror=null;this.src='${fallback}'">
-      </div>
-      <div class="card-body">
-        <h3 class="card-title">${p.name}</h3>
-        <p class="card-desc">${p.desc}</p>
-        <div class="card-price">
-          <span class="price-current">${money(p.price)}</span>
-          ${p.oldPrice?`<span class="price-old">${money(p.oldPrice)}</span>`:""}
-        </div>
-        <button class="btn" onclick="addToCart(${p.id})">В корзину</button>
-      </div>
-    </article>`;
+    return '<article class="card" data-id="'+p.id+'" style="--i:'+idx+'" tabindex="0" role="button" aria-label="Открыть описание: '+p.name+'">'+
+      '<div class="card-img">'+
+        (p.promoUntil?'<span class="promo-badge">до '+fmtDate(p.promoUntil)+'</span>':'')+
+        (sale?'<span class="sale-badge">−'+sale+'%</span>':'')+
+        '<img src="'+(p.image||fallbackImage(p))+'" alt="'+p.name+'" loading="lazy" width="400" height="300" onerror="this.onerror=null;this.src=\''+fallbackImage(p)+'\'">'+
+        '<span class="card-hint">Нажмите, чтобы читать описание</span>'+
+      '</div>'+
+      '<div class="card-body">'+
+        '<div class="card-tag">'+p.tag+'</div>'+
+        '<h3 class="card-title">'+p.name+'</h3>'+
+        '<p class="card-desc">'+p.desc+'</p>'+
+        '<div class="card-price"><span class="price-current">'+money(p.price)+'</span>'+(p.oldPrice?'<span class="price-old">'+money(p.oldPrice)+'</span>':'')+'</div>'+
+        '<div class="card-actions">'+
+          '<button class="btn" onclick="event.stopPropagation();addToCart('+p.id+')">В корзину</button>'+
+          '<button class="btn ghost" onclick="event.stopPropagation();openProduct('+p.id+')">Описание</button>'+
+        '</div>'+
+      '</div>'+
+    '</article>';
   }).join("");
   Analytics.observeCards();
 }
 
-function addToCart(id){
+/* Окно товара */
+function openProduct(id){
+  const idx=currentList.findIndex(p=>p.id===id);
+  if(idx<0)return;
+  currentIndex=idx;
+  lastFocus=document.activeElement;
+  fillProduct(currentList[idx]);
+  productModal.classList.add("open");
+  updateScrollLock();
+  document.getElementById("pmClose").focus();
+}
+function fillProduct(p){
+  const sale=discount(p);
+  document.getElementById("pmImage").src=p.image||fallbackImage(p);
+  document.getElementById("pmImage").alt=p.name;
+  document.getElementById("pmImage").onerror=function(){this.onerror=null;this.src=fallbackImage(p)};
+  document.getElementById("pmBadges").innerHTML=(p.promoUntil?'<span class="promo-badge">Акция до '+fmtDate(p.promoUntil)+'</span>':'')+(sale?'<span class="sale-badge">−'+sale+'%</span>':'');
+  document.getElementById("pmTag").textContent=p.tag;
+  document.getElementById("pmTitle").textContent=p.name;
+  document.getElementById("pmTagline").textContent=p.desc;
+  document.getElementById("pmPrice").textContent=money(p.price);
+  const oldEl=document.getElementById("pmOld");
+  oldEl.textContent=p.oldPrice?money(p.oldPrice):"";oldEl.style.display=p.oldPrice?"inline":"none";
+  const saveEl=document.getElementById("pmSave");
+  if(p.oldPrice){saveEl.textContent="Выгода "+money(p.oldPrice-p.price);saveEl.style.display="inline"}else{saveEl.style.display="none"}
+  document.getElementById("pmPoints").innerHTML=p.points.map(t=>'<span class="pm-point">'+t+'</span>').join("");
+  document.getElementById("pmAbout").textContent=p.about;
+  const note=document.getElementById("pmNote");
+  if(SUPPLEMENT_TAGS.has(p.tag)){
+    note.textContent="БАД. Не является лекарственным средством. Перед применением рекомендуется проконсультироваться со специалистом.";
+    note.style.display="block";
+  }else{
+    note.textContent="Наличие, состав и условия доставки уточняйте у менеджера.";
+    note.style.display="block";
+  }
+  document.getElementById("pmAdd").onclick=function(){addToCart(p.id,false)};
+  const ask=document.getElementById("pmAsk");
+  ask.href="https://wa.me/"+WHATSAPP_PHONE+"?text="+encodeURIComponent("Здравствуйте! Интересует «"+p.name+"» за "+money(p.price)+". Подскажите наличие и детали.");
+  ask.onclick=function(){Analytics.question(p)};
+  document.getElementById("pmCounter").textContent=(currentIndex+1)+" / "+currentList.length;
+  Analytics.detail(p);
+}
+function closeProduct(){
+  productModal.classList.remove("open");
+  updateScrollLock();
+  if(lastFocus&&lastFocus.focus)lastFocus.focus();
+}
+function stepProduct(delta){
+  if(currentIndex<0||!currentList.length)return;
+  currentIndex=(currentIndex+delta+currentList.length)%currentList.length;
+  fillProduct(currentList[currentIndex]);
+}
+
+/* Корзина */
+function addToCart(id,openCartAfter){
+  if(openCartAfter===undefined)openCartAfter=true;
   const p=activeProducts.find(x=>x.id===id);
-  if(!p) return;
+  if(!p)return;
   const item=cart.find(i=>i.id===id);
-  if(item) item.qty++;
-  else cart.push({id:p.id,name:p.name,price:p.price,qty:1});
-  Analytics.add(p,1);
-  saveCart();
-  toggleCart(true,"add");
+  if(item)item.qty++;else cart.push({id:p.id,name:p.name,price:p.price,qty:1});
+  Analytics.add(p,1);saveCart();
+  if(openCartAfter)toggleCart(true);else toast("«"+p.name+"» — в корзине");
 }
 function changeQty(id,delta){
-  const item=cart.find(i=>i.id===id);
-  if(!item) return;
+  const item=cart.find(i=>i.id===id);if(!item)return;
   const p=activeProducts.find(x=>x.id===id);
-  if(delta>0){
-    item.qty++;
-    if(p) Analytics.add(p,1);
-  }else{
-    item.qty--;
-    if(p) Analytics.remove(p,1);
-    if(item.qty<=0) cart=cart.filter(i=>i.id!==id);
-  }
+  if(delta>0){item.qty++;if(p)Analytics.add(p,1)}
+  else{item.qty--;if(p)Analytics.remove(p,1);if(item.qty<=0)cart=cart.filter(i=>i.id!==id)}
   saveCart();
 }
 function removeFromCart(id){
-  const item=cart.find(i=>i.id===id);
-  const p=activeProducts.find(x=>x.id===id);
-  if(item&&p) Analytics.remove(p,item.qty);
-  cart=cart.filter(i=>i.id!==id);
-  saveCart();
+  const item=cart.find(i=>i.id===id),p=activeProducts.find(x=>x.id===id);
+  if(item&&p)Analytics.remove(p,item.qty);
+  cart=cart.filter(i=>i.id!==id);saveCart();
 }
 function clearCart(){
   cart.forEach(i=>{const p=activeProducts.find(x=>x.id===i.id);if(p)Analytics.remove(p,i.qty)});
-  cart=[];
-  saveCart();
+  cart=[];saveCart();toast("Корзина очищена");
 }
-function saveCart(){
-  localStorage.setItem("agenyz_cart",JSON.stringify(cart));
-  renderCart();
-}
+function saveCart(){localStorage.setItem("agenyz_cart",JSON.stringify(cart));renderCart()}
 function cartTotal(){return cart.reduce((s,i)=>s+i.price*i.qty,0)}
 function renderCart(){
   const count=cart.reduce((s,i)=>s+i.qty,0);
   document.getElementById("cartCount").textContent=count;
   document.getElementById("cartTotal").textContent=money(cartTotal());
   const box=document.getElementById("cartItems");
-  if(!cart.length){
-    box.innerHTML=`<div class="empty-cart"><div style="font-size:2rem">🛒</div><p>Корзина пуста</p><p style="font-size:.85rem;margin-top:.4rem">Добавьте товары из каталога</p></div>`;
-    return;
-  }
-  box.innerHTML=cart.map(i=>`
-    <div class="cart-item">
-      <div>
-        <div class="cart-item-name">${i.name}</div>
-        <div class="cart-item-meta">${i.qty} × ${money(i.price)} = ${money(i.qty*i.price)}</div>
-        <div class="qty-controls">
-          <button class="qty-btn" onclick="changeQty(${i.id},-1)" aria-label="Уменьшить">−</button>
-          <span>${i.qty}</span>
-          <button class="qty-btn" onclick="changeQty(${i.id},1)" aria-label="Увеличить">+</button>
-        </div>
-      </div>
-      <button class="remove-btn" onclick="removeFromCart(${i.id})">Удалить</button>
-    </div>`).join("");
+  if(!cart.length){box.innerHTML='<div class="empty-cart"><div style="font-size:2rem">🛒</div><p>Корзина пуста</p><p style="font-size:.85rem;margin-top:.4rem">Добавьте товары из каталога</p></div>';return}
+  box.innerHTML=cart.map(i=>'<div class="cart-item"><div><div class="cart-item-name">'+i.name+'</div><div class="cart-item-meta">'+i.qty+' × '+money(i.price)+' = '+money(i.qty*i.price)+'</div><div class="qty-controls"><button class="qty-btn" onclick="changeQty('+i.id+',-1)" aria-label="Уменьшить">−</button><span>'+i.qty+'</span><button class="qty-btn" onclick="changeQty('+i.id+',1)" aria-label="Увеличить">+</button></div></div><button class="remove-btn" onclick="removeFromCart('+i.id+')">Удалить</button></div>').join("");
 }
 function toggleCart(forceOpen){
-  const modal=document.getElementById("cartModal");
-  const open=typeof forceOpen==="boolean"?forceOpen:!modal.classList.contains("open");
-  modal.classList.toggle("open",open);
-  if(open) Analytics.cartOpen();
-  document.body.style.overflow=open?"hidden":"";
+  const open=typeof forceOpen==="boolean"?forceOpen:!cartModal.classList.contains("open");
+  cartModal.classList.toggle("open",open);
+  if(open)Analytics.cartOpen();
+  updateScrollLock();
 }
 function checkout(){
   if(!cart.length){alert("Корзина пуста");return}
   Analytics.checkout();
-  const lines=cart.map(i=>`▪️ ${i.name} x${i.qty} — ${money(i.price*i.qty)}`).join("\n");
-  const text=`Здравствуйте! Хочу оформить заказ:\n\n${lines}\n\nИтого: ${money(cartTotal())}\nДоставка: рассчитывается индивидуально`;
-  window.open(`https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(text)}`,"_blank","noopener");
+  const lines=cart.map(i=>"▪️ "+i.name+" x"+i.qty+" — "+money(i.price*i.qty)).join("\n");
+  const text="Здравствуйте! Хочу оформить заказ:\n\n"+lines+"\n\nИтого: "+money(cartTotal())+"\nДоставка: рассчитывается индивидуально";
+  window.open("https://wa.me/"+WHATSAPP_PHONE+"?text="+encodeURIComponent(text),"_blank","noopener");
 }
-function resetSearch(){
-  searchInput.value="";
-  searchClear.classList.remove("show");
-  renderProducts(activeProducts);
-  searchInput.focus();
-}
+function resetSearch(){searchInput.value="";searchClear.classList.remove("show");renderProducts(activeProducts);searchInput.focus()}
 
 let searchDebounce=null;
 searchInput.addEventListener("input",e=>{
-  const raw=e.target.value;
-  const term=raw.trim().toLowerCase();
+  const raw=e.target.value,term=raw.trim().toLowerCase();
   searchClear.classList.toggle("show",raw.length>0);
-  renderProducts(activeProducts.filter(p=>p.name.toLowerCase().includes(term)||p.desc.toLowerCase().includes(term)));
+  renderProducts(activeProducts.filter(p=>(p.name+" "+p.desc+" "+p.about+" "+p.tag+" "+p.points.join(" ")).toLowerCase().includes(term)));
   clearTimeout(searchDebounce);
-  if(term.length>=2) searchDebounce=setTimeout(()=>Analytics.search(raw.trim()),700);
+  if(term.length>=2)searchDebounce=setTimeout(()=>Analytics.search(raw.trim()),700);
 });
 searchClear.addEventListener("click",resetSearch);
 grid.addEventListener("click",e=>{
   const card=e.target.closest(".card");
-  if(!card||e.target.closest("button")) return;
-  const p=activeProducts.find(x=>x.id===Number(card.dataset.id));
-  if(p) Analytics.productClick(p);
+  if(!card||e.target.closest("button"))return;
+  openProduct(Number(card.dataset.id));
+});
+grid.addEventListener("keydown",e=>{
+  const card=e.target.closest(".card");
+  if(!card)return;
+  if(e.key==="Enter"||e.key===" "){e.preventDefault();openProduct(Number(card.dataset.id))}
 });
 document.addEventListener("keydown",e=>{
   if(e.key==="Escape"){
-    const modal=document.getElementById("cartModal");
-    if(modal.classList.contains("open")) toggleCart(false);
+    if(productModal.classList.contains("open"))closeProduct();
+    else if(cartModal.classList.contains("open"))toggleCart(false);
+  }
+  if(productModal.classList.contains("open")){
+    if(e.key==="ArrowLeft")stepProduct(-1);
+    if(e.key==="ArrowRight")stepProduct(1);
   }
 });
 
-/* ============ СОГЛАСИЕ НА АНАЛИТИКУ ============ */
 (function(){
   let saved=null;
   try{saved=localStorage.getItem(ANALYTICS_CONFIG.CONSENT_KEY)}catch(e){}
   const bar=document.getElementById("consentBar");
   if(saved==="yes"){Analytics.start();return}
-  if(saved==="no") return;
+  if(saved==="no")return;
   bar.hidden=false;
-  document.getElementById("consentYes").addEventListener("click",()=>{
-    try{localStorage.setItem(ANALYTICS_CONFIG.CONSENT_KEY,"yes")}catch(e){}
-    bar.hidden=true;
-    Analytics.start();
-  });
-  document.getElementById("consentNo").addEventListener("click",()=>{
-    try{localStorage.setItem(ANALYTICS_CONFIG.CONSENT_KEY,"no")}catch(e){}
-    bar.hidden=true;
-  });
+  document.getElementById("consentYes").addEventListener("click",()=>{try{localStorage.setItem(ANALYTICS_CONFIG.CONSENT_KEY,"yes")}catch(e){}bar.hidden=true;Analytics.start()});
+  document.getElementById("consentNo").addEventListener("click",()=>{try{localStorage.setItem(ANALYTICS_CONFIG.CONSENT_KEY,"no")}catch(e){}bar.hidden=true});
 })();
 
 renderProducts(activeProducts);
